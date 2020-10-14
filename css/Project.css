@@ -1,0 +1,26 @@
+
+.logo-icon{
+    background-image: url(../images/logo-black.jpg)!important;
+    /* background-color: black ;  */
+    width: 30px!important;
+    height: 30px!important; 
+}
+.logo-button{
+    height: 30px!important;
+    background-image: none!important;
+    background-color:#ffffff!important;
+    background-position: center!important;
+    border: none!important;
+    
+}
+
+.toolbar-button{
+    margin:auto!important;
+    height: 30px!important;
+    background-color:#000!important;
+    background-position: center!important;
+    background-image: none!important;
+    border: none!important;
+    
+
+}
