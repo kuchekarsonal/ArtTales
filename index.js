@@ -1,14 +1,14 @@
 function loginCallback() {
   var footer = Ext.create("Ext.container.Container", {
     width: "100%",
-    flex:0.5,
+    flex: 0.5,
     layout: {
       type: "hbox",
       pack: "center",
     },
     style: {
       // borderColor:'#000000',
-      borderTopStyle: "groove",
+      
       backgroundColor: "#fff",
     },
     items: [
@@ -23,15 +23,27 @@ function loginCallback() {
       responsive: true,
     },
     layout: { type: "vbox", stretch: true },
-    dock:'left',
+    dock: "left",
     height: "100%",
     width: 100,
     style: "background:#15151e;",
     id: "toolbar",
     margin: 1,
     vertical: true,
-    defaults: {},
+    listeners: {
+      focusleave: function () {
+        Ext.getCmp("Drawing").hide();
+        Ext.getCmp("Quilling").hide();
+      },
+    },
     items: [
+      {
+        cls: "toolbar-button",
+        height: 60,
+        text: "<h1>D</h1>",
+      },
+
+      { xtype: "tbseparator" },
       {
         cls: "toolbar-button",
         //iconCls: "logo-icon",
@@ -42,22 +54,46 @@ function loginCallback() {
       },
       { xtype: "tbseparator" },
       {
+        xtype: "button",
         cls: "toolbar-button",
         iconAlign: "top",
         html: "My Art",
+        menu: [],
         listeners: {
-          click: function () {},
+          click: function () {
+            if (Ext.getCmp("Drawing").isHidden()) {
+              Ext.getCmp("Drawing").show();
+              Ext.getCmp("Quilling").show();
+            } else {
+              Ext.getCmp("Drawing").hide();
+              Ext.getCmp("Quilling").hide();
+            }
+          },
+          mouseover: function () {
+            //console.log("Mouse Enter");
+            //this.showMenu();
+            Ext.getCmp("Drawing").show();
+            Ext.getCmp("Quilling").show();
+          },
         },
+
+        /* listeners: {
+          hover: function () {},
+        }, */
       },
-      { xtype: "tbseparator" },
       {
-        cls: "toolbar-button",
-        iconAlign: "top",
-        text: "Gallery",
-        listeners: {
-          click: function () {},
-        },
+        xtype: "button",
+        id: "Drawing",
+        hidden: true,
+        text: "Drawing",
       },
+      {
+        hidden: true,
+        id: "Quilling",
+        xtype: "button",
+        text: "Quilling",
+      },
+
       { xtype: "tbseparator" },
       {
         cls: "toolbar-button",
@@ -85,12 +121,12 @@ function loginCallback() {
       { xtype: "tbseparator" },
     ],
   });
-  
-  var headerContainer=Ext.create("Ext.container.Container",{
+
+  var headerContainer = Ext.create("Ext.container.Container", {
     id: "headerContainer",
-    flex:1,
+    flex: 1,
     width: "100%",
-    margin: 1,
+    margin: 5,
     style: {
       borderBottom: "2px solid black",
       background: "none",
@@ -98,27 +134,44 @@ function loginCallback() {
     layout: {
       type: "hbox",
       align: "middle",
-      pack: "end",
+      pack:'end',
     },
     items: [
+      {
+        xtype: "label",
+        html: "<h1>Art Gallery</h1>",
+      },
+      { xtype: "tbspacer", flex: 1 },
       {
         xtype: "toolbar",
         border: false,
         items: [
+          
           {
             xtype: "tbseparator",
             height: 40,
           },
           {
             xtype: "button",
-            iconCls: "logout",
+            text: "Login",
             cls: "toolbar-button",
             height: 45,
-            width: 45,
+            margin: "0 8 0 0",
+          },
+          {
+            xtype: "tbseparator",
+            height: 40,
+          },
+          {
+            xtype: "button",
+            text: "Sign Up",
+            cls: "toolbar-button",
+            height: 45,
           },
         ],
       },
     ],
+<<<<<<< HEAD
   },)
   
 
@@ -220,8 +273,13 @@ function loginCallback() {
 
 
   var itemsContainer=Ext.create("Ext.container.Container",{
+=======
+  });
+
+  var itemsContainer = Ext.create("Ext.container.Container", {
+>>>>>>> 91b534b77f6c32315d1fe463b0c960278f8b90a4
     id: "itemsContainer",
-    flex:9,
+    flex: 9,
     width: "100%",
     scrollable : true,
  
@@ -230,6 +288,7 @@ function loginCallback() {
       borderBottom: "2px solid black",
       background: "none",
     },
+<<<<<<< HEAD
     items :[
       {
         xtype : "button",
@@ -248,6 +307,19 @@ function loginCallback() {
     items:[ headerContainer,itemsContainer,footer]
   })
   
+=======
+  });
+
+  var subMain = Ext.create("Ext.container.Container", {
+    flex: 9,
+    height: "100%",
+    title: "Final Assignment",
+    titleAlign: "center",
+    layout: "vbox",
+    items: [headerContainer, itemsContainer, footer],
+  });
+
+>>>>>>> 91b534b77f6c32315d1fe463b0c960278f8b90a4
   var mainContainer = Ext.create("Ext.container.Container", {
     id: "mainContainer",
     plugins: {
