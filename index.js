@@ -112,7 +112,6 @@ function loginCallback() {
           click: function () {
             Ext.getCmp("aboutUs").hide();
             Ext.getCmp("contactUs").show();
-            
           },
         },
       },
