@@ -21,7 +21,7 @@ function loginCallback() {
     plugins: {
       responsive: true,
     },
-    layout: { type: "fit", stretch: true },
+    layout: { type: "vbox", stretch: true },
     height: "100%",
     width: 100,
     style: "background:#15151e;",
