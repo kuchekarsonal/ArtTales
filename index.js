@@ -1,6 +1,7 @@
 function loginCallback() {
   var footer = Ext.create("Ext.container.Container", {
     width: "100%",
+    flex:0.5,
     layout: {
       type: "hbox",
       pack: "center",
@@ -21,7 +22,8 @@ function loginCallback() {
     plugins: {
       responsive: true,
     },
-    layout: { type: "fit", stretch: true },
+    layout: { type: "vbox", stretch: true },
+    dock:'left',
     height: "100%",
     width: 100,
     style: "background:#15151e;",
@@ -77,67 +79,65 @@ function loginCallback() {
       { xtype: "tbseparator" },
     ],
   });
-  var subMain = Ext.create("Ext.container.Container", {
-    id: "subMain",
-    flex: 1,
-    //height: "100%",
-    //scrollable:true,
+  
+  var headerContainer=Ext.create("Ext.container.Container",{
+    id: "headerContainer",
+    flex:1,
+    width: "100%",
+    margin: 1,
     style: {
+      borderBottom: "2px solid black",
       background: "none",
     },
-    layout: "vbox",
+    layout: {
+      type: "hbox",
+      align: "middle",
+      pack: "end",
+    },
     items: [
       {
-        xtype: "container",
-        id: "headerContainer",
-        height: 60,
-        width: "100%",
-        margin: 1,
-        style: {
-          borderBottom: "2px solid black",
-          background: "none",
-        },
-        layout: {
-          type: "hbox",
-          align: "middle",
-          pack: "end",
-        },
+        xtype: "toolbar",
+        border: false,
         items: [
           {
-            xtype: "toolbar",
-            border: false,
-            items: [
-              {
-                xtype: "tbseparator",
-                height: 40,
-              },
-              {
-                xtype: "button",
-                iconCls: "logout",
-                cls: "toolbar-button",
-                height: 45,
-                width: 45,
-              },
-            ],
+            xtype: "tbseparator",
+            height: 40,
+          },
+          {
+            xtype: "button",
+            iconCls: "logout",
+            cls: "toolbar-button",
+            height: 45,
+            width: 45,
           },
         ],
       },
-      {
-        xtype: "container",
-        id: "centerContainer",
-        //scrollable:true,
-        width: "100%",
-
-        margin: 1,
-        style: {
-          //border: "1px solid black",
-          background: "#f0f0f5",
-        },
-        items: [],
-      },
-      footer,
     ],
-  });
+  },)
+  
+  var itemsContainer=Ext.create("Ext.container.Container",{
+    id: "itemsContainer",
+    flex:9,
+    width: "100%",
+    margin: 1,
+    style: {
+      borderBottom: "2px solid black",
+      background: "none",
+    }
+    
+  },)
+  
+  var subMain=Ext.create("Ext.container.Container",{
+    flex:9,
+    height:'100%',
+    title:'Final Assignment',
+    titleAlign:'center',
+    layout:'vbox',
+    items:[ headerContainer,itemsContainer,footer
+
+    ]
+  })
+  
   var mainContainer = Ext.create("Ext.container.Container", {
     id: "mainContainer",
     plugins: {
