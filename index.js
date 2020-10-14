@@ -64,7 +64,10 @@ function loginCallback() {
         iconAlign: "top",
         text: "About Us",
         listeners: {
-          click: function () {},
+          click: function () {
+            Ext.getCmp('aboutUs').show();
+            console.log("AboutUs click");
+          },
         },
       },
       { xtype: "tbseparator" },
@@ -73,7 +76,10 @@ function loginCallback() {
         iconAlign: "top",
         text: "Contact Us",
         listeners: {
-          click: function () {},
+          click: function () {
+            Ext.getCmp('contactUs').show();
+            Ext.getCmp('aboutUs').hide();
+          },
         },
       },
       { xtype: "tbseparator" },
@@ -115,15 +121,120 @@ function loginCallback() {
     ],
   },)
   
+
+  var aboutUs = Ext.create("Ext.container.Container",{
+    id: "aboutUs",
+    width: "100%",
+    height : "100%",
+    hidden : true,
+    layout : "vbox",
+
+    items : [
+      {
+        xtype : "image",
+        width :250,
+        heigth :250,
+ 
+        margin : "50 0 0 500",
+        src : "./project/images/1.jpg"
+      },
+     
+      {
+        xtype : 'label',
+        html : "<h1>Helloooo</h1>"
+      }
+
+    ]
+
+
+
+  });
+
+
+  var contactUs = Ext.create("Ext.form.Panel",{
+    id: "contactUs",
+    height: "100%",
+    width: "100%",
+    align : "center",
+    bodyPadding: 10,
+    defaultType: 'textfield',
+    hidden :true,
+
+    items : [
+      {
+        xtype : "image",
+        width :250,
+        heigth :250,
+        margin : "50 0 0 500",
+        src : "./project/images/3.jpg"
+      },
+     
+      {
+        xtype : 'label',
+        html : "<h1>Don’t hesitate to chat with us, just drop a line below or contact via email.</h1>"
+      },
+      {
+        id : "getName",
+        fieldLabel: 'First Name',
+        name : "first NAme"
+        
+      },
+      {
+        id : "getEmail",
+        fieldLabel: 'Email Address',
+        name : "Email Address"
+        
+      },
+      {
+        id : "getSubject",
+        fieldLabel: "Subject:",
+        name : "Subject"
+        
+      },
+      {
+        id : "getMessage",
+        fieldLabel: "Message ",
+        name : "Message"
+        
+      },
+
+      {
+        xtype : "button",
+        text: "Submit",
+        listeners:{
+          click :function(){
+            var data = Ext.getCmp("getName").getValue();
+            console.log(Ext.getCmp("getEmail").getValue());
+            console.log(Ext.getCmp("getSubject").getValue());
+            console.log(Ext.getCmp("getMessage").getValue());
+            console.log(data);
+          }
+        }
+      }
+
+    ]
+
+
+
+  });
+
+
   var itemsContainer=Ext.create("Ext.container.Container",{
     id: "itemsContainer",
     flex:9,
     width: "100%",
+    scrollable : true,
+ 
     margin: 1,
     style: {
       borderBottom: "2px solid black",
       background: "none",
-    }
+    },
+    items :[
+      {
+        xtype : "button",
+        text :"Hello welcome to our homepage"
+      },aboutUs, contactUs  ]
     
   },)
   
@@ -132,10 +243,9 @@ function loginCallback() {
     height:'100%',
     title:'Final Assignment',
     titleAlign:'center',
+    
     layout:'vbox',
-    items:[ headerContainer,itemsContainer,footer
-
-    ]
+    items:[ headerContainer,itemsContainer,footer]
   })
   
   var mainContainer = Ext.create("Ext.container.Container", {
