@@ -8,7 +8,7 @@ function loginCallback() {
     },
     style: {
       // borderColor:'#000000',
-      
+
       backgroundColor: "#fff",
     },
     items: [
@@ -32,7 +32,7 @@ function loginCallback() {
     vertical: true,
     listeners: {
       focusleave: function () {
-        Ext.getCmp("Drawing").hide();
+        Ext.getCmp("Drawing").hide(); //doesn't work
         Ext.getCmp("Quilling").hide();
       },
     },
@@ -76,10 +76,6 @@ function loginCallback() {
             Ext.getCmp("Quilling").show();
           },
         },
-
-        /* listeners: {
-          hover: function () {},
-        }, */
       },
       {
         xtype: "button",
@@ -100,7 +96,11 @@ function loginCallback() {
         iconAlign: "top",
         text: "About Us",
         listeners: {
-          click: function () {},
+          click: function () {
+            Ext.getCmp("contactUs").hide();
+            Ext.getCmp("aboutUs").show();
+            //console.log("AboutUs click");
+          },
         },
       },
       { xtype: "tbseparator" },
@@ -109,10 +109,98 @@ function loginCallback() {
         iconAlign: "top",
         text: "Contact Us",
         listeners: {
-          click: function () {},
+          click: function () {
+            Ext.getCmp("aboutUs").hide();
+            Ext.getCmp("contactUs").show();
+            
+          },
         },
       },
       { xtype: "tbseparator" },
+    ],
+  });
+
+  var contactUs = Ext.create("Ext.form.Panel", {
+    id: "contactUs",
+    height: "100%",
+    width: "100%",
+    align: "center",
+    bodyPadding: 10,
+    defaultType: "textfield",
+    hidden: true,
+
+    items: [
+      {
+        xtype: "image",
+        width: 250,
+        heigth: 250,
+        margin: "50 0 0 500",
+        src: "./project/images/3.jpg",
+      },
+
+      {
+        xtype: "label",
+        html:
+          "<h1>Don’t hesitate to chat with us, just drop a line below or contact via email.</h1>",
+      },
+      {
+        id: "getName",
+        fieldLabel: "First Name",
+        name: "first NAme",
+      },
+      {
+        id: "getEmail",
+        fieldLabel: "Email Address",
+        name: "Email Address",
+      },
+      {
+        id: "getSubject",
+        fieldLabel: "Subject:",
+        name: "Subject",
+      },
+      {
+        id: "getMessage",
+        fieldLabel: "Message ",
+        name: "Message",
+      },
+
+      {
+        xtype: "button",
+        text: "Submit",
+        listeners: {
+          click: function () {
+            var data = Ext.getCmp("getName").getValue();
+            console.log(Ext.getCmp("getEmail").getValue());
+            console.log(Ext.getCmp("getSubject").getValue());
+            console.log(Ext.getCmp("getMessage").getValue());
+            console.log(data);
+          },
+        },
+      },
+    ],
+  });
+
+  var aboutUs = Ext.create("Ext.container.Container", {
+    id: "aboutUs",
+    width: "100%",
+    height: "100%",
+    hidden: true,
+    layout: "vbox",
+
+    items: [
+      {
+        xtype: "image",
+        width: 250,
+        heigth: 250,
+
+        margin: "50 0 0 500",
+        src: "./project/images/1.jpg",
+      },
+
+      {
+        xtype: "label",
+        html: "<h1>Helloooo</h1>",
+      },
     ],
   });
 
@@ -128,7 +216,7 @@ function loginCallback() {
     layout: {
       type: "hbox",
       align: "middle",
-      pack:'end',
+      pack: "end",
     },
     items: [
       {
@@ -140,7 +228,6 @@ function loginCallback() {
         xtype: "toolbar",
         border: false,
         items: [
-          
           {
             xtype: "tbseparator",
             height: 40,
@@ -169,6 +256,7 @@ function loginCallback() {
 
   var itemsContainer = Ext.create("Ext.container.Container", {
     id: "itemsContainer",
+    scrollable: true,
     flex: 9,
     width: "100%",
     margin: 1,
@@ -176,6 +264,7 @@ function loginCallback() {
       borderBottom: "2px solid black",
       background: "none",
     },
+    items: [aboutUs, contactUs],
   });
 
   var subMain = Ext.create("Ext.container.Container", {
