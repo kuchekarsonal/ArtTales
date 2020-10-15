@@ -119,86 +119,146 @@ function loginCallback() {
     ],
   });
 
-  var contactUs = Ext.create("Ext.form.Panel", {
+  var contactUs = Ext.create("Ext.Container", {
     id: "contactUs",
-    height: "100%",
-    width: "100%",
-    align: "center",
-    bodyPadding: 10,
-    defaultType: "textfield",
     hidden: true,
+    layout: {
+      type: "vbox",
+      align: "center",
+    },
 
     items: [
       {
-        xtype: "image",
-        width: 250,
-        heigth: 250,
-        margin: "50 0 0 500",
-        src: "./project/images/3.jpg",
-      },
-
-      {
-        xtype: "label",
-        html:
-          "<h1>Don’t hesitate to chat with us, just drop a line below or contact via email.</h1>",
-      },
-      {
-        id: "getName",
-        fieldLabel: "First Name",
-        name: "first NAme",
-      },
-      {
-        id: "getEmail",
-        fieldLabel: "Email Address",
-        name: "Email Address",
-      },
-      {
-        id: "getSubject",
-        fieldLabel: "Subject:",
-        name: "Subject",
-      },
-      {
-        id: "getMessage",
-        fieldLabel: "Message ",
-        name: "Message",
-      },
-
-      {
-        xtype: "button",
-        text: "Submit",
-        listeners: {
-          click: function () {
-            var data = Ext.getCmp("getName").getValue();
-            console.log(Ext.getCmp("getEmail").getValue());
-            console.log(Ext.getCmp("getSubject").getValue());
-            console.log(Ext.getCmp("getMessage").getValue());
-            console.log(data);
-          },
+        xtype: "form",
+        /* title:
+          "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
+        margin: "5 5 5 5",
+        width: "auto",
+        height: 500,
+        forcefit: true,
+        style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
         },
+        layout: {
+          type: "vbox",
+          align: "center",
+        },
+        bodyPadding: 10,
+        defaultType: "textfield",
+        buttons: [
+          {
+            text: "Reset",
+            handler: function () {
+              this.up("form").getForm().reset();
+            },
+          },
+          {
+            text: "Submit",
+            formBind: true, //only enabled once the form is valid
+            disabled: true,
+            handler: function () {
+              var data = Ext.getCmp("getName").getValue();
+              console.log(Ext.getCmp("getEmail").getValue());
+              console.log(Ext.getCmp("getSubject").getValue());
+              console.log(Ext.getCmp("getMessage").getValue());
+              console.log(data);
+              var form = this.up("form").getForm();
+              if (form.isValid()) {
+                form.submit({
+                  success: function (form, action) {
+                    Ext.Msg.alert("Success", action.result.msg);
+                  },
+                  failure: function (form, action) {
+                    Ext.Msg.alert("Failed", action.result.msg);
+                  },
+                });
+              }
+            },
+          },
+        ],
+        items: [
+          {
+            xtype: "label",
+            html:
+              "<h1>Don’t hesitate to chat with us, just drop a line below or contact via email.</h1>",
+          },
+          {
+            xtype: "image",
+            margin: "5 5 20 5",
+            width: 100,
+            heigth: 100,
+            src: "./project/images/3.jpg",
+          },
+          {
+            id: "getName",
+            fieldLabel: "First Name",
+            name: "first NAme",
+          },
+          {
+            id: "getEmail",
+            fieldLabel: "Email Address",
+            name: "Email Address",
+          },
+          {
+            id: "getSubject",
+            fieldLabel: "Subject:",
+            name: "Subject",
+          },
+          {
+            xtype: "textareafield",
+            grow: true,
+            id: "getMessage",
+            fieldLabel: "Message ",
+            name: "Message",
+          },
+        ],
       },
     ],
   });
 
-  var aboutUs = Ext.create("Ext.container.Container", {
+  var aboutUs = Ext.create("Ext.Container", {
     id: "aboutUs",
-    width: "100%",
-    height: "100%",
     hidden: true,
-    layout: "vbox",
-
+    layout: {
+      type: "vbox",
+      align: "center",
+    },
     items: [
       {
-        xtype: "image",
-        width: 250,
-        heigth: 250,
-
-        margin: "50 0 0 500",
-        src: "./project/images/1.jpg",
-      },
-
-      {
-        xtype: "label",
-        html: "<h1>Helloooo</h1>",
+        xtype: "container",
+        margin: "5 5 5 5",
+        width: 300,
+        height: 500,
+        style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
+        },
+        layout: {
+          type: "vbox",
+          align: "center",
+        },
+        items: [
+          {
+            xtype: "label",
+            html: "<h1>Helloooo!!</h1>",
+            height: 50,
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            style: "border-radius:50%;border:1px solid black",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/nophoto.png",
+          },
+          {
+            flex: 1,
+            xtype: "label",
+            html:
+              "<h1 align='center'>Jack Kirtikar</h1><h2 align='center'>I am An Artist.</h2>",
+          },
+        ],
       },
     ],
   });
@@ -220,7 +280,7 @@ function loginCallback() {
     items: [
       {
         xtype: "label",
-        html: "<h1>Art Gallery</h1>",
+        html: "<h1>Art Tales</h1>",
       },
       { xtype: "tbspacer", flex: 1 },
       {
@@ -269,7 +329,6 @@ function loginCallback() {
   var subMain = Ext.create("Ext.container.Container", {
     flex: 9,
     height: "100%",
-    title: "Final Assignment",
     titleAlign: "center",
     layout: "vbox",
     items: [headerContainer, itemsContainer, footer],
