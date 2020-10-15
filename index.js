@@ -1,7 +1,4 @@
 function loginCallback() {
-
-  
-
   //breadcrumb
   Ext.define("Myapp.sample.store.mainMenu", {
     extend: "Ext.data.TreeStore",
@@ -58,7 +55,7 @@ function loginCallback() {
 
   var contactUs = Ext.create("Ext.Container", {
     id: "contactUs",
-    
+
     layout: {
       type: "vbox",
       align: "center",
@@ -71,7 +68,7 @@ function loginCallback() {
           "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
         margin: "5 5 5 5",
         width: "auto",
-        flex:1,
+        flex: 1,
         forcefit: true,
         style: {
           background: "white",
@@ -94,31 +91,49 @@ function loginCallback() {
             text: "Submit",
             formBind: true, //only enabled once the form is valid
             disabled: true,
-            listeners:{
-              click :function(){
+            listeners: {
+              click: function () {
                 var firstName = Ext.getCmp("firstname").getValue();
                 var lastName = Ext.getCmp("lastname").getValue();
-                var email=Ext.getCmp("emailaddress").getValue();
-                var subject=Ext.getCmp("subject").getValue();
-                var message=Ext.getCmp("message").getValue();
-                var respGetAll = ESApis.executeScript("_getAllJSONDocs_akirtikar", ['paramCount', 'params1',], [1, 'ContactUs_akirtikar', ]);
-						if(respGetAll.status=='success'){
-							Ext.Msg.alert('Alert','Submitted Successfully');
-							var esResp = respGetAll.response;
-							var esParse = JSON.parse(esResp);
-                            console.log(esParse.CallResponse)
-                            var count=esParse.CallResponse.length;
-                            
-						}
-                var resp = ESApis.executeScript("_createDoc_akirtikar", ['paramCount', 'params1', 'params2'], [2, 'ContactUs_akirtikar', {"MessageId":(count+1).toString(),"FirstName":firstName,"LastName":lastName,"EmailId":email,"Subject":subject,"Message":message}]);
-						if(resp.status=='success'){
-							Ext.Msg.alert('Alert','Submitted Successfully');
-							var esResp = resp.response;
-							var esParse = JSON.parse(esResp);
-							console.log(esParse.CallResponse)
-						}
-              }
-            }
+                var email = Ext.getCmp("emailaddress").getValue();
+                var subject = Ext.getCmp("subject").getValue();
+                var message = Ext.getCmp("message").getValue();
+                var respGetAll = ESApis.executeScript(
+                  "_getAllJSONDocs_akirtikar",
+                  ["paramCount", "params1"],
+                  [1, "ContactUs_akirtikar"]
+                );
+                if (respGetAll.status == "success") {
+                  Ext.Msg.alert("Alert", "Submitted Successfully");
+                  var esResp = respGetAll.response;
+                  var esParse = JSON.parse(esResp);
+                  console.log(esParse.CallResponse);
+                  var count = esParse.CallResponse.length;
+                }
+                var resp = ESApis.executeScript(
+                  "_createDoc_akirtikar",
+                  ["paramCount", "params1", "params2"],
+                  [
+                    2,
+                    "ContactUs_akirtikar",
+                    {
+                      MessageId: (count + 1).toString(),
+                      FirstName: firstName,
+                      LastName: lastName,
+                      EmailId: email,
+                      Subject: subject,
+                      Message: message,
+                    },
+                  ]
+                );
+                if (resp.status == "success") {
+                  Ext.Msg.alert("Alert", "Submitted Successfully");
+                  var esResp = resp.response;
+                  var esParse = JSON.parse(esResp);
+                  console.log(esParse.CallResponse);
+                }
+              },
+            },
           },
         ],
         items: [
@@ -135,36 +150,32 @@ function loginCallback() {
             src: "./project/images/3.jpg",
           },
           {
-            id : "firstname",
-            fieldLabel: 'First Name',
-            name : "First Name"
-            
-          },{
-            id : "lastname",
-            fieldLabel: 'Last Name',
-            name : "Last Name"
-            
+            id: "firstname",
+            fieldLabel: "First Name",
+            name: "First Name",
           },
           {
-            id : "emailaddress",
-            fieldLabel: 'Email Address',
-            name : "Email Address"
-            
+            id: "lastname",
+            fieldLabel: "Last Name",
+            name: "Last Name",
           },
           {
-            id : "subject",
+            id: "emailaddress",
+            fieldLabel: "Email Address",
+            name: "Email Address",
+          },
+          {
+            id: "subject",
             fieldLabel: "Subject:",
-            name : "Subject"
-            
+            name: "Subject",
           },
           {
-            id : "message",
+            id: "message",
             fieldLabel: "Message ",
-            name : "Message",
+            name: "Message",
             xtype: "textareafield",
-            grow: true
-            
-          }
+            grow: true,
+          },
         ],
       },
     ],
@@ -172,7 +183,7 @@ function loginCallback() {
 
   var aboutUs = Ext.create("Ext.Container", {
     id: "aboutUs",
-    
+
     layout: {
       type: "vbox",
       align: "center",
@@ -182,7 +193,7 @@ function loginCallback() {
         xtype: "container",
         margin: "5 5 5 5",
         width: 300,
-        flex:1,
+        flex: 1,
         style: {
           background: "white",
           "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
@@ -191,7 +202,7 @@ function loginCallback() {
           type: "vbox",
           align: "center",
         },
-        
+
         items: [
           {
             xtype: "label",
@@ -217,100 +228,97 @@ function loginCallback() {
     ],
   });
 
-
- 
-var myhomeGrid = Ext.create('Ext.panel.Panel', {
-  id  : "tablePic",
-  width: "100%",
-  margin : 10,
-  scrollable :true,
-  layout: {
-      type: 'table',
-      align : 'center',
+  var myhomeGrid = Ext.create("Ext.panel.Panel", {
+    id: "tablePic",
+    width: "100%",
+    margin: 10,
+    scrollable: true,
+    layout: {
+      type: "table",
+      align: "center",
       // The total column count must be specified here
-      columns: 3
-  },
-  defaults: {
+      columns: 3,
+    },
+    defaults: {
       // applied to each contained panel
-      bodyStyle: 'padding:20px'
-  },
-  items: [{
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/1.jpg"
-  },{
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/1.jpg"
-      
-  },{
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/3.jpg",
-      cellCls: 'highlight'
-  },{
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/1.jpg"
-  },
-  {
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/3.jpg"
-  },
-  {
-  
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/3.jpg"
-  },
-  {
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/3.jpg"
-  },
-  {
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/3.jpg"
-  },
-  {
-      flex:1,
-      xtype: "image",
-      html: 'Cell 1 content',
-      width: 250,
-      heigth: 250,
-      src : "./project/images/3.jpg"
-  }
-],
- 
-});
-
-
+      bodyStyle: "padding:20px",
+    },
+    items: [
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/1.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/1.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/3.jpg",
+        cellCls: "highlight",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/1.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/3.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/3.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/3.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/3.jpg",
+      },
+      {
+        flex: 1,
+        xtype: "image",
+        html: "Cell 1 content",
+        width: 250,
+        heigth: 250,
+        src: "./project/images/3.jpg",
+      },
+    ],
+  });
 
   var headerContainer = Ext.create("Ext.container.Container", {
     id: "headerContainer",
@@ -347,12 +355,12 @@ var myhomeGrid = Ext.create('Ext.panel.Panel', {
             cls: "toolbar-button",
             height: 45,
             margin: "0 8 0 0",
-            listeners:{
-              click:function(){
+            listeners: {
+              click: function () {
                 Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
                 Ext.getCmp("itemsContainer").add(signUpForm);
-              }
-            }
+              },
+            },
           },
           {
             xtype: "tbseparator",
@@ -434,6 +442,7 @@ var myhomeGrid = Ext.create('Ext.panel.Panel', {
         listeners: {
           click: function () {
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            Ext.getCmp("itemsContainer").add(myhomeGrid);
           },
         },
       },
