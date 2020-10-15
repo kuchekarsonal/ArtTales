@@ -34,6 +34,8 @@ function loginCallback() {
   });
   var breadcrumbStore = Ext.create("Myapp.sample.store.mainMenu", {});
   //end breadcrumb
+
+  //footer
   var footer = Ext.create("Ext.container.Container", {
     width: "100%",
     flex: 0.5,
@@ -198,6 +200,37 @@ function loginCallback() {
       },
     ],
   });
+
+
+  var myhomeGrid = Ext.create('Ext.panel.Panel', {
+    title: 'Table Layout',
+    id  : "tablePic",
+    width: 300,
+    height: 150,
+    layout: {
+        type: 'table',
+        // The total column count must be specified here
+        columns: 3
+    },
+    defaults: {
+        // applied to each contained panel
+        bodyStyle: 'padding:20px'
+    },
+    items: [{
+        html: 'Cell A content',
+        rowspan: 2
+    },{
+        html: 'Cell B content',
+        colspan: 2
+    },{
+        html: 'Cell C content',
+        cellCls: 'highlight'
+    },{
+        html: 'Cell D content'
+    }],
+    renderTo: Ext.getBody()
+});
+
 
   var headerContainer = Ext.create("Ext.container.Container", {
     id: "headerContainer",
