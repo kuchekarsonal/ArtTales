@@ -1,6 +1,6 @@
 function loginCallback() {
 
-  var signUpForm;
+  
 
   //breadcrumb
   Ext.define("Myapp.sample.store.mainMenu", {
@@ -94,24 +94,31 @@ function loginCallback() {
             text: "Submit",
             formBind: true, //only enabled once the form is valid
             disabled: true,
-            handler: function () {
-              var data = Ext.getCmp("getName").getValue();
-              console.log(Ext.getCmp("getEmail").getValue());
-              console.log(Ext.getCmp("getSubject").getValue());
-              console.log(Ext.getCmp("getMessage").getValue());
-              console.log(data);
-              var form = this.up("form").getForm();
-              if (form.isValid()) {
-                form.submit({
-                  success: function (form, action) {
-                    Ext.Msg.alert("Success", action.result.msg);
-                  },
-                  failure: function (form, action) {
-                    Ext.Msg.alert("Failed", action.result.msg);
-                  },
-                });
+            listeners:{
+              click :function(){
+                var firstName = Ext.getCmp("firstname").getValue();
+                var lastName = Ext.getCmp("lastname").getValue();
+                var email=Ext.getCmp("emailaddress").getValue();
+                var subject=Ext.getCmp("subject").getValue();
+                var message=Ext.getCmp("message").getValue();
+                var respGetAll = ESApis.executeScript("_getAllJSONDocs_akirtikar", ['paramCount', 'params1',], [1, 'ContactUs_akirtikar', ]);
+						if(respGetAll.status=='success'){
+							Ext.Msg.alert('Alert','Submitted Successfully');
+							var esResp = respGetAll.response;
+							var esParse = JSON.parse(esResp);
+                            console.log(esParse.CallResponse)
+                            var count=esParse.CallResponse.length;
+                            
+						}
+                var resp = ESApis.executeScript("_createDoc_akirtikar", ['paramCount', 'params1', 'params2'], [2, 'ContactUs_akirtikar', {"MessageId":(count+1).toString(),"FirstName":firstName,"LastName":lastName,"EmailId":email,"Subject":subject,"Message":message}]);
+						if(resp.status=='success'){
+							Ext.Msg.alert('Alert','Submitted Successfully');
+							var esResp = resp.response;
+							var esParse = JSON.parse(esResp);
+							console.log(esParse.CallResponse)
+						}
               }
-            },
+            }
           },
         ],
         items: [
@@ -128,27 +135,36 @@ function loginCallback() {
             src: "./project/images/3.jpg",
           },
           {
-            id: "getName",
-            fieldLabel: "First Name",
-            name: "first NAme",
+            id : "firstname",
+            fieldLabel: 'First Name',
+            name : "First Name"
+            
+          },{
+            id : "lastname",
+            fieldLabel: 'Last Name',
+            name : "Last Name"
+            
           },
           {
-            id: "getEmail",
-            fieldLabel: "Email Address",
-            name: "Email Address",
+            id : "emailaddress",
+            fieldLabel: 'Email Address',
+            name : "Email Address"
+            
           },
           {
-            id: "getSubject",
+            id : "subject",
             fieldLabel: "Subject:",
-            name: "Subject",
+            name : "Subject"
+            
           },
           {
-            xtype: "textareafield",
-            grow: true,
-            id: "getMessage",
+            id : "message",
             fieldLabel: "Message ",
-            name: "Message",
-          },
+            name : "Message",
+            xtype: "textareafield",
+            grow: true
+            
+          }
         ],
       },
     ],
