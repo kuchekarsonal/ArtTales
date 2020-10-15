@@ -1,6 +1,6 @@
 function loginCallback() {
 
-  var signUpForm;
+  
 
   //breadcrumb
   Ext.define("Myapp.sample.store.mainMenu", {
