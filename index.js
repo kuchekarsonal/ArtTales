@@ -47,7 +47,7 @@ function loginCallback() {
       {
         cls: "toolbar-button",
         //iconCls: "logo-icon",
-        html: "Title",
+        html: "Home",
         listeners: {
           click: function () {},
         },
