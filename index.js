@@ -68,7 +68,7 @@ function loginCallback() {
           "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
         margin: "5 5 5 5",
         width: "auto",
-        flex: 1,
+        height: 470,
         forcefit: true,
         style: {
           background: "white",
@@ -143,11 +143,9 @@ function loginCallback() {
               "<h1>Don’t hesitate to chat with us, just drop a line below or contact via email.</h1>",
           },
           {
-            xtype: "image",
-            margin: "5 5 20 5",
-            width: 100,
-            heigth: 100,
-            src: "./project/images/3.jpg",
+            xtype: "label",
+            html:
+              '<h3><a href = "mailto: rsarvaiya@vistaar.in">Email Us</a><br><br>OR<br></h3>',
           },
           {
             id: "firstname",
@@ -162,6 +160,7 @@ function loginCallback() {
           {
             id: "emailaddress",
             fieldLabel: "Email Address",
+            //email:true, to validate if email is proper
             name: "Email Address",
           },
           {
@@ -181,8 +180,8 @@ function loginCallback() {
     ],
   });
 
-  var signUpForm = Ext.create("Ext.Container", {
-    id: "signUpForm",
+  var loginForm = Ext.create("Ext.Container", {
+    id: "loginForm",
     
     layout: {
       type: "vbox",
@@ -194,9 +193,100 @@ function loginCallback() {
         xtype: "form",
         /* title:
           "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
-        margin: "5 5 5 5",
+        margin: "100% 5 5 5",
         width: "auto",
-        flex:1,
+        flex: 1,
+        forcefit: true,
+        style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
+        },
+        layout: {
+          type: "vbox",
+          align: "center",
+        },
+        bodyPadding: 10,
+        defaultType: "textfield",
+        buttons: [
+          {
+            text: "Reset",
+            handler: function () {
+              this.up("form").getForm().reset();
+            },
+          },
+          {
+            text: "Forgot Password?",
+            handler: function () {
+              this.up("form").getForm().reset();
+            },
+          },
+          {
+            text: "Login",
+            formBind: true, //only enabled once the form is valid
+            disabled: true,
+            // listeners:{
+            //   click :function(){
+            //     var firstName = Ext.getCmp("firstname").getValue();
+            //     var lastName = Ext.getCmp("lastname").getValue();
+            //     var email=Ext.getCmp("emailaddress").getValue();
+            //     var subject=Ext.getCmp("subject").getValue();
+            //     var message=Ext.getCmp("message").getValue();
+            //     var respGetAll = ESApis.executeScript("_getAllJSONDocs_akirtikar", ['paramCount', 'params1',], [1, 'ContactUs_akirtikar', ]);
+            // if(respGetAll.status=='success'){
+            // 	Ext.Msg.alert('Alert','Submitted Successfully');
+            // 	var esResp = respGetAll.response;
+            // 	var esParse = JSON.parse(esResp);
+            //                 console.log(esParse.CallResponse)
+            //                 var count=esParse.CallResponse.length;
+
+            // }
+            //     var resp = ESApis.executeScript("_createDoc_akirtikar", ['paramCount', 'params1', 'params2'], [2, 'ContactUs_akirtikar', {"MessageId":(count+1).toString(),"FirstName":firstName,"LastName":lastName,"EmailId":email,"Subject":subject,"Message":message}]);
+            // if(resp.status=='success'){
+            // 	Ext.Msg.alert('Alert','Submitted Successfully');
+            // 	var esResp = resp.response;
+            // 	var esParse = JSON.parse(esResp);
+            // 	console.log(esParse.CallResponse)
+            // }
+            //   }
+            // }
+          },
+        ],
+        items: [
+          {
+            xtype: "label",
+            html: "<h1>Login Form</h1>",
+          },
+          {
+            id: "usernamelogin",
+            fieldLabel: "UserName\\Email",
+            name: "UserName\Email",
+          },
+          {
+            id: "passwordlogin",
+            fieldLabel: "Password",
+            name: "Passowrd",
+          },
+        ],
+      },
+    ],
+  });
+
+  var signUpForm = Ext.create("Ext.Container", {
+    id: "signUpForm",
+
+    layout: {
+      type: "vbox",
+      align: "center",
+    },
+
+    items: [
+      {
+        xtype: "form",
+        /* title:
+          "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
+          margin: "100% 5 5 5",
+        width: "auto",
+        flex: 1,
         forcefit: true,
         style: {
           background: "white",
@@ -227,21 +317,21 @@ function loginCallback() {
             //     var subject=Ext.getCmp("subject").getValue();
             //     var message=Ext.getCmp("message").getValue();
             //     var respGetAll = ESApis.executeScript("_getAllJSONDocs_akirtikar", ['paramCount', 'params1',], [1, 'ContactUs_akirtikar', ]);
-						// if(respGetAll.status=='success'){
-						// 	Ext.Msg.alert('Alert','Submitted Successfully');
-						// 	var esResp = respGetAll.response;
-						// 	var esParse = JSON.parse(esResp);
+            // if(respGetAll.status=='success'){
+            // 	Ext.Msg.alert('Alert','Submitted Successfully');
+            // 	var esResp = respGetAll.response;
+            // 	var esParse = JSON.parse(esResp);
             //                 console.log(esParse.CallResponse)
             //                 var count=esParse.CallResponse.length;
-                            
-						// }
+
+            // }
             //     var resp = ESApis.executeScript("_createDoc_akirtikar", ['paramCount', 'params1', 'params2'], [2, 'ContactUs_akirtikar', {"MessageId":(count+1).toString(),"FirstName":firstName,"LastName":lastName,"EmailId":email,"Subject":subject,"Message":message}]);
-						// if(resp.status=='success'){
-						// 	Ext.Msg.alert('Alert','Submitted Successfully');
-						// 	var esResp = resp.response;
-						// 	var esParse = JSON.parse(esResp);
-						// 	console.log(esParse.CallResponse)
-						// }
+            // if(resp.status=='success'){
+            // 	Ext.Msg.alert('Alert','Submitted Successfully');
+            // 	var esResp = resp.response;
+            // 	var esParse = JSON.parse(esResp);
+            // 	console.log(esParse.CallResponse)
+            // }
             //   }
             // }
           },
@@ -249,30 +339,28 @@ function loginCallback() {
         items: [
           {
             xtype: "label",
-            html:
-              "<h1>Sign Up Form</h1>",
+            html: "<h1>Sign Up Form</h1>",
           },
           {
-            id : "firstnamesignup",
-            fieldLabel: 'First Name',
-            name : "First Name"
-            
-          },{
-            id : "lastnamesignup",
-            fieldLabel: 'Last Name',
-            name : "Last Name"
-            
-          },{
-            id : "username",
-            fieldLabel: 'UserName',
-            name : "UserName"
-            
-          },{
-            id : "emailidsignup",
-            fieldLabel: 'EmailId',
-            name : "EmailId"
-            
-          }
+            id: "firstnamesignup",
+            fieldLabel: "First Name",
+            name: "First Name",
+          },
+          {
+            id: "lastnamesignup",
+            fieldLabel: "Last Name",
+            name: "Last Name",
+          },
+          {
+            id: "username",
+            fieldLabel: "UserName",
+            name: "UserName",
+          },
+          {
+            id: "emailidsignup",
+            fieldLabel: "EmailId",
+            name: "EmailId",
+          },
         ],
       },
     ],
@@ -290,7 +378,7 @@ function loginCallback() {
         xtype: "container",
         margin: "5 5 5 5",
         width: 300,
-        flex: 1,
+        height: 470,
         style: {
           background: "white",
           "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
@@ -325,94 +413,305 @@ function loginCallback() {
     ],
   });
 
-  var myhomeGrid = Ext.create("Ext.panel.Panel", {
+  var myhomeGrid = Ext.create("Ext.Container", {
     id: "tablePic",
-    width: "100%",
-    margin: 10,
-    scrollable: true,
+    width: "auto",
     layout: {
-      type: "table",
+      type: "vbox",
       align: "center",
-      // The total column count must be specified here
-      columns: 3,
-    },
-    defaults: {
-      // applied to each contained panel
-      bodyStyle: "padding:20px",
     },
     items: [
       {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/1.jpg",
+        xtype: "label",
+        html: "<h1>Art Gallery</h1>",
       },
       {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/1.jpg",
+        xtype: "panel",
+        margin: "5 5 5 5",
+        width: "auto",
+        height: 420,
+        style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
+        },
+        scrollable: true,
+        layout: {
+          type: "table",
+          tdAttrs: {
+            style: {
+              border: "3px solid black",
+            },
+          },
+          columns: 3,
+        },
+        items: [
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+            cellCls: "highlight",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+        ],
+      },
+    ],
+  });
+
+  var drawingGrid = Ext.create("Ext.Container", {
+    id: "drawingPic",
+    width: "auto",
+    layout: {
+      type: "vbox",
+      align: "center",
+    },
+    items: [
+      {
+        xtype: "label",
+        html: "<h1>Drawing Gallery</h1>",
       },
       {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/3.jpg",
-        cellCls: "highlight",
+        xtype: "panel",
+        margin: "5 5 5 5",
+        width: "auto",
+        height: 420,
+        style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
+        },
+        scrollable: true,
+        layout: {
+          type: "table",
+          tdAttrs: {
+            style: {
+              border: "3px solid black",
+            },
+          },
+          columns: 3,
+        },
+        items: [
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+            cellCls: "highlight",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+        ],
+      },
+    ],
+  });
+
+  var quillingGrid = Ext.create("Ext.Container", {
+    id: "quillingPic",
+    width: "auto",
+    layout: {
+      type: "vbox",
+      align: "center",
+    },
+    items: [
+      {
+        xtype: "label",
+        html: "<h1>Quilling Gallery</h1>",
       },
       {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/1.jpg",
-      },
-      {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/3.jpg",
-      },
-      {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/3.jpg",
-      },
-      {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/3.jpg",
-      },
-      {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/3.jpg",
-      },
-      {
-        flex: 1,
-        xtype: "image",
-        html: "Cell 1 content",
-        width: 250,
-        heigth: 250,
-        src: "./project/images/3.jpg",
+        xtype: "panel",
+        margin: "5 5 5 5",
+        width: "auto",
+        height: 420,
+        style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
+        },
+        scrollable: true,
+        layout: {
+          type: "table",
+          tdAttrs: {
+            style: {
+              border: "3px solid black",
+            },
+          },
+          columns: 3,
+        },
+        items: [
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+            cellCls: "highlight",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/1.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+          {
+            flex: 1,
+            xtype: "image",
+            width: 250,
+            heigth: 250,
+            src: "./project/images/3.jpg",
+          },
+        ],
       },
     ],
   });
@@ -455,7 +754,7 @@ function loginCallback() {
             listeners: {
               click: function () {
                 Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-                Ext.getCmp("itemsContainer").add(signUpForm);
+                Ext.getCmp("itemsContainer").add(loginForm);
               },
             },
           },
@@ -468,13 +767,12 @@ function loginCallback() {
             text: "Sign Up",
             cls: "toolbar-button",
             height: 45,
-            listeners:{
-              click:function(){
+            listeners: {
+              click: function () {
                 Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
                 Ext.getCmp("itemsContainer").add(signUpForm);
-                
-              }
-            }
+              },
+            },
           },
         ],
       },
@@ -491,6 +789,7 @@ function loginCallback() {
       borderBottom: "2px solid black",
       background: "none",
     },
+    
     dockedItems: [
       {
         //Step 2
@@ -581,12 +880,24 @@ function loginCallback() {
         id: "Drawing",
         hidden: true,
         text: "Drawing",
+        listeners: {
+          click: function () {
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            Ext.getCmp("itemsContainer").add(drawingGrid);
+          },
+        },
       },
       {
         hidden: true,
         id: "Quilling",
         xtype: "button",
         text: "Quilling",
+        listeners: {
+          click: function () {
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            Ext.getCmp("itemsContainer").add(quillingGrid);
+          },
+        },
       },
 
       { xtype: "tbseparator" },
