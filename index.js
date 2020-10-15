@@ -1,4 +1,39 @@
 function loginCallback() {
+
+  var signUpForm;
+
+  //breadcrumb
+  Ext.define("Myapp.sample.store.mainMenu", {
+    extend: "Ext.data.TreeStore",
+    root: {
+      text: "HomePage",
+      expanded: true,
+      children: [
+        {
+          leaf: true,
+          text: "Home",
+          expanded: true,
+        },
+        {
+          text: "My Art",
+          expanded: true,
+          leaf: true,
+        },
+        {
+          leaf: true,
+          text: "About Us",
+          expanded: true,
+        },
+        {
+          leaf: true,
+          text: "Contact Us",
+          expanded: true,
+        },
+      ],
+    },
+  });
+  var breadcrumbStore = Ext.create("Myapp.sample.store.mainMenu", {});
+  //end breadcrumb
   var footer = Ext.create("Ext.container.Container", {
     width: "100%",
     flex: 0.5,
@@ -18,110 +53,10 @@ function loginCallback() {
       },
     ],
   });
-  var toolbar = Ext.create("Ext.toolbar.Toolbar", {
-    plugins: {
-      responsive: true,
-    },
-    layout: { type: "vbox", stretch: true },
-    dock: "left",
-    height: "100%",
-    width: 100,
-    style: "background:#15151e;",
-    id: "toolbar",
-    margin: 1,
-    vertical: true,
-    listeners: {
-      focusleave: function () {
-        Ext.getCmp("Drawing").hide(); //doesn't work
-        Ext.getCmp("Quilling").hide();
-      },
-    },
-    items: [
-      {
-        cls: "toolbar-button",
-        height: 60,
-        text: "<h1>D</h1>",
-      },
-
-      { xtype: "tbseparator" },
-      {
-        cls: "toolbar-button",
-        //iconCls: "logo-icon",
-        html: "Home",
-        listeners: {
-          click: function () {},
-        },
-      },
-      { xtype: "tbseparator" },
-      {
-        xtype: "button",
-        cls: "toolbar-button",
-        iconAlign: "top",
-        html: "My Art",
-        menu: [],
-        listeners: {
-          click: function () {
-            if (Ext.getCmp("Drawing").isHidden()) {
-              Ext.getCmp("Drawing").show();
-              Ext.getCmp("Quilling").show();
-            } else {
-              Ext.getCmp("Drawing").hide();
-              Ext.getCmp("Quilling").hide();
-            }
-          },
-          mouseover: function () {
-            //console.log("Mouse Enter");
-            //this.showMenu();
-            Ext.getCmp("Drawing").show();
-            Ext.getCmp("Quilling").show();
-          },
-        },
-      },
-      {
-        xtype: "button",
-        id: "Drawing",
-        hidden: true,
-        text: "Drawing",
-      },
-      {
-        hidden: true,
-        id: "Quilling",
-        xtype: "button",
-        text: "Quilling",
-      },
-
-      { xtype: "tbseparator" },
-      {
-        cls: "toolbar-button",
-        iconAlign: "top",
-        text: "About Us",
-        listeners: {
-          click: function () {
-            Ext.getCmp("contactUs").hide();
-            Ext.getCmp("aboutUs").show();
-            //console.log("AboutUs click");
-          },
-        },
-      },
-      { xtype: "tbseparator" },
-      {
-        cls: "toolbar-button",
-        iconAlign: "top",
-        text: "Contact Us",
-        listeners: {
-          click: function () {
-            Ext.getCmp("aboutUs").hide();
-            Ext.getCmp("contactUs").show();
-          },
-        },
-      },
-      { xtype: "tbseparator" },
-    ],
-  });
 
   var contactUs = Ext.create("Ext.Container", {
     id: "contactUs",
-    hidden: true,
+    
     layout: {
       type: "vbox",
       align: "center",
@@ -134,7 +69,7 @@ function loginCallback() {
           "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
         margin: "5 5 5 5",
         width: "auto",
-        height: 500,
+        flex:1,
         forcefit: true,
         style: {
           background: "white",
@@ -219,7 +154,7 @@ function loginCallback() {
 
   var aboutUs = Ext.create("Ext.Container", {
     id: "aboutUs",
-    hidden: true,
+    
     layout: {
       type: "vbox",
       align: "center",
@@ -229,7 +164,7 @@ function loginCallback() {
         xtype: "container",
         margin: "5 5 5 5",
         width: 300,
-        height: 500,
+        flex:1,
         style: {
           background: "white",
           "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
@@ -238,6 +173,7 @@ function loginCallback() {
           type: "vbox",
           align: "center",
         },
+        
         items: [
           {
             xtype: "label",
@@ -277,6 +213,7 @@ function loginCallback() {
       align: "middle",
       pack: "end",
     },
+
     items: [
       {
         xtype: "label",
@@ -297,6 +234,12 @@ function loginCallback() {
             cls: "toolbar-button",
             height: 45,
             margin: "0 8 0 0",
+            listeners:{
+              click:function(){
+                Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+                Ext.getCmp("itemsContainer").add(signUpForm);
+              }
+            }
           },
           {
             xtype: "tbseparator",
@@ -313,7 +256,7 @@ function loginCallback() {
     ],
   });
 
-  var itemsContainer = Ext.create("Ext.container.Container", {
+  var itemsContainer = Ext.create("Ext.Panel", {
     id: "itemsContainer",
     scrollable: true,
     flex: 9,
@@ -323,7 +266,18 @@ function loginCallback() {
       borderBottom: "2px solid black",
       background: "none",
     },
-    items: [aboutUs, contactUs],
+    dockedItems: [
+      {
+        //Step 2
+        xtype: "breadcrumb",
+        dock: "top",
+        margin: 0,
+        store: breadcrumbStore,
+        showIcons: true,
+        selection: breadcrumbStore.getRoot().childNodes[0],
+      },
+    ],
+    items: [],
   });
 
   var subMain = Ext.create("Ext.container.Container", {
@@ -332,6 +286,110 @@ function loginCallback() {
     titleAlign: "center",
     layout: "vbox",
     items: [headerContainer, itemsContainer, footer],
+  });
+
+  var toolbar = Ext.create("Ext.toolbar.Toolbar", {
+    plugins: {
+      responsive: true,
+    },
+    layout: { type: "vbox", stretch: true },
+    dock: "left",
+    height: "100%",
+    width: 100,
+    style: "background:#15151e;",
+    id: "toolbar",
+    margin: 1,
+    vertical: true,
+    listeners: {
+      focusleave: function () {
+        Ext.getCmp("Drawing").hide(); //focus leave means tab switching
+        Ext.getCmp("Quilling").hide();
+      },
+    },
+    items: [
+      {
+        cls: "toolbar-button",
+        height: 60,
+        text: "<h1>D</h1>",
+      },
+
+      { xtype: "tbseparator" },
+      {
+        cls: "toolbar-button",
+        //iconCls: "logo-icon",
+        html: "Home",
+        listeners: {
+          click: function () {
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+          },
+        },
+      },
+      { xtype: "tbseparator" },
+      {
+        xtype: "button",
+        cls: "toolbar-button",
+        iconAlign: "top",
+        html: "My Art",
+        menu: [],
+        listeners: {
+          click: function () {
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            if (Ext.getCmp("Drawing").isHidden()) {
+              Ext.getCmp("Drawing").show();
+              Ext.getCmp("Quilling").show();
+            } else {
+              Ext.getCmp("Drawing").hide();
+              Ext.getCmp("Quilling").hide();
+            }
+          },
+          mouseover: function () {
+            //console.log("Mouse Enter");
+            //this.showMenu();
+            Ext.getCmp("Drawing").show();
+            Ext.getCmp("Quilling").show();
+          },
+        },
+      },
+      {
+        xtype: "button",
+        id: "Drawing",
+        hidden: true,
+        text: "Drawing",
+      },
+      {
+        hidden: true,
+        id: "Quilling",
+        xtype: "button",
+        text: "Quilling",
+      },
+
+      { xtype: "tbseparator" },
+      {
+        cls: "toolbar-button",
+        iconAlign: "top",
+        text: "About Us",
+        listeners: {
+          click: function () {
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            Ext.getCmp("itemsContainer").add(aboutUs);
+            //console.log("AboutUs click");
+          },
+        },
+      },
+      { xtype: "tbseparator" },
+      {
+        cls: "toolbar-button",
+        iconAlign: "top",
+        text: "Contact Us",
+        listeners: {
+          click: function () {
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            Ext.getCmp("itemsContainer").add(contactUs);
+          },
+        },
+      },
+      { xtype: "tbseparator" },
+    ],
   });
 
   var mainContainer = Ext.create("Ext.container.Container", {
