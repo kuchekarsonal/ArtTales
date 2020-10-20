@@ -30,7 +30,7 @@ function loginCallback() {
         },
         {
           leaf: true,
-          text: "Contact Us",
+          text: "Feedback",
           expanded: true,
         },
       ],
@@ -83,6 +83,7 @@ function loginCallback() {
       { xtype: "tbspacer", flex: 1 },
       {
         xtype: "toolbar",
+        id: 'header-toolbar',
         border: false,
         items: [
           {
@@ -91,6 +92,7 @@ function loginCallback() {
           },
           {
             xtype: "button",
+            id: "login-button",
             text: "Login",
             cls: "toolbar-button",
             height: 45,
@@ -103,11 +105,18 @@ function loginCallback() {
             },
           },
           {
+            xtype: 'label',
+            id: 'logged-in-name',
+            hidden: true,
+            text: 'Logged in'
+          },
+          {
             xtype: "tbseparator",
             height: 40,
           },
           {
             xtype: "button",
+            id: "sign-up-button",
             text: "Sign Up",
             cls: "toolbar-button",
             height: 45,
@@ -115,6 +124,25 @@ function loginCallback() {
               click: function () {
                 Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
                 Ext.getCmp("itemsContainer").add(signUpForm);
+              },
+            },
+          },
+          {
+            xtype: "button",
+            id: "logout-button",
+            text: "Logout",
+            hidden: true,
+            cls: "toolbar-button",
+            height: 45,
+            listeners: {
+              click: function () {
+                Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+                Ext.getCmp("itemsContainer").add(loginForm);
+                Ext.getCmp("logged-in-name").hide();
+                Ext.getCmp("logout-button").hide();
+                Ext.getCmp("sign-up-button").show();
+                Ext.getCmp("login-button").show();
+                //TODO Later - If sessions are used later, clear them here.
               },
             },
           },
@@ -133,7 +161,7 @@ function loginCallback() {
       borderBottom: "2px solid black",
       background: "none",
     },
-    
+
     dockedItems: [
       {
         //Step 2
@@ -261,7 +289,7 @@ function loginCallback() {
       {
         cls: "toolbar-button",
         iconAlign: "top",
-        text: "Contact Us",
+        text: "Feedback",
         listeners: {
           click: function () {
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
