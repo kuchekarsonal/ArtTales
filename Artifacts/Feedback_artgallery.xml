@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Entities xmlns="http://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com note.xsd">
+  <Entity DisplayName="Feedback_artgallery" Name="Feedback_artgallery" DBTableName="Feedback_artgallery" Cache="false" Hidden="false" VersionEnabled="true" SaveVersionsOnly="true" AllowStaleUpdateMultipleDocs="true" WorkFlow="false" DisplayIDColumn="FirstName" DocDBColumn="JSONString" UIPagingAllowed="false" EntityType="Base" Description="Feedback_artgallery" NoClob="false">
+    <Attribute DisplayName="MessageId" JsonKeyName="MessageId" DBColumnName="MessageId" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="FirstName" JsonKeyName="FirstName" DBColumnName="FirstName" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="LastName" JsonKeyName="LastName" DBColumnName="LastName" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="EmailId" JsonKeyName="EmailId" DBColumnName="EmailId" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="Subject" JsonKeyName="Subject" DBColumnName="Subject" Type="String" Length="200" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName="" />
+    <Attribute DisplayName="Message" JsonKeyName="Message" DBColumnName="Message" Type="String" Length="1000" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <UniqueKey name="uk_MessageId_artgallery">
+      <KeyMember>MessageId</KeyMember>
+    </UniqueKey>
+  </Entity>
+</Entities>

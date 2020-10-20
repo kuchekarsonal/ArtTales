@@ -1,0 +1,20 @@
+<?xml version="1.0"?> 
+<Entities xmlns="http://www.w3schools.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com note.xsd">
+  <Entity AllowStaleUpdateMultipleDocs="true" Cache="false" CacheDataAtClient="true" DBTableName="Product_artgallery" Description="Product_artgallery" DisplayIDColumn="ProductId" DisplayName="Product_artgallery" DocDBColumn="" DocDBDataType="CLOB" EntityType="Join" Hidden="false" Name="Product_artgallery" NoClob="true" SaveVersionsOnly="false" UIPagingAllowed="false" VersionEnabled="false" WorkFlow="false">
+    <Attribute DisplayName="ProductId" JsonKeyName="ProductId" DBColumnName="ProductId" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="ProductName" JsonKeyName="ProductName" DBColumnName="ProductName" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="ArtistName" JsonKeyName="ArtistName" DBColumnName="ArtistName" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" RefColumn="FirstName" RefEntityAlias="SignUpProdMapping" IndexName=""/>
+	<Attribute DisplayName="Category" JsonKeyName="Category" DBColumnName="Category" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+	<Attribute DisplayName="EmailId" JsonKeyName="EmailId" DBColumnName="EmailId" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="ArtDetails" JsonKeyName="ArtDetails" DBColumnName="ArtDetails" Type="String" Length="1000" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="Price" JsonKeyName="Price" DBColumnName="Price" Type="Number" Length="5" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName="" /> 
+	
+	<ReferredEntity Alias="SignUpProdMapping" JsonDocKey="JSONSignUpProd" KeyName="FK_ProdMapping_artgallery" RefEntity="SignUp_artgallery" RefKey="uk_EmailId_artgallery" Type="many-to-one">
+			<KeyMember>EmailId</KeyMember>
+	</ReferredEntity>
+		
+    <UniqueKey name="uk_ProductId_artgallery">
+      <KeyMember>ProductId</KeyMember>
+    </UniqueKey>
+  </Entity>
+</Entities>

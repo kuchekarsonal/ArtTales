@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Entities xmlns="http://www.w3schools.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com note.xsd">
+  <Entity DisplayName="SignUp_artgallery" Name="SignUp_artgallery" DBTableName="SignUp_artgallery" Cache="false" Hidden="false" VersionEnabled="true" SaveVersionsOnly="true" AllowStaleUpdateMultipleDocs="true" WorkFlow="false" DisplayIDColumn="FirstName" DocDBColumn="JSONString" UIPagingAllowed="false" EntityType="Base" Description="SignUp_artgallery" NoClob="false">
+    <Attribute DisplayName="FirstName" JsonKeyName="FirstName" DBColumnName="FirstName" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="LastName" JsonKeyName="LastName" DBColumnName="LastName" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="EmailId" JsonKeyName="EmailId" DBColumnName="EmailId" Type="String" Length="100" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="Password" JsonKeyName="Password" DBColumnName="Password" Type="String" Length="1000" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    <Attribute DisplayName="Account_Type" JsonKeyName="Account_Type" DBColumnName="Account_Type" Type="String" Length="1000" DefaultDisplay="true" Mandatory="true" DBIndex="false" IndexName=""/>
+    
+    <UniqueKey name="uk_EmailId_artgallery">
+      <KeyMember>EmailId</KeyMember>
+    </UniqueKey>
+  </Entity>
+</Entities>
