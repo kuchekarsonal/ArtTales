@@ -1,0 +1,26 @@
+A. Execute in Dev Workspace:-
+--------------------------------
+Open the file __devws__createDoc_rsarvaiya.js
+Copy Paste the entire contents into the Dev Workspace fiddle.
+Execute the dynamic script.
+Watch the values in the window tab
+	a) Console Output
+	b) Script Output
+
+
+B. Deploy JS Libs:
+--------------------------
+VistaarMaintain -addorupdate -vistaarJSLibs -dirpath=. -filenames=_createDoc_rsarvaiya.js
+VistaarMonitor -refresh -workflowentity -vistaarJSLibs -filenames=_createDoc_rsarvaiya.js
+
+C. Deploy EntityScript:
+-----------------------------
+VistaarMaintain -addorupdate -entityscript -file=_createDoc_rsarvaiya.xml -verbose
+VistaarMonitor -refresh -workflowentity -scriptlibrary
+
+D. Execute EntityScript:-
+-------------------------------
+VistaarMaintain -compute -entityscript -file=run_createDoc_rsarvaiya.xml -verbose
+
+---------------------------------------------------------------------------------------------
+

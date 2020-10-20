@@ -1,0 +1,47 @@
+listeners: {
+              click: function () {
+                var firstName = Ext.getCmp("firstname").getValue();
+                var lastName = Ext.getCmp("lastname").getValue();
+                var email = Ext.getCmp("emailaddress").getValue();
+                var subject = Ext.getCmp("subject").getValue();
+                var message = Ext.getCmp("message").getValue();
+                console.log(firstName,lastName,email,subject,message);
+                var respGetAll = ESApis.executeScript(
+                  "_getAllJSONDocs_artgallery",
+                  ["paramCount", "params1"],
+                  [1, "Feedback_artgallery"]
+                );
+                if (respGetAll.status == "success") {
+                  Ext.Msg.alert("Alert", "Submitted Successfully");
+                  var esResp = respGetAll.response;
+                  var esParse = JSON.parse(esResp);
+                  console.log(esParse.CallResponse);
+                  var count = esParse.CallResponse.length;
+                }
+                var resp = ESApis.executeScript(
+                  "_createDoc_artgallery",
+                  ["paramCount", "params1", "params2"],
+                  [
+                    2,
+                    "Feedback_artgallery",
+                    {
+                      MessageId: (count + 1).toString(),
+                      FirstName: firstName,
+                      LastName: lastName,
+                      EmailId: email,
+                      Subject: subject,
+                      Message: message,
+                    },
+                  ]
+                );
+                if (resp.status == "success") {
+                  Ext.Msg.alert("Alert", "Submitted Successfully");
+                  var esResp = resp.response;
+                  var esParse = JSON.parse(esResp);
+                  console.log(esParse.CallResponse);
+                }
+                else{
+                  Ext.Msg.alert("Alert", "Failed");
+                }
+              },
+            },
