@@ -1,7 +1,7 @@
 var myArtStore=Ext.create('Vistaar.data.DataStore', {
     storeId: 'myArtStore',
     fields:[ 'Art_desc', 'Art', 'Category', 'Price'],
-    data: [
+    data: [     //TODO Backend
         { Art_desc: 'Lisa', Art: 'Monalisa',Category: 'Drawing', Price: '555' },
         { Art_desc: 'Bart', Art: "Da Vinci's Code",Category: 'Drawing', Price: '1234' },
         { Art_desc: 'Homer', Art: 'Jade island',Category: 'Drawing', Price: '1244' },
@@ -61,7 +61,7 @@ var config = {
 //                 new Ext.Button({
 //                     text: 'Edit Item',
 //                     handler : function(btn, e) {
-//                         // do whatever you want here
+//                         //TODO Backend
 //                     }
 //                 }).render(document.body, id);
 //             },50);
@@ -78,7 +78,7 @@ var config = {
              new Ext.Button({
                  text: 'Delete Item',
                  handler : function(btn, e) {
-                     // do whatever you want here
+                     //TODO Backend
                  }
              }).render(document.body, id);
          },50);
