@@ -1,3 +1,4 @@
+//TODO Backend - Load data dynamically
 Ext.create('Ext.data.Store', {
   id:'artistsStore',
   data: [
@@ -7,8 +8,46 @@ Ext.create('Ext.data.Store', {
     { name:'Rushabh', description: 'Unique Art Maker' },
     { name:'Sonal', description: '5 year experience' },
     { name:'Reema', description: 'Expert in free hand drawing' },
-  ]
+  ],
+  pageSize: 3
   });
+
+  var pagingBar = new Ext.PagingToolbar({
+    pageSize: 3,
+    store: Ext.data.StoreManager.lookup('artistsStore'),
+    autoLoad: true
+    });
+    
+    var panel= new Ext.Panel({
+    items: {
+      xtype: 'dataview',
+      cls: 'artist-container',
+      width: '100%',
+      store: Ext.data.StoreManager.lookup('artistsStore'),
+      tpl: new Ext.XTemplate(
+          '<tpl for=".">',
+              '<div class="thumb-wrap about-card">',
+              '<h2 class="centered-text">{name}</h2>',
+              '<img src="./project/images/nophoto.png"/>',
+              '<p class="centered-text">{description}</p>',
+              '</div>',
+          '</tpl>'
+      ),
+      itemSelector: 'div.thumb-wrap',
+      emptyText: 'No artists available',
+      "listeners": {
+          "itemclick": function(item, record){
+              alert('Artist clicked');
+          }
+      },
+      tbar:  new Ext.PagingToolbar({
+        pageSize: 3,
+        store: Ext.data.StoreManager.lookup('artistsStore'),
+        autoLoad: true
+        })
+  },
+    tbar : pagingBar
+    });
 
 var aboutUs = Ext.create("Ext.Container", {
     id: "aboutUs",
@@ -36,61 +75,48 @@ var aboutUs = Ext.create("Ext.Container", {
       },
       {
         xtype: 'dataview',
+        id: 'artist-dataview',
         cls: 'artist-container',
         width: '100%',
         store: Ext.data.StoreManager.lookup('artistsStore'),
         tpl: new Ext.XTemplate(
             '<tpl for=".">',
+              '<tpl if="xindex &lt; this.getStart()+3">',
                 '<div class="thumb-wrap about-card">',
                 '<h2 class="centered-text">{name}</h2>',
                 '<img src="./project/images/nophoto.png"/>',
                 '<p class="centered-text">{description}</p>',
                 '</div>',
-            '</tpl>'
+              '</tpl>',
+            '</tpl>',
+            {
+              startIndex: 1,
+              getStart: function() {
+                return this.startIndex;
+            }
+            }
         ),
         itemSelector: 'div.thumb-wrap',
-        emptyText: 'No images available',
+        emptyText: 'No artists available',
         "listeners": {
             "itemclick": function(item, record){
-                alert('working');
-            }
+                alert('Artist clicked');
+            },          
         }
     },
-      // {
-      //   xtype: "container",
-      //   margin: "5 5 5 5",
-      //   width: 300,
-      //   height: 470,
-      //   style: {
-      //     background: "white",
-      //     "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
-      //   },
-      //   layout: {
-      //     type: "vbox",
-      //     align: "center",
-      //   },
+    {
+      xtype: 'button',
+      text: 'View More',
+      handler: function(){        
+        var dv = Ext.getCmp('artist-dataview');
 
-      //   items: [
-      //     {
-      //       xtype: "label",
-      //       html: "<h1>Helloooo!!</h1>",
-      //       height: 50,
-      //     },
-      //     {
-      //       flex: 1,
-      //       xtype: "image",
-      //       style: "border-radius:50%;border:1px solid black",
-      //       width: 250,
-      //       heigth: 250,
-      //       src: "./project/images/nophoto.png",
-      //     },
-      //     {
-      //       flex: 1,
-      //       xtype: "label",
-      //       html:
-      //         "<h1 align='center'>Jack Kirtikar</h1><h2 align='center'>I am An Artist.</h2>",
-      //     },
-      //   ],
-      // },
+        if(Ext.data.StoreManager.lookup('artistsStore').getCount()-3 <= dv.tpl.startIndex + 3){
+          this.hide();
+        }
+
+        dv.tpl.startIndex = dv.tpl.startIndex + 3;
+        dv.refresh();
+      }
+    }
     ],
   });
