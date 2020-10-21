@@ -17,13 +17,13 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
     "Price",
   ],
   //TODO Backend /////////////    artData is ready column config needs to be changed
-  data:  [
+  data: [
     {
       "ProductId": "1",
       "ArtDetails": "Lisa",
       "ProductName": "Monalisa",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "555"
     },
     {
@@ -31,7 +31,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Bart",
       "ProductName": "Da Vinci Code",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "1234"
     },
     {
@@ -39,7 +39,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Homer",
       "ProductName": "Jade island",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "1244"
     },
     {
@@ -47,7 +47,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Marge",
       "ProductName": "Injustice",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "1254"
     },
     {
@@ -55,7 +55,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Lisa",
       "ProductName": "Horizon zero Dawn",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "1224"
     },
     {
@@ -63,7 +63,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Bart",
       "ProductName": "Ragnarock",
       "Category": "Quilling",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "5234"
     },
     {
@@ -71,7 +71,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Homer",
       "ProductName": "New World",
       "Category": "Quilling",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "244"
     },
     {
@@ -79,7 +79,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Lisa",
       "ProductName": "Guide post",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "5114"
     },
     {
@@ -87,7 +87,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Bart",
       "ProductName": "Nen",
       "Category": "Drawing",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "534"
     },
     {
@@ -95,19 +95,20 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "ArtDetails": "Homer",
       "ProductName": "The Wrath of Asura",
       "Category": "Quilling",
-      "EmailId":"kuchekar@gmail.com",
+      "EmailId": "kuchekar@gmail.com",
       "Price": "5244"
     }
   ],
   paging: "local",
-  pageSize: 8,
+  pageSize: 15,
 });
 
 var config = {
   //title: 'Art Store',
-  width: "80%",
-  margin: "50% 0 0 0 ",
-  height: "auto",
+  width: '80%',
+  margin: '50% 0 0 0 ',
+  //height: 'auto',
+  flex: 9,
   //scrollable: true,
   filterOnChange: true,
   sortOnChange: true,
@@ -117,12 +118,12 @@ var config = {
   },
   store: Ext.data.StoreManager.lookup("ArtStore"),
   selModel: {
-    mode: "single",
+    mode: 'multi',
     checkOnly: true,
-    type: "cellmodel",
+    type: 'checkidmodel',
     selectionCount: false,
     clearSelection: false,
-    selectionOptions: false,
+    selectionOptions: false
   },
 
   plugins: [
@@ -131,10 +132,14 @@ var config = {
     },
   ],
   pagingConfig: {
-    pageSize: 8,
+    pageSize: 15,
     paging: true,
     serverSidePaging: false,
     pageSizeCombo: false,
+  },
+  style: {
+    background: "white",
+    "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
   },
   columns: [
     {
@@ -152,24 +157,32 @@ var config = {
     },
     { text: "Art Description", dataIndex: "ArtDetails", xtype: "gridcolumn", flex: 1 },
     { text: "Category", dataIndex: "Category", xtype: "gridcolumn", flex: 1 },
-    { text: "Price", dataIndex: "Price", xtype: "gridcolumn", flex: 1 },
     {
-      text: "Buy",
+      text: 'Price',
+      dataIndex: 'Price',
+      xtype: 'numbercolumn',
       flex: 1,
-      align: "center",
-      renderer: function () {
-        var id = Ext.id();
-        Ext.defer(function () {
-          new Ext.Button({
-            text: "Buy",
-            handler: function (btn, e) {
-              //TODO Backend
-            },
-          }).render(document.body, id);
-        }, 50);
-        return Ext.String.format('<div id="{0}"></div>', id);
-      },
+      renderer: function (value) {
+        return "₹" + value;
+      }
     },
+    // {
+    //   text: "Buy",
+    //   flex: 1,
+    //   align: "center",
+    //   renderer: function () {
+    //     var id = Ext.id();
+    //     Ext.defer(function () {
+    //       new Ext.Button({
+    //         text: "Buy",
+    //         handler: function (btn, e) {
+    //           //TODO Backend
+    //         },
+    //       }).render(document.body, id);
+    //     }, 50);
+    //     return Ext.String.format('<div id="{0}"></div>', id);
+    //   },
+    // },
   ],
 };
 var homeGrid = Ext.create(Vistaar.grid.DataGrid, config);
@@ -182,97 +195,22 @@ var myhomeGrid = Ext.create("Ext.Container", {
     align: "center",
   },
   items: [
-    //   {
-    //     xtype: "label",
-    //     html: "<h1>Art Gallery</h1>",
-    //   },
-    //   {
-    //     xtype: "panel",
-    //     margin: "5 5 5 5",
-    //     width: "auto",
-    //     height: 420,
-    //     style: {
-    //       background: "white",
-    //       "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
-    //     },
-    //     scrollable: true,
-    //     layout: {
-    //       type: "table",
-    //       tdAttrs: {
-    //         style: {
-    //           border: "3px solid black",
-    //         },
-    //       },
-    //       columns: 3,
-    //     },
-    //     items: [
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/1.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/1.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/3.jpg",
-    //         cellCls: "highlight",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/1.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/3.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/3.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/3.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/3.jpg",
-    //       },
-    //       {
-    //         flex: 1,
-    //         xtype: "image",
-    //         width: 250,
-    //         heigth: 250,
-    //         src: "./project/images/3.jpg",
-    //       },
-    //     ],
-    //   },
+
     homeGrid,
+    Ext.create("Ext.Container", {
+      layout: "hbox", flex: 1, width: '80%', items: [
+        {
+          xtype: 'label',
+          flex: 7,
+        },
+        {
+          xtype: 'button',
+          text: 'Buy',
+          margin: '5 50% 5 5',
+          flex: 1,
+        }]
+    })
+
   ],
 });
 
