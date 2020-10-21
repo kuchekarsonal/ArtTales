@@ -179,6 +179,31 @@ var loginForm = Ext.create("Ext.Container", {
             fieldLabel: "EmailId",
             name: "EmailId",
           },
+			{
+				xtype      : 'fieldcontainer',
+				fieldLabel : 'Account Type',
+				defaultType: 'radiofield',
+				defaults: {
+					flex: 1
+				},
+				layout: 'hbox',
+				items: [
+					{
+						boxLabel  : 'user',
+						name      : 'acc_type',
+						inputValue: 'user',
+						id        : 'user'
+					}, {
+						xtype: "tbspacer",
+						width: 10
+					},{
+						boxLabel  : 'artist',
+						name      : 'acc_type',
+						inputValue: 'artist',
+						id        : 'artist'
+					}
+				]
+			},
         ],
       },
     ],
