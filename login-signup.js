@@ -98,7 +98,7 @@ var loginForm = Ext.create("Ext.Container", {
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
                       );
-                      Ext.getCmp("itemsContainer").add(artistHomeGrid );
+                      Ext.getCmp("itemsContainer").add(artistHomeGrid);
                       break;
                     case "Admin":
                       Ext.getCmp("itemsContainer").removeAll(
@@ -226,11 +226,10 @@ var signUpForm = Ext.create("Ext.Container", {
               }
               var pass = Ext.getCmp("passwordsignup").getValue();
               var resp = ESApis.executeScript(
-                "_createDoc_artgallery",
-                ["paramCount", "params1", "params2"],
+                "signUp",
+                ["paramCount", "params2"],
                 [
-                  2,
-                  "SignUp_artgallery",
+                  1,
                   {
                     FirstName: firstName,
                     LastName: lastName,
