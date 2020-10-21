@@ -1,4 +1,4 @@
-var Training_getAllJSONDocs_rsarvaiya = function()
+var getAllData_artgallery = function()
 {
 	this.getAllJSONDocs = function(docServerManager, userConnInfo, params1)
 	{
