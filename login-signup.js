@@ -11,7 +11,7 @@ var loginForm = Ext.create("Ext.Container", {
     {
       xtype: "form",
       /* title:
-        "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
+        "Don�t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "100% 5 5 5",
       width: "auto",
       flex: 1,
@@ -125,7 +125,7 @@ var loginForm = Ext.create("Ext.Container", {
           //     var email=Ext.getCmp("emailaddress").getValue();
           //     var subject=Ext.getCmp("subject").getValue();
           //     var message=Ext.getCmp("message").getValue();
-          //  var resp = ESApis.executeScript("_createDoc_artgallery", ['paramCount', 'params1', 'params2'], [2, 'SignUp_artgallery', {​​"FirstName":firstName,"LastName":lastName,"EmailId":email,"Account_Type":accounttype,"Password":pass}​​]);
+          //  var resp = ESApis.executeScript("_createDoc_artgallery", ['paramCount', 'params1', 'params2'], [2, 'SignUp_artgallery', {??"FirstName":firstName,"LastName":lastName,"EmailId":email,"Account_Type":accounttype,"Password":pass}??]);
           // if(respGetAll.status=='success'){
           // 	Ext.Msg.alert('Alert','Submitted Successfully');
           // 	var esResp = respGetAll.response;
@@ -186,8 +186,6 @@ var signUpForm = Ext.create("Ext.Container", {
   items: [
     {
       xtype: "form",
-      /* title:
-  "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "100% 5 5 5",
       width: "auto",
       flex: 1,
