@@ -18,7 +18,12 @@ var simStore=Ext.create('Vistaar.data.DataStore', {
 });
 
 //-------------SAMPLE STORE FOR FEEDBACK--------------------
-
+/* var respGetAll = ESApis.executeScript(
+  "_getAllFeedback_artgallery",
+  ["paramCount"],
+  [0]
+);
+var feedbackData = JSON.parse(respGetAll.response).CallResponse; */ //do not delete
 var feedbackStore=Ext.create('Vistaar.data.DataStore', {
 	storeId: 'feedbackStore',
 	fields:[ 'date', 'feedback', 'username'],
@@ -33,7 +38,8 @@ var feedbackStore=Ext.create('Vistaar.data.DataStore', {
 		{ date: '19-08-2020', feedback: 'Great product.', username: 'lisa'},
 		{ date: '19-06-2020', feedback: 'Very beautifull product.', username: 'bart'},
 		{ date: '19-04-2020', feedback: 'I liked the basket', username: 'homer'}
-	]
+  ]
+  /* data: feedbackData, */ //do not delete
 });
 
 //--------------SAMPLE BAR GRAPH------------------
@@ -177,14 +183,18 @@ var feedbackGrid = Ext.create('Vistaar.grid.DataGrid', {
 		}],	
 		columns: [{
 			text: 'Date',
-			dataIndex: 'date'
+			dataIndex: 'Date Modified'
 		},{
 			text: 'Feedback',
-			dataIndex: 'feedback',
+			dataIndex: 'Message',
 			id:'p1'
 		}, {
 			text: 'User Name',
-			dataIndex: 'username'
+			dataIndex: 'FirstName'//,'LastName']
+    },
+    {
+			text: 'Email Id',
+			dataIndex: 'EmailId'
 		}],
 	});
 
