@@ -1,7 +1,17 @@
+//console.log(userName);
+/* var respGetAll = ESApis.executeScript(
+  "_getAllArtistArts_artgallery",
+  ["paramCount", "params1"],
+  [1, userName]
+);
+
+//console.log(JSON.parse(respGetAll.response).CallResponse);
+var artistArtData = JSON.parse(respGetAll.response).CallResponse; */
+//console.log(artistArtData);
 var myArtStore=Ext.create('Vistaar.data.DataStore', {
     storeId: 'myArtStore',
     fields:[ 'Product_Id','Art_desc', 'Art', 'Category', 'Price'],
-    data: [
+    data:/* artistArtData, */ [
         { Product_Id:'1', Art_desc: 'Lisa', Art: 'Monalisa',Category: 'Drawing', Price: '555' },
         { Product_Id:'2',Art_desc: 'Bart', Art: "Da Vinci's Code",Category: 'Drawing', Price: '1234' },
         { Product_Id:'3',Art_desc: 'Homer', Art: 'Jade island',Category: 'Drawing', Price: '1244' },
@@ -154,9 +164,9 @@ var config = {
             pageSizeCombo: false
 		},
     columns: [
-        {text:'Product_Id',dataIndex:'Product_Id', xtype:'gridcolumn',hidden: true},
-        {text:'Art',dataIndex:'Art', xtype:'gridcolumn',editor:'textfield',flex:1},
-        {text:'Art_desc',dataIndex:'Art_desc', xtype:'gridcolumn',editor:'textfield',flex:1},
+        {text:'Product_Id',dataIndex:'ProductId', xtype:'gridcolumn',hidden: true},
+        {text:'Art Name',dataIndex:'ProductName', xtype:'gridcolumn',editor:'textfield',flex:1},
+        {text:'Art Description',dataIndex:'ArtDetails', xtype:'gridcolumn',editor:'textfield',flex:1},
         {text:'Category',dataIndex:'Category', xtype:'gridcolumn',editor:'textfield',flex:1},
         {
         text: 'Price', 
