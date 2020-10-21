@@ -1,3 +1,4 @@
+//loginForm
 var loginForm = Ext.create("Ext.Container", {
   id: "loginForm",
 
@@ -48,31 +49,75 @@ var loginForm = Ext.create("Ext.Container", {
               Ext.getCmp("sign-up-button").hide();
               Ext.getCmp("login-button").hide();
               //TODO Backend - Get the first name and last name from backend and put them in userName.
-              userName = "Abhijeet Deo";
-              Ext.getCmp("logged-in-name").setText("Logged in as " + userName);
-              Ext.getCmp("logged-in-name").show();
-              Ext.getCmp("logout-button").show();
-              //TODO Backend - Check if the data is valid. Return the account type, I am hard-coding it for now.
-              var accType = "User";
-              switch (accType) {
-                case "User":
-                  Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-                  Ext.getCmp("itemsContainer").add(myhomeGrid);
-                  break;
-                case "Artist":
-                  Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-                  Ext.getCmp("itemsContainer").add(myArtistGrid);
-                  break;
-                case "Admin":
-                  Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-                  Ext.getCmp("itemsContainer").add(adminhomegrid);
-                  break;
-                default:
-                  Ext.Msg.alert('Invalid User', 'Please check your credentials');
+              var email = Ext.getCmp("usernamelogin").getValue();
+              var password = Ext.getCmp("passwordlogin").getValue();
 
+              var respGetAll = ESApis.executeScript(
+                "_getAllJSONDocs_artgallery",
+                ["paramCount", "params1"],
+                [1, "SignUp_artgallery"]
+              );
+              //  console.log(respGetAll);
+
+              if (respGetAll.status == "success") {
+                Ext.Msg.alert("Alert", "Submitted Successfully");
+                var esResp = respGetAll.response;
+                var esParse = JSON.parse(esResp);
+
+                var count = esParse.CallResponse.length;
+
+                for (var i = 0; i < count; i++) {
+                  var getEmail = esParse.CallResponse[i].EmailId;
+                  var getPass = esParse.CallResponse[i].Password;
+                  if (email == getEmail && password == getPass) {
+                    var found = true;
+                    break;
+                  }
+                }
+                if (found) {
+                  console.log(esParse.CallResponse);
+                  var userName = esParse.CallResponse[i].FirstName;
+                  console.log(userName);
+                  Ext.getCmp("logged-in-name").setText(
+                    "Logged in as " + userName
+                  );
+                  Ext.getCmp("logged-in-name").show();
+                  Ext.getCmp("logout-button").show();
+
+                  //TODO Backend - Check if the data is valid. Return the account type, I am hard-coding it for now.
+                  var accType = esParse.CallResponse[i].Account_Type;
+                  console.log(userName);
+                  switch (accType) {
+                    case "Buyer":
+                      Ext.getCmp("itemsContainer").removeAll(
+                        (autoDestroy = false)
+                      );
+                      Ext.getCmp("itemsContainer").add(myhomeGrid);
+                      break;
+                    case "Artist":
+                      Ext.getCmp("itemsContainer").removeAll(
+                        (autoDestroy = false)
+                      );
+                      Ext.getCmp("itemsContainer").add(artistHomeGrid );
+                      break;
+                    case "Admin":
+                      Ext.getCmp("itemsContainer").removeAll(
+                        (autoDestroy = false)
+                      );
+                      Ext.getCmp("itemsContainer").add(adminhomegrid);
+                      break;
+                    default:
+                      Ext.Msg.alert(
+                        "Invalid User",
+                        "Please check your credentials"
+                      );
+                  }
+                } else {
+                  Ext.Msg.alert("Alert", "Invalid Credentials.");
+                }
               }
-            }
-          }
+            },
+          },
           // listeners:{
           //   click :function(){
           //     var firstName = Ext.getCmp("firstname").getValue();
@@ -80,7 +125,7 @@ var loginForm = Ext.create("Ext.Container", {
           //     var email=Ext.getCmp("emailaddress").getValue();
           //     var subject=Ext.getCmp("subject").getValue();
           //     var message=Ext.getCmp("message").getValue();
-          //     var respGetAll = ESApis.executeScript("_getAllJSONDocs_akirtikar", ['paramCount', 'params1',], [1, 'ContactUs_akirtikar', ]);
+          //  var resp = ESApis.executeScript("_createDoc_artgallery", ['paramCount', 'params1', 'params2'], [2, 'SignUp_artgallery', {​​"FirstName":firstName,"LastName":lastName,"EmailId":email,"Account_Type":accounttype,"Password":pass}​​]);
           // if(respGetAll.status=='success'){
           // 	Ext.Msg.alert('Alert','Submitted Successfully');
           // 	var esResp = respGetAll.response;
@@ -112,11 +157,11 @@ var loginForm = Ext.create("Ext.Container", {
           validator: function (value) {
             var emailRegex = new RegExp("\\S+@\\S+\\.\\S+");
             if (!emailRegex.test(value)) {
-              return 'Email format is incorrect';
+              return "Email format is incorrect";
             } else {
               return true;
             }
-          }
+          },
         },
         {
           id: "passwordlogin",
@@ -130,6 +175,7 @@ var loginForm = Ext.create("Ext.Container", {
   ],
 });
 
+//signUp
 var signUpForm = Ext.create("Ext.Container", {
   id: "signUpForm",
 
@@ -137,11 +183,12 @@ var signUpForm = Ext.create("Ext.Container", {
     type: "vbox",
     align: "center",
   },
+
   items: [
     {
       xtype: "form",
       /* title:
-        "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
+  "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "100% 5 5 5",
       width: "auto",
       flex: 1,
@@ -172,31 +219,46 @@ var signUpForm = Ext.create("Ext.Container", {
               //TODO Backend - Fetch details and insert them in entity
               var firstName = Ext.getCmp("firstnamesignup").getValue();
               var lastName = Ext.getCmp("lastnamesignup").getValue();
-              var email=Ext.getCmp("emailidsignup").getValue();
-              if(Ext.getCmp("user-radio").checked){
-                var accounttype="Buyer";
+              var email = Ext.getCmp("emailidsignup").getValue();
+              if (Ext.getCmp("user-radio").checked) {
+                var accounttype = "Buyer";
+              } else {
+                var accounttype = "Artist";
               }
-              else{
-                var accounttype="Artist";
-              }
-              var pass=Ext.getCmp("passwordsignup").getValue();
-              var resp = ESApis.executeScript("_createDoc_artgallery", ['paramCount', 'params1', 'params2'], [2, 'SignUp_artgallery', {​​​​"FirstName":firstName,"LastName":lastName,"EmailId":email,"Account_Type":accounttype,"Password":pass}​​​​]);
-              if(resp.status=='success'){​​​​
-                Ext.Msg.alert('Alert','Submitted Successfully');
+              var pass = Ext.getCmp("passwordsignup").getValue();
+              var resp = ESApis.executeScript(
+                "_createDoc_artgallery",
+                ["paramCount", "params1", "params2"],
+                [
+                  2,
+                  "SignUp_artgallery",
+                  {
+                    FirstName: firstName,
+                    LastName: lastName,
+                    EmailId: email,
+                    Account_Type: accounttype,
+                    Password: pass,
+                  },
+                ]
+              );
+              if (resp.status == "success") {
+                Ext.Msg.alert("Alert", "Submitted Successfully");
                 var esResp = resp.response;
                 var esParse = JSON.parse(esResp);
                 console.log(esParse.CallResponse);
                 Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
                 Ext.getCmp("itemsContainer").add(loginForm);
-                Ext.Msg.alert('Success!', 'Account created successfully, login to continue');
-              }​​​​
-              else{​​​
-                Ext.Msg.alert('Alert','Failed');
-              }​​​              
+                Ext.Msg.alert(
+                  "Success!",
+                  "Account created successfully, login to continue"
+                );
+              } else {
+                Ext.Msg.alert("Alert", "Failed");
+              }
               //TODO Backend - If success, redirect to login page
-            }
-          }
-        } ,
+            },
+          },
+        },
       ],
       items: [
         {
@@ -231,11 +293,11 @@ var signUpForm = Ext.create("Ext.Container", {
           validator: function (value) {
             var pass = Ext.getCmp("passwordsignup").getValue();
             if (pass != value) {
-              return 'Passwords do not match';
+              return "Passwords do not match";
             } else {
               return true;
             }
-          }
+          },
         },
         {
           id: "emailidsignup",
@@ -244,38 +306,40 @@ var signUpForm = Ext.create("Ext.Container", {
           validator: function (value) {
             var emailRegex = new RegExp("\\S+@\\S+\\.\\S+");
             if (!emailRegex.test(value)) {
-              return 'Email format is incorrect';
+              return "Email format is incorrect";
             } else {
               return true;
             }
-          }
+          },
         },
         {
           id: "acctypesignup",
-          xtype: 'fieldcontainer',
-          fieldLabel: 'Sign Up As',
-          defaultType: 'radiofield',
+          xtype: "fieldcontainer",
+          fieldLabel: "Sign Up As",
+          defaultType: "radiofield",
           allowBlank: false,
-          layout: 'hbox',
+          layout: "hbox",
           items: [
             {
-              boxLabel: 'User',
-              name: 'acc_type',
-              inputValue: 'User',
+              boxLabel: "User",
+              name: "acc_type",
+              inputValue: "User",
               checked: true,
-              id: 'user-radio'
-            }, {
+              id: "user-radio",
+            },
+            {
               xtype: "tbspacer",
-              width: 5
-            }, {
-              boxLabel: 'Artist',
-              name: 'acc_type',
-              inputValue: 'Artist',
-              id: 'artist-radio'
-            }
-          ]
+              width: 5,
+            },
+            {
+              boxLabel: "Artist",
+              name: "acc_type",
+              inputValue: "Artist",
+              id: "artist-radio",
+            },
+          ],
         },
       ],
-    }
-  ]
+    },
+  ],
 });
