@@ -10,28 +10,46 @@ function loginCallback() {
   Ext.define("Myapp.sample.store.mainMenu", {
     extend: "Ext.data.TreeStore",
     root: {
-      text: "HomePage",
+      text: "Home",
       expanded: true,
+      iconCls: 'x-fa fa-home',
+      containerName: 'myhomeGrid',
       children: [
-        {
-          leaf: true,
-          text: "Home",
-          expanded: true,
-        },
         {
           text: "My Art",
           expanded: true,
-          leaf: true,
+          iconCls: 'x-fa fa-paint-brush',
+          containerName: 'artistHomeGrid',
+          children: [
+            {
+              text: "Drawing",
+              expanded: true,
+              iconCls: 'x-fa fa-pencil',
+              left: true,
+              containerName: 'drawingGrid'
+            },
+            {
+              text: "Quilling",
+              expanded: true,
+              iconCls: 'x-fa fa-paper-plane',
+              left: true,
+              containerName: 'quillingGrid'
+            }
+          ]
         },
         {
           leaf: true,
           text: "About Us",
+          iconCls: 'x-fa fa-user',
           expanded: true,
+          containerName: 'aboutUs'
         },
         {
           leaf: true,
           text: "Feedback",
+          iconCls: 'x-fa fa-comments',
           expanded: true,
+          containerName: 'contactUs'
         },
       ],
     },
@@ -170,10 +188,22 @@ function loginCallback() {
         //Step 2
         xtype: "breadcrumb",
         dock: "top",
+        id: "bread-crumb",
         margin: 0,
         store: breadcrumbStore,
         showIcons: true,
-        selection: breadcrumbStore.getRoot().childNodes[0],
+        viewModel: true,
+        bind: {
+          selection: '{selectedNode}'
+        },
+        listeners: {
+          selectionchange: function(){
+            var containerToLoad = this.getSelection().data.containerName;
+            console.log(containerToLoad);
+            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            Ext.getCmp("itemsContainer").add(window[containerToLoad]);
+          }
+        }
       },
     ],
     items: [myhomeGrid],
@@ -220,8 +250,9 @@ function loginCallback() {
         html: "Home",
         listeners: {
           click: function () {
-            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-            Ext.getCmp("itemsContainer").add(myhomeGrid);
+            //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            //Ext.getCmp("itemsContainer").add(myhomeGrid);
+            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Home'));
           },
         },
       },
@@ -242,6 +273,7 @@ function loginCallback() {
               Ext.getCmp("Drawing").hide();
               Ext.getCmp("Quilling").hide();
             }
+            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'My Art'));
           },
           mouseover: function () {
             //console.log("Mouse Enter");
@@ -258,8 +290,9 @@ function loginCallback() {
         text: "Drawing",
         listeners: {
           click: function () {
-            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-            Ext.getCmp("itemsContainer").add(drawingGrid);
+            //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            //Ext.getCmp("itemsContainer").add(drawingGrid);
+            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Drawing'));
           },
         },
       },
@@ -270,8 +303,9 @@ function loginCallback() {
         text: "Quilling",
         listeners: {
           click: function () {
-            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-            Ext.getCmp("itemsContainer").add(quillingGrid);
+            //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            //Ext.getCmp("itemsContainer").add(quillingGrid);
+            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Quilling'));
           },
         },
       },
@@ -283,8 +317,9 @@ function loginCallback() {
         text: "About Us",
         listeners: {
           click: function () {
-            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-            Ext.getCmp("itemsContainer").add(aboutUs);
+            //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            //Ext.getCmp("itemsContainer").add(aboutUs);
+            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'About Us'));
             //console.log("AboutUs click");
           },
         },
@@ -296,8 +331,9 @@ function loginCallback() {
         text: "Feedback",
         listeners: {
           click: function () {
-            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-            Ext.getCmp("itemsContainer").add(contactUs);
+            //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            //Ext.getCmp("itemsContainer").add(contactUs);
+            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Feedback'));
           },
         },
       },
@@ -307,16 +343,12 @@ function loginCallback() {
 
   var mainContainer = Ext.create("Ext.container.Container", {
     id: "mainContainer",
+    height: '100%',
     plugins: {
       responsive: true,
     },
     layout: "hbox",
     scrollable: true,
-    style: {
-      background: "none",
-    },
-    border: 1,
-    margin: "5",
     items: [toolbar, subMain],
   });
 

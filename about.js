@@ -13,7 +13,7 @@ Ext.create('Ext.data.Store', {
 var aboutUs = Ext.create("Ext.Container", {
     id: "aboutUs",
     height: '100%',
-    scrollable: true,
+    scrollable: 'y',
     layout: {
       type: "vbox",
       align: "center",
