@@ -43,10 +43,11 @@ var contactUs = Ext.create("Ext.Container", {
                 var email = Ext.getCmp("emailaddress").getValue();
                 var subject = Ext.getCmp("subject").getValue();
                 var message = Ext.getCmp("message").getValue();
+                //console.log(firstName,lastName,email,subject,message);
                 var respGetAll = ESApis.executeScript(
-                  "_getAllJSONDocs_akirtikar",
+                  "_getAllJSONDocs_artgallery",
                   ["paramCount", "params1"],
-                  [1, "ContactUs_akirtikar"]
+                  [1, "Feedback_artgallery"]
                 );
                 if (respGetAll.status == "success") {
                   Ext.Msg.alert("Alert", "Submitted Successfully");
@@ -56,11 +57,11 @@ var contactUs = Ext.create("Ext.Container", {
                   var count = esParse.CallResponse.length;
                 }
                 var resp = ESApis.executeScript(
-                  "_createDoc_akirtikar",
+                  "_createDoc_artgallery",
                   ["paramCount", "params1", "params2"],
                   [
                     2,
-                    "ContactUs_akirtikar",
+                    "Feedback_artgallery",
                     {
                       MessageId: (count + 1).toString(),
                       FirstName: firstName,
@@ -76,6 +77,9 @@ var contactUs = Ext.create("Ext.Container", {
                   var esResp = resp.response;
                   var esParse = JSON.parse(esResp);
                   console.log(esParse.CallResponse);
+                }
+                else{
+                  Ext.Msg.alert("Alert", "Failed");
                 }
               },
             },

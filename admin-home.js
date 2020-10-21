@@ -122,9 +122,10 @@ var grid = Ext.create('Vistaar.grid.DataGrid', {
 		title:'Pruchase Reports',
 		store: simStore,
 		id:'d1',
-		//autoSizeColumns: true,
-		flex: 1,
-		forceFit:true,		
+		autoSizeColumns: true,
+		//flex: 1,
+		width: 'auto',
+		//forceFit:true,		
 		selModel: {
 			type: 'checkidmodel',	
 			mode: "MULTI",				
