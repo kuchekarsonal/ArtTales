@@ -158,7 +158,7 @@ var config = {
         {text:'Art',dataIndex:'Art', xtype:'gridcolumn',editor:'textfield',flex:1},
         {text:'Art_desc',dataIndex:'Art_desc', xtype:'gridcolumn',editor:'textfield',flex:1},
         {text:'Category',dataIndex:'Category', xtype:'gridcolumn',editor:'textfield',flex:1},
-        {text:'Price',dataIndex:'Price', xtype:'numbercolumn',editor:'textfield',flex:1},{
+        {
         text: 'Price', 
         dataIndex: 'Price', 
         xtype: 'numbercolumn', 
