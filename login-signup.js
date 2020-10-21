@@ -120,6 +120,7 @@ var loginForm = Ext.create("Ext.Container", {
         },
         {
           id: "passwordlogin",
+          xtype: "passwordfield",
           fieldLabel: "Password",
           allowBlank: false,
           name: "Password",

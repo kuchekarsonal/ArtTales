@@ -98,11 +98,13 @@ var contactUs = Ext.create("Ext.Container", {
         {
           id: "firstname",
           fieldLabel: "First Name",
+          allowBlank: false,
           name: "First Name",
         },
         {
           id: "lastname",
           fieldLabel: "Last Name",
+          allowBlank: false,
           name: "Last Name",
         },
         {
@@ -110,10 +112,19 @@ var contactUs = Ext.create("Ext.Container", {
           fieldLabel: "Email Address",
           //email:true, to validate if email is proper
           name: "Email Address",
+          validator: function (value) {
+            var emailRegex = new RegExp("\\S+@\\S+\\.\\S+");
+            if (!emailRegex.test(value)) {
+              return 'Email format is incorrect';
+            } else {
+              return true;
+            }
+          }
         },
         {
           id: "subject",
           fieldLabel: "Subject:",
+          allowBlank: false,
           name: "Subject",
         },
         {
