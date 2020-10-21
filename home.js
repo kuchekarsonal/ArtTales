@@ -14,14 +14,15 @@ var ArtStore=Ext.create('Vistaar.data.DataStore', {
       { Product_Id:'17', Artist_name: 'Homer', Art_name: 'The Wrath of Asura', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5244' }
   ],
   paging:'local',
-		pageSize: 8,
+		pageSize: 15,
 });
 
 var config = {
   //title: 'Art Store',
   width: '80%',
   margin: '50% 0 0 0 ',
-  height: 'auto',
+  //height: 'auto',
+  flex: 9,
   //scrollable: true,
   filterOnChange: true,
   sortOnChange: true,
@@ -31,9 +32,9 @@ var config = {
   },
   store: Ext.data.StoreManager.lookup('ArtStore'),
   selModel: {
-      mode: 'single',
+      mode: 'multi',
       checkOnly: true,
-      type: 'cellmodel',
+      type: 'checkidmodel',
       selectionCount: false,
       clearSelection: false,
       selectionOptions: false
@@ -45,35 +46,48 @@ var config = {
       ptype: 'inlinefilterbar'
   }],
   pagingConfig: {
-    pageSize: 8,
+    pageSize: 15,
     paging: true,
     serverSidePaging: false,
           pageSizeCombo: false
   },
+  style: {
+          background: "white",
+          "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
+        },
   columns: [
       {text:'Product_Id',dataIndex:'Product_Id', xtype:'gridcolumn',hidden: true},
       {text:'Art_name',dataIndex:'Art_name', xtype:'gridcolumn',flex:1},
       {text:'Artist_name',dataIndex:'Artist_name', xtype:'gridcolumn',flex:1},
       {text:'Art_desc',dataIndex:'Art_desc', xtype:'gridcolumn',flex:1},
       {text:'Category',dataIndex:'Category', xtype:'gridcolumn',flex:1},
-      {text:'Price',dataIndex:'Price', xtype:'gridcolumn',flex:1},
-     {
-     text: 'Buy',
-     flex:1,
-     align: 'center',
-     renderer: function() {
-          var id = Ext.id();
-          Ext.defer(function(){
-              new Ext.Button({
-                  text: 'Buy',
-                  handler : function(btn, e) {
-                    //TODO Backend
-                  }
-              }).render(document.body, id);
-          },50);
-          return Ext.String.format('<div id="{0}"></div>', id);
-      }
- }
+      {
+        text: 'Price', 
+        dataIndex: 'Price', 
+        xtype: 'numbercolumn', 
+        flex: 1,
+        renderer: function (value) {
+          return "₹"+value;
+        }
+      },
+      
+//      {
+//      text: 'Buy',
+//      flex:1,
+//      align: 'center',
+//      renderer: function() {
+//           var id = Ext.id();
+//           Ext.defer(function(){
+//               new Ext.Button({
+//                   text: 'Buy',
+//                   handler : function(btn, e) {
+//                     //TODO Backend
+//                   }
+//               }).render(document.body, id);
+//           },50);
+//           return Ext.String.format('<div id="{0}"></div>', id);
+//       }
+//  }
   ]
 };
 var homeGrid = Ext.create(Vistaar.grid.DataGrid, config);
@@ -176,7 +190,19 @@ var myhomeGrid = Ext.create("Ext.Container", {
     //       },
     //     ],
     //   },
-    homeGrid
+    homeGrid,
+    Ext.create("Ext.Container",{layout: "hbox",flex: 1,width:'80%',items:[
+      {
+        xtype:'label',
+        flex: 7,
+      },
+    {
+    xtype:'button',
+    text:'Buy',
+    margin: '5 50% 5 5',
+    flex:1,	
+        }]
+    })
 
      ],
   });
