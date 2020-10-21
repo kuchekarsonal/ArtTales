@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="no"?>
+<Scripts>
+<Script Name="_getAllArts_artgallery" PrivilegeMode="false" Type="Rhino">
+<ScriptDefinition>
+<![CDATA[
+	
+	/*
+		'params1' is a global context variable passed on from the calling Entity Script. It doesn't need to be declared here.
+		'docServerManager' and 'userConnInfo' are global objects provided by the Entity Service.
+		'output' is a global object used by Entity Service to get the script result.
+		
+		The above 4 objects can be used without declaration.
+		
+		However, other objects apart from the above ones need to be declared. 
+		Hence, 'WrapperObj' and 'resultData' have to be declared.
+	*/
+	
+	var WrapperObj = new Training_getAllJSONDocs_rsarvaiya();
+	
+    var resultData = WrapperObj.getAllJSONDocs(docServerManager, userConnInfo, "Product_artgallery");
+	
+    output = resultData.toString();
+	
+]]>
+</ScriptDefinition>
+</Script>
+</Scripts>
+

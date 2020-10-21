@@ -1,4 +1,4 @@
-var Training_createDoc_rsarvaiya = function()
+var Art_Gallery_createDoc = function()
 {
 	/*
 		'createDoc' API would create a record in the given entity based on the document string passed in the argument.

@@ -11,7 +11,7 @@ var loginForm = Ext.create("Ext.Container", {
     {
       xtype: "form",
       /* title:
-        "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
+        "Don�t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "100% 5 5 5",
       width: "auto",
       flex: 1,
@@ -50,34 +50,22 @@ var loginForm = Ext.create("Ext.Container", {
               Ext.getCmp("login-button").hide();
               //TODO Backend - Get the first name and last name from backend and put them in userName.
               var email = Ext.getCmp("usernamelogin").getValue();
-              var password = Ext.getCmp("passwordlogin").getValue();
-
-              var respGetAll = ESApis.executeScript(
-                "_getAllJSONDocs_artgallery",
-                ["paramCount", "params1"],
-                [1, "SignUp_artgallery"]
-              );
-              //  console.log(respGetAll);
+              var pass = Ext.getCmp("passwordlogin").getValue();
+			  //console.log(email,pass);	
+			  var respGetAll = ESApis.executeScript("loginArtgallery", ['paramCount', 'params2','params3'], [2, email,pass]);
+              //console.log(respGetAll);
 
               if (respGetAll.status == "success") {
                 Ext.Msg.alert("Alert", "Submitted Successfully");
                 var esResp = respGetAll.response;
                 var esParse = JSON.parse(esResp);
-
+				//console.log(respGetAll);
+		
                 var count = esParse.CallResponse.length;
-
-                for (var i = 0; i < count; i++) {
-                  var getEmail = esParse.CallResponse[i].EmailId;
-                  var getPass = esParse.CallResponse[i].Password;
-                  if (email == getEmail && password == getPass) {
-                    var found = true;
-                    break;
-                  }
-                }
-                if (found) {
-                  console.log(esParse.CallResponse);
-                  var userName = esParse.CallResponse[i].FirstName;
-                  console.log(userName);
+                if (true) {
+                  //console.log(esParse.CallResponse);
+                  var userName = esParse.CallResponse[0].FirstName;
+                  //console.log(userName);
                   Ext.getCmp("logged-in-name").setText(
                     "Logged in as " + userName
                   );
@@ -85,8 +73,8 @@ var loginForm = Ext.create("Ext.Container", {
                   Ext.getCmp("logout-button").show();
 
                   //TODO Backend - Check if the data is valid. Return the account type, I am hard-coding it for now.
-                  var accType = esParse.CallResponse[i].Account_Type;
-                  console.log(userName);
+                  var accType = esParse.CallResponse[0].Account_Type;
+                  //console.log(userName);
                   switch (accType) {
                     case "Buyer":
                       Ext.getCmp("itemsContainer").removeAll(
@@ -98,7 +86,7 @@ var loginForm = Ext.create("Ext.Container", {
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
                       );
-                      Ext.getCmp("itemsContainer").add(artistHomeGrid );
+                      Ext.getCmp("itemsContainer").add(artistHomeGrid);
                       break;
                     case "Admin":
                       Ext.getCmp("itemsContainer").removeAll(
@@ -125,7 +113,7 @@ var loginForm = Ext.create("Ext.Container", {
           //     var email=Ext.getCmp("emailaddress").getValue();
           //     var subject=Ext.getCmp("subject").getValue();
           //     var message=Ext.getCmp("message").getValue();
-          //  var resp = ESApis.executeScript("_createDoc_artgallery", ['paramCount', 'params1', 'params2'], [2, 'SignUp_artgallery', {​​"FirstName":firstName,"LastName":lastName,"EmailId":email,"Account_Type":accounttype,"Password":pass}​​]);
+          //  var resp = ESApis.executeScript("_createDoc_artgallery", ['paramCount', 'params1', 'params2'], [2, 'SignUp_artgallery', {??"FirstName":firstName,"LastName":lastName,"EmailId":email,"Account_Type":accounttype,"Password":pass}??]);
           // if(respGetAll.status=='success'){
           // 	Ext.Msg.alert('Alert','Submitted Successfully');
           // 	var esResp = respGetAll.response;
@@ -187,8 +175,6 @@ var signUpForm = Ext.create("Ext.Container", {
   items: [
     {
       xtype: "form",
-      /* title:
-  "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "100% 5 5 5",
       width: "auto",
       flex: 1,
@@ -227,11 +213,10 @@ var signUpForm = Ext.create("Ext.Container", {
               }
               var pass = Ext.getCmp("passwordsignup").getValue();
               var resp = ESApis.executeScript(
-                "_createDoc_artgallery",
-                ["paramCount", "params1", "params2"],
+                "signUp",
+                ["paramCount", "params2"],
                 [
-                  2,
-                  "SignUp_artgallery",
+                  1,
                   {
                     FirstName: firstName,
                     LastName: lastName,
