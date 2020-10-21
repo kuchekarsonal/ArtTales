@@ -1,26 +1,28 @@
 var ArtStore=Ext.create('Vistaar.data.DataStore', {
   storeId: 'ArtStore',
-  fields:[ 'Artist_name', 'Art_name','Art_desc', 'Category', 'Price'],
+  fields:[ 'Product_Id','Artist_name', 'Art_name','Art_desc', 'Category', 'Price'],
   data: [   //TODO Backend
-      { Artist_name: 'Lisa', Art_name: 'Monalisa',Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '555' },
-      { Artist_name: 'Bart', Art_name: "Da Vinci's Code",Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '1234' },
-      { Artist_name: 'Homer', Art_name: 'Jade island',Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '1244' },
-      { Artist_name: 'Marge', Art_name: 'Injustice', Art_desc: 'Fine oil painting on..',Category: 'Drawing',Price: '1254' },
-      { Artist_name: 'Lisa', Art_name: 'Horizon zero Dawn',Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '1224' },
-      { Artist_name: 'Bart', Art_name: 'Ragnarock', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5234' },
-      { Artist_name: 'Homer', Art_name: 'New World', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '244' },
-      { Artist_name: 'Lisa', Art_name: 'Guide post', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5114' },
-      { Artist_name: 'Bart', Art_name: 'Nen', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '534' },
-      { Artist_name: 'Homer', Art_name: 'The Wrath of Asura', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5244' }
-  ]
+      { Product_Id:'18', Artist_name: 'Lisa', Art_name: 'Monalisa',Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '555' },
+      { Product_Id:'71', Artist_name: 'Bart', Art_name: "Da Vinci's Code",Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '1234' },
+      { Product_Id:'61', Artist_name: 'Homer', Art_name: 'Jade island',Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '1244' },
+      { Product_Id:'16', Artist_name: 'Marge', Art_name: 'Injustice', Art_desc: 'Fine oil painting on..',Category: 'Drawing',Price: '1254' },
+      { Product_Id:'13', Artist_name: 'Lisa', Art_name: 'Horizon zero Dawn',Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '1224' },
+      { Product_Id:'14', Artist_name: 'Bart', Art_name: 'Ragnarock', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5234' },
+      { Product_Id:'14', Artist_name: 'Homer', Art_name: 'New World', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '244' },
+      { Product_Id:'51', Artist_name: 'Lisa', Art_name: 'Guide post', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5114' },
+      { Product_Id:'15', Artist_name: 'Bart', Art_name: 'Nen', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '534' },
+      { Product_Id:'17', Artist_name: 'Homer', Art_name: 'The Wrath of Asura', Art_desc: 'Fine oil painting on..',Category: 'Drawing', Price: '5244' }
+  ],
+  paging:'local',
+		pageSize: 8,
 });
 
 var config = {
-  title: 'Art Store',
-  stateful: false,
+  //title: 'Art Store',
   width: '80%',
-  stateId: 'grid-1',
-  cls: '',
+  margin: '50% 0 0 0 ',
+  height: 'auto',
+  //scrollable: true,
   filterOnChange: true,
   sortOnChange: true,
   //forceFit:true,
@@ -31,7 +33,7 @@ var config = {
   selModel: {
       mode: 'single',
       checkOnly: true,
-      type: 'checkboxmodel',
+      type: 'cellmodel',
       selectionCount: false,
       clearSelection: false,
       selectionOptions: false
@@ -41,8 +43,15 @@ var config = {
   
   plugins: [{
       ptype: 'inlinefilterbar'
-  },],
+  }],
+  pagingConfig: {
+    pageSize: 8,
+    paging: true,
+    serverSidePaging: false,
+          pageSizeCombo: false
+  },
   columns: [
+      {text:'Product_Id',dataIndex:'Product_Id', xtype:'gridcolumn',hidden: true},
       {text:'Art_name',dataIndex:'Art_name', xtype:'gridcolumn',flex:1},
       {text:'Artist_name',dataIndex:'Artist_name', xtype:'gridcolumn',flex:1},
       {text:'Art_desc',dataIndex:'Art_desc', xtype:'gridcolumn',flex:1},
@@ -67,7 +76,7 @@ var config = {
  }
   ]
 };
-var artistHomeGrid = Ext.create(Vistaar.grid.DataGrid, config);
+var homeGrid = Ext.create(Vistaar.grid.DataGrid, config);
 
 var myhomeGrid = Ext.create("Ext.Container", {
     id: "tablePic",
@@ -167,7 +176,7 @@ var myhomeGrid = Ext.create("Ext.Container", {
     //       },
     //     ],
     //   },
-    artistHomeGrid
+    homeGrid
 
      ],
   });
