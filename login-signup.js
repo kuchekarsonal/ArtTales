@@ -136,7 +136,6 @@ var signUpForm = Ext.create("Ext.Container", {
     type: "vbox",
     align: "center",
   },
-
   items: [
     {
       xtype: "form",
@@ -276,6 +275,6 @@ var signUpForm = Ext.create("Ext.Container", {
           ]
         },
       ],
-    },
-  ],
+    }
+  ]
 });
