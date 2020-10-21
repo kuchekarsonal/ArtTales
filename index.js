@@ -42,7 +42,8 @@ function loginCallback() {
   //footer
   var footer = Ext.create("Ext.container.Container", {
     width: "100%",
-    flex: 0.5,
+    //flex: 0.5,
+    height: '50',
     layout: {
       type: "hbox",
       pack: "center",
@@ -62,7 +63,8 @@ function loginCallback() {
 
   var headerContainer = Ext.create("Ext.container.Container", {
     id: "headerContainer",
-    flex: 1,
+    //flex: 1,
+    height: '100',
     width: "100%",
     margin: 5,
     style: {
@@ -154,7 +156,8 @@ function loginCallback() {
   var itemsContainer = Ext.create("Ext.Panel", {
     id: "itemsContainer",
     scrollable: true,
-    flex: 9,
+    //flex: 9,
+    flex: 1,
     width: "100%",
     margin: 1,
     style: {
@@ -177,7 +180,8 @@ function loginCallback() {
   });
 
   var subMain = Ext.create("Ext.container.Container", {
-    flex: 9,
+    //flex: 9,
+    flex: 1,
     height: "100%",
     titleAlign: "center",
     layout: "vbox",
