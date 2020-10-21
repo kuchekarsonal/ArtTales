@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<Scripts>
+	<Script Name="signUp" PrivilegeMode="false" Type="Rhino">
+		<ScriptDefinition>
+			<![CDATA[
+		var WrapperObj = new Art_Gallery_createDoc();
+    	var resultData = WrapperObj.createDoc(docServerManager, userConnInfo, "SignUp_artgallery", params2);
+    	output = resultData.toString();
+			]]>
+		</ScriptDefinition>
+	</Script>
+</Scripts>
+
