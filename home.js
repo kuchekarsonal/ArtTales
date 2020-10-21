@@ -1,11 +1,11 @@
-var respGetAll = ESApis.executeScript(
+/* var respGetAll = ESApis.executeScript(
   "_getAllArts_artgallery",
   ["paramCount"],
   [0]
 );
 //console.log(JSON.parse(respGetAll.response).CallResponse);
 var artData = JSON.parse(respGetAll.response).CallResponse;
-//console.log(artData);
+//console.log(artData); */
 var ArtStore = Ext.create("Vistaar.data.DataStore", {
   storeId: "ArtStore",
   fields: [
@@ -17,7 +17,88 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
     "Price",
   ],
   //TODO Backend /////////////    artData is ready column config needs to be changed
-  data: artData,
+  data:  [
+    {
+      "ProductId": "1",
+      "ArtDetails": "Lisa",
+      "ProductName": "Monalisa",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "555"
+    },
+    {
+      "ProductId": "2",
+      "ArtDetails": "Bart",
+      "ProductName": "Da Vinci Code",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "1234"
+    },
+    {
+      "ProductId": "3",
+      "ArtDetails": "Homer",
+      "ProductName": "Jade island",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "1244"
+    },
+    {
+      "ProductId": "4",
+      "ArtDetails": "Marge",
+      "ProductName": "Injustice",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "1254"
+    },
+    {
+      "ProductId": "5",
+      "ArtDetails": "Lisa",
+      "ProductName": "Horizon zero Dawn",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "1224"
+    },
+    {
+      "ProductId": "6",
+      "ArtDetails": "Bart",
+      "ProductName": "Ragnarock",
+      "Category": "Quilling",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "5234"
+    },
+    {
+      "ProductId": "7",
+      "ArtDetails": "Homer",
+      "ProductName": "New World",
+      "Category": "Quilling",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "244"
+    },
+    {
+      "ProductId": "8",
+      "ArtDetails": "Lisa",
+      "ProductName": "Guide post",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "5114"
+    },
+    {
+      "ProductId": "9",
+      "ArtDetails": "Bart",
+      "ProductName": "Nen",
+      "Category": "Drawing",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "534"
+    },
+    {
+      "ProductId": "10",
+      "ArtDetails": "Homer",
+      "ProductName": "The Wrath of Asura",
+      "Category": "Quilling",
+      "EmailId":"kuchekar@gmail.com",
+      "Price": "5244"
+    }
+  ],
   paging: "local",
   pageSize: 8,
 });
