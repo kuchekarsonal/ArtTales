@@ -26,14 +26,15 @@ function loginCallback() {
               expanded: true,
               iconCls: 'x-fa fa-pencil',
               left: true,
-              containerName: 'drawingGrid'
+              containerName: 'myhomeGrid',
+              
             },
             {
               text: "Quilling",
               expanded: true,
               iconCls: 'x-fa fa-paper-plane',
               left: true,
-              containerName: 'quillingGrid'
+              containerName: 'myhomeGrid'
             }
           ]
         },
@@ -240,7 +241,7 @@ function loginCallback() {
       {
         cls: "toolbar-button",
         height: 60,
-        text: "<h1>D</h1>",
+        iconCls: 'x-fa fa-paint-brush',
       },
 
       { xtype: "tbseparator" },
@@ -286,6 +287,7 @@ function loginCallback() {
       {
         xtype: "button",
         id: "Drawing",
+        cls: "toolbar-button",
         hidden: true,
         text: "Drawing",
         listeners: {
@@ -293,12 +295,14 @@ function loginCallback() {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(drawingGrid);
             Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Drawing'));
+            homeGrid.addFilters({property: 'Category', operator: 'eq', value:"Drawing"} );            
           },
         },
       },
       {
         hidden: true,
         id: "Quilling",
+        cls: "toolbar-button",
         xtype: "button",
         text: "Quilling",
         listeners: {
@@ -306,6 +310,7 @@ function loginCallback() {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(quillingGrid);
             Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Quilling'));
+            homeGrid.addFilters({property: 'Category', operator: 'eq', value:"Quilling"} ); 
           },
         },
       },
