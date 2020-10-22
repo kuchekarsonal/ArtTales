@@ -10,18 +10,18 @@ var artistArtData = JSON.parse(respGetAll.response).CallResponse; */
 //console.log(artistArtData);
 var myArtStore=Ext.create('Vistaar.data.DataStore', {
     storeId: 'myArtStore',
-    fields:[ 'Product_Id','Art_desc', 'Art', 'Category', 'Price'],
+    fields:[ 'Product_Id','ArtDetails', 'ProductName', 'Category', 'Price'],
     data:/* artistArtData, */ [
-        { Product_Id:'1', Art_desc: 'Lisa', Art: 'Monalisa',Category: 'Drawing', Price: '555' },
-        { Product_Id:'2',Art_desc: 'Bart', Art: "Da Vinci's Code",Category: 'Drawing', Price: '1234' },
-        { Product_Id:'3',Art_desc: 'Homer', Art: 'Jade island',Category: 'Drawing', Price: '1244' },
-        { Product_Id:'4',Art_desc: 'Marge', Art: 'Injustice',Category: 'Drawing', Price: '1254' },
-        { Product_Id:'5',Art_desc: 'Lisa', Art: 'Horizon zero Dawn',Category: 'Drawing', Price: '1224' },
-        { Product_Id:'6',Art_desc: 'Bart', Art: 'Ragnarock',Category: 'Drawing', Price: '5234' },
-        { Product_Id:'7',Art_desc: 'Homer', Art: 'New World',Category: 'Drawing', Price: '244' },
-        { Product_Id:'8',Art_desc: 'Lisa', Art: 'Guide post',Category: 'Drawing', Price: '5114' },
-        { Product_Id:'9',Art_desc: 'Bart', Art: 'Nen',Category: 'Drawing', Price: '534' },
-        { Product_Id:'10',Art_desc: 'Homer', Art: 'The Wrath of Asura',Category: 'Drawing', Price: '5244' }
+        { Product_Id:'1', ArtDetails: 'Lisa', ProductName: 'Monalisa',Category: 'Drawing', Price: '555' },
+        { Product_Id:'2',ArtDetails: 'Bart', ProductName: "Da Vinci's Code",Category: 'Drawing', Price: '1234' },
+        { Product_Id:'3',ArtDetails: 'Homer', ProductName: 'Jade island',Category: 'Drawing', Price: '1244' },
+        { Product_Id:'4',ArtDetails: 'Marge', ProductName: 'Injustice',Category: 'Drawing', Price: '1254' },
+        { Product_Id:'5',ArtDetails: 'Lisa', ProductName: 'Horizon zero Dawn',Category: 'Drawing', Price: '1224' },
+        { Product_Id:'6',ArtDetails: 'Bart', ProductName: 'Ragnarock',Category: 'Drawing', Price: '5234' },
+        { Product_Id:'7',ArtDetails: 'Homer', ProductName: 'New World',Category: 'Drawing', Price: '244' },
+        { Product_Id:'8',ArtDetails: 'Lisa', ProductName: 'Guide post',Category: 'Drawing', Price: '5114' },
+        { Product_Id:'9',ArtDetails: 'Bart', ProductName: 'Nen',Category: 'Drawing', Price: '534' },
+        { Product_Id:'10',ArtDetails: 'Homer', ProductName: 'The Wrath of Asura',Category: 'Drawing', Price: '5244' }
     ],
 	paging:'local',
 		pageSize: 5,
@@ -38,7 +38,7 @@ var obj = {
 		  id:"myChartView",	
 			"animation":true,
 			"flipXY": true,
-			"height": "50%",
+			"height": 300,
 			"allowDuplicateValuesForCategoryAxis": false,
 
 			"chartType": "cartesian",
@@ -251,7 +251,7 @@ var popupFormConfig={
     ]
 };
 var config = {
-    
+    id:"mainArtistGrid",
     filterOnChange: true,
     sortOnChange: true,
     //forceFit:true,
@@ -313,6 +313,7 @@ var config = {
         text: 'Price', 
         dataIndex: 'Price', 
         xtype: 'numbercolumn', 
+		editor:'numberfield',
         flex: 1,
         renderer: function (value) {
           return "₹"+value;
@@ -445,5 +446,6 @@ var artistHomeGrid = Ext.create("Ext.Container", {
 			margin: '10% 5 5 5',
 			html:'<h3><p>Sales Statistics for last 5 years</p></h3>',
 		},
+		
 		barChart
 		]});
