@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<Scripts>
+<Script Name="getArtistDataForAbout_artgallery" PrivilegeMode="false" Type="Rhino">
+<ScriptDefinition>
+<![CDATA[
+	
+	var WrapperObj = new getOurArtists_artgallery();	
+	var resultData = WrapperObj.getArtistData(docServerManager, userConnInfo, "SignUp_artgallery");
+	output = resultData.toString();
+	
+]]>
+</ScriptDefinition>
+</Script>
+</Scripts>
+
