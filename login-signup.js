@@ -1,4 +1,5 @@
 //loginForm
+var userName;
 var loginForm = Ext.create("Ext.Container", {
   id: "loginForm",
 
@@ -64,7 +65,7 @@ var loginForm = Ext.create("Ext.Container", {
                 var count = esParse.CallResponse.length;
                 if (true) {
                   //console.log(esParse.CallResponse);
-                  var userName = esParse.CallResponse[0].FirstName;
+                  userName = esParse.CallResponse[0].FirstName;
                   //console.log(userName);
                   Ext.getCmp("logged-in-name").setText(
                     "Logged in as " + userName
@@ -86,13 +87,15 @@ var loginForm = Ext.create("Ext.Container", {
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
                       );
+                      //console.log(userName);
+                      Ext.Loader.loadScriptsSync('./project/artist-home.js');
                       Ext.getCmp("itemsContainer").add(artistHomeGrid);
                       break;
                     case "Admin":
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
                       );
-                      Ext.getCmp("itemsContainer").add(adminhomegrid);
+                      Ext.getCmp("itemsContainer").add(adminHomeGrid);
                       break;
                     default:
                       Ext.Msg.alert(
