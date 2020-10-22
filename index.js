@@ -24,12 +24,8 @@ function loginCallback() {
             {
               text: "Drawing",
               expanded: true,
-<<<<<<< HEAD
               iconCls: "x-fa fa-pencil",
-=======
-              iconCls: 'x-fa fa-pencil',
-              filerString: 'Drawing',
->>>>>>> ac993dddd4a8c5e0a6e0a03c8151200138dbec74
+              filerString: "Drawing",
               left: true,
               containerName: "myhomeGrid",
             },
@@ -38,16 +34,10 @@ function loginCallback() {
               expanded: true,
               iconCls: "x-fa fa-paper-plane",
               left: true,
-<<<<<<< HEAD
+              filerString: "Quilling",
               containerName: "myhomeGrid",
             },
           ],
-=======
-              filerString: 'Quilling',
-              containerName: 'myhomeGrid'
-            }
-          ]
->>>>>>> ac993dddd4a8c5e0a6e0a03c8151200138dbec74
         },
         {
           leaf: true,
@@ -62,6 +52,20 @@ function loginCallback() {
           iconCls: "x-fa fa-comments",
           expanded: true,
           containerName: "contactUs",
+        },
+        {
+          leaf: true,
+          text: "Login",
+          iconCls: "x-fa fa-sign-in",
+          expanded: true,
+          containerName: "loginForm",
+        },
+        {
+          leaf: true,
+          text: "Sign Up",
+          iconCls: "x-fa fa-user-plus",
+          expanded: true,
+          containerName: "signUpForm",
         },
       ],
     },
@@ -131,8 +135,12 @@ function loginCallback() {
             margin: "0 8 0 0",
             listeners: {
               click: function () {
-                Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-                Ext.getCmp("itemsContainer").add(loginForm);
+                Ext.getCmp("bread-crumb")
+                  .getViewModel()
+                  .set(
+                    "selectedNode",
+                    breadcrumbStore.findNode("text", "Login")
+                  );
               },
             },
           },
@@ -154,8 +162,12 @@ function loginCallback() {
             height: 45,
             listeners: {
               click: function () {
-                Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
-                Ext.getCmp("itemsContainer").add(signUpForm);
+                Ext.getCmp("bread-crumb")
+                  .getViewModel()
+                  .set(
+                    "selectedNode",
+                    breadcrumbStore.findNode("text", "Sign Up")
+                  );
               },
             },
           },
@@ -216,9 +228,12 @@ function loginCallback() {
           selectionchange: function () {
             var containerToLoad = this.getSelection().data.containerName;
             console.log(containerToLoad);
-            if(this.getSelection().data.filerString)
-      homeGrid.addFilters({property: 'Category', operator: 'eq', value:this.getSelection().data.filerString} );    
-            
+            if (this.getSelection().data.filerString)
+              homeGrid.addFilters({
+                property: "Category",
+                operator: "eq",
+                value: this.getSelection().data.filerString,
+              });
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             Ext.getCmp("itemsContainer").add(window[containerToLoad]);
           },

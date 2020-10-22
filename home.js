@@ -221,7 +221,6 @@ var myhomeGrid = Ext.create("Ext.Container", {
           text: "Buy",
           margin: "5 50% 5 5",
           flex: 1,
-<<<<<<< HEAD
           handler: function () {
             //Backend: Adding data to the Order Entity
             if (JSON.stringify(currentUserLoggedIn) !== "{}") {
@@ -238,14 +237,6 @@ var myhomeGrid = Ext.create("Ext.Container", {
         },
       ],
     }),
-=======
-          //handler:function(){
-          //  Ext.Msg.alert('No Product selected', 'No products selected , Please select atlest one product to continue');
-          //}
-        }]
-    })
-
->>>>>>> ac993dddd4a8c5e0a6e0a03c8151200138dbec74
   ],
 });
 
