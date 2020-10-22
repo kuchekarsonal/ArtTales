@@ -17,6 +17,130 @@ var myArtStore=Ext.create('Vistaar.data.DataStore', {
 		pageSize: 5,
 });
 
+var obj = {
+	"chartConfig": {
+
+		"id": "CC1",
+		
+		"popUpMode": false,
+		"chartConfig": {
+			
+		  id:"myChartView",	
+			"animation":true,
+			"flipXY": true,
+			"height": "50%",
+			"allowDuplicateValuesForCategoryAxis": false,
+
+			"chartType": "cartesian",
+			"containerId": "viewContainer",
+	
+			"axes": [{
+				"type": "category",
+				"position": "left",
+				"title": "Date",
+				"fields": [
+					"year"
+				],
+				"axisId": "axis2"
+			}, {
+				"type": "numeric",
+				"position": "bottom",
+				"title": "Sales",
+				"fields": [
+					"Drawing_Sales",
+					"Quilling_Sales"
+				],
+				"axisId": "axis1"
+			}],
+			"series": [{
+				"type": "bar",
+				"xField": "year",
+				"yField": "Drawing_Sales",
+				"seriesId": "Drawing_Sales",
+				"title": "Drawing Sales",
+				style: {},
+				highlight: {
+					fillStyle: 'rgba(255, 255, 51, 1.0)',
+					strokeStyle: 'black'
+				},
+				label: {
+					field: 'Drawing_Sales',
+					display: 'Drawing Sales'
+				},
+				tooltip: { 
+	   trackMouse: true, 
+	   style: 'background: #fff', 
+	   renderer: function(toolTip,storeItem, item) { 
+		   toolTip.setHtml(storeItem.get('year') + ': ' + storeItem.get('Drawing_Sales')); 
+			   } 
+		   }
+			},
+			{
+				"type": "bar",
+				"xField": "year",
+				"yField": "Quilling_Sales",
+				"seriesId": "Quilling_Sales",
+				"title": "Quilling Sales",
+				highlight: {
+					fillStyle: 'rgba(255, 255, 51, 1.0)',
+					strokeStyle: 'black'
+				},
+				label: {
+					field: 'Quilling_Sales',
+					display: 'Quilling Sales'
+				},
+				tooltip: { 
+			   trackMouse: true, 
+			   style: 'background: #fff', 
+			   renderer: function(toolTip,storeItem, item) { 
+				   toolTip.setHtml(storeItem.get('year') + ': ' + storeItem.get('Quilling_Sales')); 
+			   } 
+		   }
+
+			}
+			],
+			"legend": true
+		},
+		"popUpWindowConfig": {
+			"title": "Custom Chart",
+			"modal": false,
+			"layout": {
+				"type": "fit"
+			},
+			"autoShow": true,
+			"closeAction": "destroy"
+		}
+	},
+	"chartData": [{
+		"Quilling_Sales": 50,
+		"Drawing_Sales": 150,
+		"year": "2019",
+		"asp": 3
+	}, {	
+		"Quilling_Sales": 30,
+		"Drawing_Sales": 130,
+		"year": "2018",
+		"asp": 4.33
+	}, {
+		"Quilling_Sales": 40,
+		"Drawing_Sales": 140,
+		"year": "2017",
+		"asp": 3.5
+	}, {
+		"Quilling_Sales": 10,
+		"Drawing_Sales": 100,
+		"year": "2016",
+		"asp": 10
+	}, {
+		"Quilling_Sales": 180,
+		"Drawing_Sales": 90,
+		"year": "2015",
+		"asp": 2.42
+	}]
+};
+
+var barChart=VistaarCC.createCustomChart(obj.chartConfig, obj.chartData);
+
 var popupFormConfig={
 	//xtype:'Ext.window.Window',
     title: 'Add Art',
@@ -37,7 +161,7 @@ var popupFormConfig={
 				bodyPadding: 5,
 				width: '80%',
 				
-				url: 'submitURl',
+				//url: 'submitURl',
 				
 				layout: {type:'vbox', align: "center",},
 				
@@ -157,7 +281,24 @@ var config = {
         {text:'Product_Id',dataIndex:'Product_Id', xtype:'gridcolumn',hidden: true},
         {text:'Art',dataIndex:'Art', xtype:'gridcolumn',editor:'textfield',flex:1},
         {text:'Art_desc',dataIndex:'Art_desc', xtype:'gridcolumn',editor:'textfield',flex:1},
-        {text:'Category',dataIndex:'Category', xtype:'gridcolumn',editor:'textfield',flex:1},
+        {text:'Category',dataIndex:'Category', xtype:'gridcolumn',editor:{
+			xtype: 'combobox',
+					width: '80%',
+					editable: false,
+					store: Ext.create('Ext.data.Store', {
+						 fields: ['abbr', 'name'],
+						 data: [{
+							'abbr': 'Drawing',
+							'name': 'Drawing'
+						 },{
+							'abbr': 'Quilling',
+							'name': 'Quilling'
+						 }]
+					  }),
+					  valueField: 'abbr',
+					  displayField: 'name',
+					  name: 'Art Category',
+					},flex:1},
         {
         text: 'Price', 
         dataIndex: 'Price', 
@@ -207,7 +348,8 @@ var config = {
 var artistGrid = Ext.create(Vistaar.grid.DataGrid, config);
 
 var artistHomeGrid = Ext.create("Ext.Container", {
-    id: "artistGrid",
+    id: "artistHome",
+	scrollable:true,
     width: "auto",
     layout: {
       type: "vbox",
@@ -221,37 +363,77 @@ var artistHomeGrid = Ext.create("Ext.Container", {
           },
           artistGrid,
           Ext.create("Ext.Container",{layout: "hbox",width:'80%',items:[
+			{
+				xtype:'label',
+				flex: 6,
+			},
+			{
+				  xtype:'button',
+				  text:'Add Art',
+				  margin: '10 50% 5 5',
+				  flex:1,	
+				  handler:function(){
+					  var addArtPopup=Ext.create('Ext.window.Window', popupFormConfig);
+					  addArtPopup.show();}
+			},
+		{
+		  xtype:'button',
+		  text:'Save',
+		  margin: '10 50% 5 5',
+		  flex:1,	
+		  handler: function(){
+			  //TODO BACKEND
+			  console.log(artistGrid.getUpdatedData());
+			  if(true)
 			  {
-				  xtype:'label',
-				  flex: 6,
-			  },
+				  artistGrid.commitChanges();
+			  }
+			  else
 			  {
-					xtype:'button',
-					text:'Add Art',
-					margin: '10 50% 5 5',
-					flex:1,	
-					handler:function(){
-						var addArtPopup=Ext.create('Ext.window.Window', popupFormConfig);
-						addArtPopup.show();}
-			  },
-		  {
-			xtype:'button',
-			text:'Save',
-			margin: '10 50% 5 5',
-			flex:1,	
-          },
-          {
-            xtype:'button',
-			text:'Delete',
-			margin: '10 50% 5 5',
-			flex:1,	
-          },
-		  {
-			xtype:'button',
-			text:'Reset',
-			margin: '10 50% 5 5',
-			flex:1,
-			handler: function(){artistGrid.rejectChanges();}
-		  }]
-		  })
-    ]});
+				  console.log("Failed to save");
+			  }
+			  
+		  }
+		},
+		{
+		  xtype:'button',
+		  text:'Delete',
+		  margin: '10 50% 5 5',
+		  flex:1,	
+		  handler: function(){
+			  //TODO BACKEND
+			  
+			  var selectedRow=artistGrid.getSelection (false, true);
+			  var selectedArray=[];
+			  for(var i=0;i<selectedRow.length;i++){
+			  selectedArray[i]=selectedRow[i].data.Product_Id;
+			  }
+			  console.log(selectedArray);
+			  
+			  if(true)
+			  {
+				  
+				  artistGrid.removeRecords (selectedRow);
+			  }
+			  else
+			  {
+				  console.log("Failed to Delete");
+			  }
+				  
+		  }
+		},
+		{
+		  xtype:'button',
+		  text:'Reset',
+		  margin: '10 50% 5 5',
+		  flex:1,
+		  handler: function(){artistGrid.rejectChanges();}
+		}]
+		}),
+		{
+			xtype: 'label',
+			margin: '10% 5 5 5',
+			html:'<h3><p>Sales Statistics for last 5 years</p></h3>',
+		},
+		barChart
+		]});
