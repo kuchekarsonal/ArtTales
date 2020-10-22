@@ -25,6 +25,7 @@ function loginCallback() {
               text: "Drawing",
               expanded: true,
               iconCls: 'x-fa fa-pencil',
+              filerString: 'Drawing',
               left: true,
               containerName: 'myhomeGrid',
               
@@ -34,6 +35,7 @@ function loginCallback() {
               expanded: true,
               iconCls: 'x-fa fa-paper-plane',
               left: true,
+              filerString: 'Quilling',
               containerName: 'myhomeGrid'
             }
           ]
@@ -201,6 +203,9 @@ function loginCallback() {
           selectionchange: function(){
             var containerToLoad = this.getSelection().data.containerName;
             console.log(containerToLoad);
+            if(this.getSelection().data.filerString)
+      homeGrid.addFilters({property: 'Category', operator: 'eq', value:this.getSelection().data.filerString} );    
+            
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             Ext.getCmp("itemsContainer").add(window[containerToLoad]);
           }

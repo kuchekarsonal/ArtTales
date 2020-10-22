@@ -386,7 +386,13 @@ var artistHomeGrid = Ext.create("Ext.Container", {
 		  flex:1,	
 		  handler: function(){
 			  //TODO BACKEND
+			  var temp=artistGrid.getUpdatedData();
 			  console.log(artistGrid.getUpdatedData());
+			  for(var i=0;i<temp.length;i++)
+			  {
+				  delete temp[i].id;
+			  }
+			  console.log(temp);
 			  if(true)
 			  {
 				  artistGrid.commitChanges();
