@@ -296,16 +296,7 @@ var config = {
 			xtype: 'combobox',
 					width: '80%',
 					editable: false,
-					store: Ext.create('Ext.data.Store', {
-						 fields: ['abbr', 'name'],
-						 data: [{
-							'abbr': 'Drawing',
-							'name': 'Drawing'
-						 },{
-							'abbr': 'Quilling',
-							'name': 'Quilling'
-						 }]
-					  }),
+					store: categoryStore,
 					  valueField: 'abbr',
 					  displayField: 'name',
 					  name: 'Art Category',

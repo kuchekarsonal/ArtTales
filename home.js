@@ -6,10 +6,20 @@
 //console.log(JSON.parse(respGetAll.response).CallResponse);
 var artData = JSON.parse(respGetAll.response).CallResponse;
 //console.log(artData); */
+var categoryStore=Ext.create('Ext.data.Store', {
+  fields: ['abbr', 'name'],
+  data: [{
+   'abbr': 'Drawing',
+   'name': 'Drawing'
+  },{
+   'abbr': 'Quilling',
+   'name': 'Quilling'
+  }]
+ });
 var ArtStore = Ext.create("Vistaar.data.DataStore", {
   storeId: "ArtStore",
   fields: [
-    "Product_Id",
+    "ProductId",
     "Artist_name",
     "Art_name",
     "Art_desc",
@@ -156,7 +166,7 @@ var config = {
       flex: 1,
     },
     { text: "Art Description", dataIndex: "ArtDetails", xtype: "gridcolumn", flex: 1 },
-    { text: "Category", dataIndex: "Category", xtype: "gridcolumn", flex: 1 },
+    { text: "Category", dataIndex: "Category", xtype: "gridcolumn", flex: 1 ,editor:{}},
     {
       text: 'Price',
       dataIndex: 'Price',
