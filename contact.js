@@ -12,9 +12,10 @@ var contactUs = Ext.create("Ext.Container", {
       /* title:
           "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "5 5 5 5",
-      width: "auto",
+      width: "100%",
       height: 470,
       forcefit: true,
+      scrollable: true,
       style: {
         background: "white",
         "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
@@ -45,9 +46,9 @@ var contactUs = Ext.create("Ext.Container", {
               var message = Ext.getCmp("message").getValue();
               //console.log(firstName,lastName,email,subject,message);
               var respGetAll = ESApis.executeScript(
-                "_getAllJSONDocs_artgallery",
-                ["paramCount", "params1"],
-                [1, "Feedback_artgallery"]
+                "_getAllFeedback_artgallery",
+                ["paramCount"],
+                [0]
               );
               if (respGetAll.status == "success") {
                 Ext.Msg.alert("Alert", "Submitted Successfully");
@@ -57,11 +58,10 @@ var contactUs = Ext.create("Ext.Container", {
                 var count = esParse.CallResponse.length;
               }
               var resp = ESApis.executeScript(
-                "_createDoc_artgallery",
-                ["paramCount", "params1", "params2"],
+                "_submitFeedback_artgallery",
+                ["paramCount", "params2"],
                 [
-                  2,
-                  "Feedback_artgallery",
+                  1,
                   {
                     MessageId: (count + 1).toString(),
                     FirstName: firstName,
@@ -82,11 +82,12 @@ var contactUs = Ext.create("Ext.Container", {
               }
             },
           },
-        },
-      ],
+        }],
       items: [
         {
           xtype: "label",
+          cls: 'contact-title',
+          width: '100%',
           html:
             "<h1>Don’t hesitate to chat with us, just drop a line below or contact via email.</h1>",
         },
@@ -98,11 +99,13 @@ var contactUs = Ext.create("Ext.Container", {
         {
           id: "firstname",
           fieldLabel: "First Name",
+          allowBlank: false,
           name: "First Name",
         },
         {
           id: "lastname",
           fieldLabel: "Last Name",
+          allowBlank: false,
           name: "Last Name",
         },
         {
@@ -110,20 +113,30 @@ var contactUs = Ext.create("Ext.Container", {
           fieldLabel: "Email Address",
           //email:true, to validate if email is proper
           name: "Email Address",
+          validator: function (value) {
+            var emailRegex = new RegExp("\\S+@\\S+\\.\\S+");
+            if (!emailRegex.test(value)) {
+              return "Email format is incorrect";
+            } else {
+              return true;
+            }
+          }
         },
         {
           id: "subject",
+          allowBlank: false,
           fieldLabel: "Subject:",
           name: "Subject",
         },
         {
           id: "message",
           fieldLabel: "Message ",
+          allowBlank: false,
           name: "Message",
           xtype: "textareafield",
           grow: true,
         },
       ],
     },
-  ],
+  ]
 });

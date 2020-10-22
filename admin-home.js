@@ -14,7 +14,9 @@ var simStore=Ext.create('Vistaar.data.DataStore', {
 		{ date: '2020/08/19', artName: 'Painting', artistName: 'lisa', price: 1124 },
 		{ date: '2020/06/19', artName: 'Quilled Basket', artistName: 'bart', price: 534 },
 		{ date: '2020/04/19', artName: 'Quilled Flower Pot', artistName: 'homer', price: 554 }
-	]
+	],
+	paging:'local',
+	pageSize: 4,
 });
 
 //-------------SAMPLE STORE FOR FEEDBACK--------------------
@@ -33,7 +35,9 @@ var feedbackStore=Ext.create('Vistaar.data.DataStore', {
 		{ date: '2020/08/19', feedback: 'Great product.', username: 'lisa'},
 		{ date: '2020/06/19', feedback: 'Very beautifull product.', username: 'bart'},
 		{ date: '2020/04/19', feedback: 'I liked the basket', username: 'homer'}
-	]
+	],
+	paging:'local',
+	pageSize: 4,
 });
 
 //--------------SAMPLE BAR GRAPH------------------
@@ -91,7 +95,7 @@ obj = {
                 "legend": true
             },
             "popUpWindowConfig": {
-                "title": "Custom Chart",
+                //"title": "Custom Chart",
                 "modal": false,
                 "layout": {
                     "type": "fit"
@@ -119,15 +123,76 @@ var hist = VistaarCC.createCustomChart(obj.chartConfig, obj.simdata);
 //------------------GRID FOR PURCHASE REPORTS--------------------
 
 var grid = Ext.create('Vistaar.grid.DataGrid', {
-		title:'Pruchase Reports',
+		//title:'Pruchase Reports',
 		store: simStore,
 		id:'d1',
 		//forceFit:true,
-		autoSizeColumns: true,
+		//autoSizeColumns: true,
+		width: '80%',
 		//flex: 1,
 		//width: '99%',
 		scrollable: true,
 		//minWidth: '425',
+		selModel: {
+			type: 'checkidmodel',	
+			mode: "MULTI",				
+			//checkOnly: true,
+			//selectionCount: true,
+			clearSelection: true,
+			//selectionOptions: true
+		},
+		plugins: [
+		{
+			ptype:'inlinefilterbar',
+		}],	
+		pagingConfig:{
+			paging: true,
+			pageSize: 4,
+			serverSidePaging: false,
+		},
+		columns: [{
+			text: 'Date',
+			dataIndex: 'date',
+			xtype: 'datecolumn',
+			format:'d-m-Y',
+			flex: 1,
+		},{
+			text: 'Art Name',
+			dataIndex: 'artName',
+			//id:'p1',
+			flex: 1,
+		}, {
+			text: 'Artist Name',
+			dataIndex: 'artistName',
+			flex: 1,
+		}, {
+			xtype: 'numbercolumn',
+			//renderer: Ext.util.Format.usMoney,
+			//currencySign: '₹',
+			//text: 'Price',
+			//dataIndex: 'price'
+			text: 'Price', 
+			dataIndex: 'price', 
+			//xtype: 'gridcolumn', 
+			//flex: 1,
+			renderer: function (value) {
+				return "₹"+value;
+			},
+			flex: 1,
+		}],
+	});
+	
+//------------------GRID FOR FEEDBACK--------------------
+
+var feedbackGrid = Ext.create('Vistaar.grid.DataGrid', {
+		//title:'Feedback',
+		store: feedbackStore,
+		id:'d2',
+		//autoSizeColumns: true,
+		width: '80%',
+		//flex: 1,
+		//width: "95%",
+		//forceFit:true,		
 		selModel: {
 			type: 'checkidmodel',	
 			mode: "MULTI",				
@@ -149,63 +214,16 @@ var grid = Ext.create('Vistaar.grid.DataGrid', {
 			text: 'Date',
 			dataIndex: 'date',
 			xtype: 'datecolumn',
-			format:'d-m-Y'
-		},{
-			text: 'Art Name',
-			dataIndex: 'artName',
-			//id:'p1'
-		}, {
-			text: 'Artist Name',
-			dataIndex: 'artistName'
-		}, {
-			xtype: 'numbercolumn',
-			//renderer: Ext.util.Format.usMoney,
-			//currencySign: '₹',
-			//text: 'Price',
-			//dataIndex: 'price'
-			text: 'Price', 
-			dataIndex: 'price', 
-			//xtype: 'gridcolumn', 
 			flex: 1,
-			renderer: function (value) {
-				return "₹"+value;
-			}
-		}],
-	});
-	
-//------------------GRID FOR FEEDBACK--------------------
-
-var feedbackGrid = Ext.create('Vistaar.grid.DataGrid', {
-		title:'Feedback',
-		store: feedbackStore,
-		id:'d2',
-		autoSizeColumns: true,
-		//flex: 1,
-		width: "95%",
-		//forceFit:true,		
-		selModel: {
-			type: 'checkidmodel',	
-			mode: "MULTI",				
-			checkOnly: true,
-			selectionCount: true,
-			clearSelection: true,
-			selectionOptions: true
-		},
-		plugins: [
-		{
-			ptype:'inlinefilterbar',
-		}],	
-		columns: [{
-			text: 'Date',
-			dataIndex: 'date',
-			xtype: 'datecolumn',
 			format:'d-m-Y'
 		},{
 			text: 'Feedback',
 			dataIndex: 'feedback',
+			flex: 1,
 			id:'p1'
 		}, {
 			text: 'User Name',
+			flex: 1,
 			dataIndex: 'username'
 		}],
 	});
@@ -220,20 +238,20 @@ var adminHomeGrid = Ext.create("Ext.Container", {
       type: "fit",
       align: "stretch",
     },
-	//scrollable: false,
+	  // scrollable: false,
     items: [
       {
         xtype: "label",
         html: "<h1>Admin Art Gallery</h1>",
-		flex: 1,
+		    flex: 1,
       },
       {
         xtype: "panel",
         margin: "5 10 10 10",
         width: "100%",
         height: 610,
-		//scrollable: 'vertical',
-		//flex: 1,
+		    // scrollable: 'vertical',
+		    // flex: 1,
         style: {
           background: "white",
           "box-shadow": "0 4px 8px 0 rgba(0, 0, 0, 0.5)",
@@ -244,69 +262,109 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           align: 'middle',
         },
         items: [
-		{
-			xtype: "panel",
-			//flex: 1,
-			//autoWidth: true,
-			//autoSize: true,
-			width: "24%",
-			border: false,
-			layout: {
-				type: 'center',
-				//align: 'stretch',
-			},
-			items: [grid],
-		},
-		{
-			xtype: "panel",
-			//flex: 1,
-			//autoWidth: true,
-			//autoSize: true,
-			border: false,
-			width: "24%",
-			layout: {
-				type: 'center',
-				//align: 'stretch',
-			},
-			items: [
-				{
-					xtype: "label",
-					//title: 'hi',
-					html: "<h2>Purchase reports</h2>",
-					flex: 1,
-				},
-			],
-		},
-		{
-			xtype: "panel",
-			//flex: 1,
-			//autoWidth: true,
-			//autoSize: true,
-			border: false,
-			width: "24%",
-			layout: {
-				type: 'center',
-				//align: 'stretch',
-			},
-			items: [
-				hist,
-			],
-		},
-		{
-			xtype: "panel",
-			//flex: 1,
-			margin: "5 0 5 0",
-			width: "22%",
-			//autoWidth: true,
-			border: false,
-			layout: {
-				type: 'center',
-				//align: 'stretch',
-			},
-			items: [feedbackGrid],
-		},
+                  {
+                    xtype: "panel",
+                    //flex: 1,
+                    //autoWidth: true,
+                    //autoSize: true,
+                    border: false,
+                    width: "24%",
+                    layout: {
+                      type: 'center',
+                      //align: 'stretch',
+                    },
+                    items: [
+                      {
+                        xtype: "label",
+                        //title: 'hi',
+                        html: "<h1>Purchase Report</h1>",
+                        flex: 1,
+                      },
+                    ],
+                  },
+                  {
+                    xtype: "panel",
+                    //flex: 1,
+                    //autoWidth: true,
+                    //autoSize: true,
+                    width: "40%",
+                    border: false,
+                    layout: {
+                      type: 'fit',
+                      //align: 'stretch',
+                    },
+                    items: [grid],
+                  },
+                  {
+                    xtype: "panel",
+                    //flex: 1,
+                    //autoWidth: true,
+                    //autoSize: true,
+                    border: false,
+                    width: "24%",
+                    layout: {
+                      type: 'center',
+                      //align: 'stretch',
+                    },
+                    items: [
+                      {
+                        xtype: "label",
+                        //title: 'hi',
+                        html: "<h1>Sales Chart</h1>",
+                        flex: 1,
+                      },
+                    ],
+                  },
+                  {
+                    xtype: "panel",
+                    //flex: 1,
+                    //autoWidth: true,
+                    //autoSize: true,
+                    border: false,
+                    width: "40%",
+                    layout: {
+                      type: 'center',
+                      //align: 'stretch',
+                    },
+                    items: [
+                      hist,
+                    ],
+                  },
+                  {
+                    xtype: "panel",
+                    //flex: 1,
+                    //autoWidth: true,
+                    //autoSize: true,
+                    border: false,
+                    width: "24%",
+                    layout: {
+                      type: 'center',
+                      //align: 'stretch',
+                    },
+                    items: [
+                      {
+                        xtype: "label",
+                        //title: 'hi',
+                        html: "<h1>Feedback</h1>",
+                        flex: 1,
+                      },
+                    ],
+                  },
+                  {
+                    xtype: "panel",
+                    //flex: 1,
+                    margin: "0 0 5 0",
+                    width: "40%",
+                    //autoWidth: true,
+                    border: false,
+                    layout: {
+                      type: 'fit',
+                      //align: 'stretch',
+                    },
+                    items: [feedbackGrid],
+                  },
 		
-		],
+		    ],
       },
     ],
   });
