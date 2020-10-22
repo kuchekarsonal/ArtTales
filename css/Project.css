@@ -21,9 +21,19 @@
     background-position: center!important;
     background-image: none!important;
     border: none!important;
+    margin-bottom: 5px !important;
 }
-.buttonColor{
-	background-color:#FF0000;	
+
+.toolbar-button * {
+    color: #ccc;
+}
+
+.toolbar-button:hover * {
+    color: #ffd635;
+}
+
+.toolbar-button:hover {
+    background-color: #333 !important;
 }
 
 .page-title{
