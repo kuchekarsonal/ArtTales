@@ -122,6 +122,7 @@ var aboutUs = Ext.create("Ext.Container", {
         {
           xtype: 'button',
           text: 'View More',
+          id: 'view-more-btn-about',
           handler: function () {
             var dv = Ext.getCmp('artist-dataview');
     
@@ -133,7 +134,15 @@ var aboutUs = Ext.create("Ext.Container", {
             dv.refresh();
           }
         }
-      ]
+      ],
+      listeners: {
+        afterrender : function(){
+          if (Ext.data.StoreManager.lookup('artistsStore').getCount() <= 3) {
+            Ext.getCmp("view-more-btn-about").hide();
+          }
+        }
+      }
+
     },
     
   ],

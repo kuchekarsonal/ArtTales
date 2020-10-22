@@ -240,7 +240,7 @@ function loginCallback() {
       {
         cls: "toolbar-button",
         height: 60,
-        text: "<h1>D</h1>",
+        iconCls: 'x-fa fa-paint-brush',
       },
 
       { xtype: "tbseparator" },
@@ -286,6 +286,7 @@ function loginCallback() {
       {
         xtype: "button",
         id: "Drawing",
+        cls: "toolbar-button",
         hidden: true,
         text: "Drawing",
         listeners: {
@@ -299,6 +300,7 @@ function loginCallback() {
       {
         hidden: true,
         id: "Quilling",
+        cls: "toolbar-button",
         xtype: "button",
         text: "Quilling",
         listeners: {
