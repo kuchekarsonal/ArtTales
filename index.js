@@ -24,7 +24,12 @@ function loginCallback() {
             {
               text: "Drawing",
               expanded: true,
+<<<<<<< HEAD
               iconCls: "x-fa fa-pencil",
+=======
+              iconCls: 'x-fa fa-pencil',
+              filerString: 'Drawing',
+>>>>>>> ac993dddd4a8c5e0a6e0a03c8151200138dbec74
               left: true,
               containerName: "myhomeGrid",
             },
@@ -33,9 +38,16 @@ function loginCallback() {
               expanded: true,
               iconCls: "x-fa fa-paper-plane",
               left: true,
+<<<<<<< HEAD
               containerName: "myhomeGrid",
             },
           ],
+=======
+              filerString: 'Quilling',
+              containerName: 'myhomeGrid'
+            }
+          ]
+>>>>>>> ac993dddd4a8c5e0a6e0a03c8151200138dbec74
         },
         {
           leaf: true,
@@ -204,6 +216,9 @@ function loginCallback() {
           selectionchange: function () {
             var containerToLoad = this.getSelection().data.containerName;
             console.log(containerToLoad);
+            if(this.getSelection().data.filerString)
+      homeGrid.addFilters({property: 'Category', operator: 'eq', value:this.getSelection().data.filerString} );    
+            
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             Ext.getCmp("itemsContainer").add(window[containerToLoad]);
           },
