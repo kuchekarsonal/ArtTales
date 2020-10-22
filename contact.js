@@ -12,7 +12,7 @@ var contactUs = Ext.create("Ext.Container", {
       /* title:
           "Don’t hesitate to chat with us,just drop a line below or contact via email.", */
       margin: "5 5 5 5",
-      width: "100%",
+      width: "95%",
       height: 470,
       forcefit: true,
       scrollable: true,
@@ -45,25 +45,12 @@ var contactUs = Ext.create("Ext.Container", {
               var subject = Ext.getCmp("subject").getValue();
               var message = Ext.getCmp("message").getValue();
               //console.log(firstName,lastName,email,subject,message);
-              var respGetAll = ESApis.executeScript(
-                "_getAllFeedback_artgallery",
-                ["paramCount"],
-                [0]
-              );
-              if (respGetAll.status == "success") {
-                Ext.Msg.alert("Alert", "Submitted Successfully");
-                var esResp = respGetAll.response;
-                var esParse = JSON.parse(esResp);
-                console.log(esParse.CallResponse);
-                var count = esParse.CallResponse.length;
-              }
               var resp = ESApis.executeScript(
                 "_submitFeedback_artgallery",
                 ["paramCount", "params2"],
                 [
                   1,
                   {
-                    MessageId: (count + 1).toString(),
                     FirstName: firstName,
                     LastName: lastName,
                     EmailId: email,
@@ -73,7 +60,7 @@ var contactUs = Ext.create("Ext.Container", {
                 ]
               );
               if (resp.status == "success") {
-                Ext.Msg.alert("Alert", "Submitted Successfully");
+                Ext.Msg.alert("Thank You!", "Feedback, Submitted Successfully.");
                 var esResp = resp.response;
                 var esParse = JSON.parse(esResp);
                 console.log(esParse.CallResponse);
@@ -82,7 +69,8 @@ var contactUs = Ext.create("Ext.Container", {
               }
             },
           },
-        }],
+        },
+      ],
       items: [
         {
           xtype: "label",
@@ -111,7 +99,6 @@ var contactUs = Ext.create("Ext.Container", {
         {
           id: "emailaddress",
           fieldLabel: "Email Address",
-          //email:true, to validate if email is proper
           name: "Email Address",
           validator: function (value) {
             var emailRegex = new RegExp("\\S+@\\S+\\.\\S+");
@@ -138,5 +125,5 @@ var contactUs = Ext.create("Ext.Container", {
         },
       ],
     },
-  ]
+  ],
 });

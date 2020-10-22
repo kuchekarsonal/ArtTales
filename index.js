@@ -1,10 +1,10 @@
+var breadcrumbStore;
+var currentUserLoggedIn = {};
 function loginCallback() {
-
-  Ext.Loader.loadScriptsSync('./project/home.js');
-  Ext.Loader.loadScriptsSync('./project/login-signup.js');
-  Ext.Loader.loadScriptsSync('./project/artist-home.js');
-  Ext.Loader.loadScriptsSync('./project/contact.js');
-  Ext.Loader.loadScriptsSync('./project/about.js');
+  Ext.Loader.loadScriptsSync("./project/home.js");
+  Ext.Loader.loadScriptsSync("./project/login-signup.js");
+  Ext.Loader.loadScriptsSync("./project/contact.js");
+  Ext.Loader.loadScriptsSync("./project/about.js");
 
   //breadcrumb
   Ext.define("Myapp.sample.store.mainMenu", {
@@ -12,57 +12,56 @@ function loginCallback() {
     root: {
       text: "Home",
       expanded: true,
-      iconCls: 'x-fa fa-home',
-      containerName: 'myhomeGrid',
+      iconCls: "x-fa fa-home",
+      containerName: "myhomeGrid",
       children: [
         {
-          text: "My Art",
+          text: "Arts",
           expanded: true,
-          iconCls: 'x-fa fa-paint-brush',
-          containerName: 'artistHomeGrid',
+          iconCls: "x-fa fa-paint-brush",
+          //containerName: "artistHomeGrid",
           children: [
             {
               text: "Drawing",
               expanded: true,
-              iconCls: 'x-fa fa-pencil',
+              iconCls: "x-fa fa-pencil",
               left: true,
-              containerName: 'myhomeGrid',
-              
+              containerName: "myhomeGrid",
             },
             {
               text: "Quilling",
               expanded: true,
-              iconCls: 'x-fa fa-paper-plane',
+              iconCls: "x-fa fa-paper-plane",
               left: true,
-              containerName: 'myhomeGrid'
-            }
-          ]
+              containerName: "myhomeGrid",
+            },
+          ],
         },
         {
           leaf: true,
           text: "About Us",
-          iconCls: 'x-fa fa-user',
+          iconCls: "x-fa fa-user",
           expanded: true,
-          containerName: 'aboutUs'
+          containerName: "aboutUs",
         },
         {
           leaf: true,
           text: "Feedback",
-          iconCls: 'x-fa fa-comments',
+          iconCls: "x-fa fa-comments",
           expanded: true,
-          containerName: 'contactUs'
+          containerName: "contactUs",
         },
       ],
     },
   });
-  var breadcrumbStore = Ext.create("Myapp.sample.store.mainMenu", {});
+  breadcrumbStore = Ext.create("Myapp.sample.store.mainMenu", {});
   //end breadcrumb
 
   //footer
   var footer = Ext.create("Ext.container.Container", {
     width: "100%",
     //flex: 0.5,
-    height: '50',
+    height: "50",
     layout: {
       type: "hbox",
       pack: "center",
@@ -83,7 +82,7 @@ function loginCallback() {
   var headerContainer = Ext.create("Ext.container.Container", {
     id: "headerContainer",
     //flex: 1,
-    height: '100',
+    height: "100",
     width: "100%",
     margin: 5,
     style: {
@@ -104,7 +103,7 @@ function loginCallback() {
       { xtype: "tbspacer", flex: 1 },
       {
         xtype: "toolbar",
-        id: 'header-toolbar',
+        id: "header-toolbar",
         border: false,
         items: [
           {
@@ -126,10 +125,10 @@ function loginCallback() {
             },
           },
           {
-            xtype: 'label',
-            id: 'logged-in-name',
+            xtype: "label",
+            id: "logged-in-name",
             hidden: true,
-            text: 'Logged in'
+            text: "Logged in",
           },
           {
             xtype: "tbseparator",
@@ -163,6 +162,10 @@ function loginCallback() {
                 Ext.getCmp("logout-button").hide();
                 Ext.getCmp("sign-up-button").show();
                 Ext.getCmp("login-button").show();
+                Ext.getCmp("Artsbutton").show();
+                Ext.getCmp("artbuttonSep").show();
+                var node = breadcrumbStore.getRootNode();
+                node.data.containerName = "myhomeGrid";
                 //TODO Later - If sessions are used later, clear them here.
               },
             },
@@ -195,16 +198,16 @@ function loginCallback() {
         showIcons: true,
         viewModel: true,
         bind: {
-          selection: '{selectedNode}'
+          selection: "{selectedNode}",
         },
         listeners: {
-          selectionchange: function(){
+          selectionchange: function () {
             var containerToLoad = this.getSelection().data.containerName;
             console.log(containerToLoad);
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             Ext.getCmp("itemsContainer").add(window[containerToLoad]);
-          }
-        }
+          },
+        },
       },
     ],
     items: [myhomeGrid],
@@ -241,7 +244,7 @@ function loginCallback() {
       {
         cls: "toolbar-button",
         height: 60,
-        iconCls: 'x-fa fa-paint-brush',
+        iconCls: "x-fa fa-paint-brush",
       },
 
       { xtype: "tbseparator" },
@@ -253,7 +256,10 @@ function loginCallback() {
           click: function () {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(myhomeGrid);
-            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Home'));
+            homeGrid.removeFilters();
+            Ext.getCmp("bread-crumb")
+              .getViewModel()
+              .set("selectedNode", breadcrumbStore.findNode("text", "Home"));
           },
         },
       },
@@ -262,11 +268,12 @@ function loginCallback() {
         xtype: "button",
         cls: "toolbar-button",
         iconAlign: "top",
-        html: "My Art",
+        html: "Arts",
+        id: "Artsbutton",
         menu: [],
         listeners: {
           click: function () {
-            Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+            //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             if (Ext.getCmp("Drawing").isHidden()) {
               Ext.getCmp("Drawing").show();
               Ext.getCmp("Quilling").show();
@@ -274,14 +281,13 @@ function loginCallback() {
               Ext.getCmp("Drawing").hide();
               Ext.getCmp("Quilling").hide();
             }
-            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'My Art'));
           },
-          mouseover: function () {
+          /* mouseover: function () {
             //console.log("Mouse Enter");
             //this.showMenu();
             Ext.getCmp("Drawing").show();
             Ext.getCmp("Quilling").show();
-          },
+          }, */
         },
       },
       {
@@ -294,8 +300,14 @@ function loginCallback() {
           click: function () {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(drawingGrid);
-            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Drawing'));
-            homeGrid.addFilters({property: 'Category', operator: 'eq', value:"Drawing"} );            
+            Ext.getCmp("bread-crumb")
+              .getViewModel()
+              .set("selectedNode", breadcrumbStore.findNode("text", "Drawing"));
+            homeGrid.addFilters({
+              property: "Category",
+              operator: "eq",
+              value: "Drawing",
+            });
           },
         },
       },
@@ -309,13 +321,25 @@ function loginCallback() {
           click: function () {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(quillingGrid);
-            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Quilling'));
-            homeGrid.addFilters({property: 'Category', operator: 'eq', value:"Quilling"} ); 
+            Ext.getCmp("bread-crumb")
+              .getViewModel()
+              .set(
+                "selectedNode",
+                breadcrumbStore.findNode("text", "Quilling")
+              );
+            homeGrid.addFilters({
+              property: "Category",
+              operator: "eq",
+              value: "Quilling",
+            });
           },
         },
       },
 
-      { xtype: "tbseparator" },
+      {
+        id: "artbuttonSep",
+        xtype: "tbseparator",
+      },
       {
         cls: "toolbar-button",
         iconAlign: "top",
@@ -324,7 +348,12 @@ function loginCallback() {
           click: function () {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(aboutUs);
-            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'About Us'));
+            Ext.getCmp("bread-crumb")
+              .getViewModel()
+              .set(
+                "selectedNode",
+                breadcrumbStore.findNode("text", "About Us")
+              );
             //console.log("AboutUs click");
           },
         },
@@ -338,7 +367,12 @@ function loginCallback() {
           click: function () {
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             //Ext.getCmp("itemsContainer").add(contactUs);
-            Ext.getCmp("bread-crumb").getViewModel().set('selectedNode', breadcrumbStore.findNode('text', 'Feedback'));
+            Ext.getCmp("bread-crumb")
+              .getViewModel()
+              .set(
+                "selectedNode",
+                breadcrumbStore.findNode("text", "Feedback")
+              );
           },
         },
       },
@@ -348,7 +382,7 @@ function loginCallback() {
 
   var mainContainer = Ext.create("Ext.container.Container", {
     id: "mainContainer",
-    height: '100%',
+    height: "100%",
     plugins: {
       responsive: true,
     },

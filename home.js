@@ -1,25 +1,16 @@
-/* var respGetAll = ESApis.executeScript(
+var respGetAll = ESApis.executeScript(
   "_getAllArts_artgallery",
   ["paramCount"],
   [0]
 );
+//console.log(respGetAll);
 //console.log(JSON.parse(respGetAll.response).CallResponse);
 var artData = JSON.parse(respGetAll.response).CallResponse;
-//console.log(artData); */
-var categoryStore=Ext.create('Ext.data.Store', {
-  fields: ['abbr', 'name'],
-  data: [{
-   'abbr': 'Drawing',
-   'name': 'Drawing'
-  },{
-   'abbr': 'Quilling',
-   'name': 'Quilling'
-  }]
- });
+//console.log(artData);
 var ArtStore = Ext.create("Vistaar.data.DataStore", {
   storeId: "ArtStore",
   fields: [
-    "ProductId",
+    "Product_Id",
     "Artist_name",
     "Art_name",
     "Art_desc",
@@ -27,7 +18,7 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
     "Price",
   ],
   //TODO Backend /////////////    artData is ready column config needs to be changed
-  data: [
+  data: artData /* [
     {
       "ProductId": "1",
       "ArtDetails": "Lisa",
@@ -108,15 +99,15 @@ var ArtStore = Ext.create("Vistaar.data.DataStore", {
       "EmailId": "kuchekar@gmail.com",
       "Price": "5244"
     }
-  ],
+  ] */,
   paging: "local",
   pageSize: 15,
 });
 
 var config = {
   //title: 'Art Store',
-  width: '80%',
-  margin: '50% 0 0 0 ',
+  width: "80%",
+  margin: "50% 0 0 0 ",
   //height: 'auto',
   flex: 9,
   //scrollable: true,
@@ -128,12 +119,12 @@ var config = {
   },
   store: Ext.data.StoreManager.lookup("ArtStore"),
   selModel: {
-    mode: 'multi',
+    mode: "multi",
     checkOnly: true,
-    type: 'checkidmodel',
+    type: "checkidmodel",
     selectionCount: false,
     clearSelection: false,
-    selectionOptions: false
+    selectionOptions: false,
   },
 
   plugins: [
@@ -158,23 +149,33 @@ var config = {
       xtype: "gridcolumn",
       hidden: true,
     },
-    { text: "Art Name", dataIndex: "ProductName", xtype: "gridcolumn", flex: 1 },
+    {
+      text: "Art Name",
+      dataIndex: "ProductName",
+      xtype: "gridcolumn",
+      flex: 1,
+    },
     {
       text: "Artist Name",
       dataIndex: "FirstName",
       xtype: "gridcolumn",
       flex: 1,
     },
-    { text: "Art Description", dataIndex: "ArtDetails", xtype: "gridcolumn", flex: 1 },
-    { text: "Category", dataIndex: "Category", xtype: "gridcolumn", flex: 1 ,editor:{}},
     {
-      text: 'Price',
-      dataIndex: 'Price',
-      xtype: 'numbercolumn',
+      text: "Art Description",
+      dataIndex: "ArtDetails",
+      xtype: "gridcolumn",
+      flex: 1,
+    },
+    { text: "Category", dataIndex: "Category", xtype: "gridcolumn", flex: 1 },
+    {
+      text: "Price",
+      dataIndex: "Price",
+      xtype: "numbercolumn",
       flex: 1,
       renderer: function (value) {
         return "₹" + value;
-      }
+      },
     },
     // {
     //   text: "Buy",
@@ -205,22 +206,37 @@ var myhomeGrid = Ext.create("Ext.Container", {
     align: "center",
   },
   items: [
-
     homeGrid,
     Ext.create("Ext.Container", {
-      layout: "hbox", flex: 1, width: '80%', items: [
+      layout: "hbox",
+      flex: 1,
+      width: "80%",
+      items: [
         {
-          xtype: 'label',
+          xtype: "label",
           flex: 7,
         },
         {
-          xtype: 'button',
-          text: 'Buy',
-          margin: '5 50% 5 5',
+          xtype: "button",
+          text: "Buy",
+          margin: "5 50% 5 5",
           flex: 1,
-        }]
-    })
-
+          handler: function () {
+            //Backend: Adding data to the Order Entity
+            if (JSON.stringify(currentUserLoggedIn) !== "{}") {
+              var selectedData = homeGrid.getSelection().length;
+              for (var artData = 0; artData < selectedData; artData++) {
+                console.log(homeGrid.getSelection()[artData].data);
+                //Attributes Required :ProductId,Price,EmailId,OrderId
+              }
+            } else {
+              Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
+              Ext.getCmp("itemsContainer").add(loginForm);
+            }
+          },
+        },
+      ],
+    }),
   ],
 });
 

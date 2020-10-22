@@ -1,5 +1,4 @@
-//loginForm
-var userName;
+
 var loginForm = Ext.create("Ext.Container", {
   id: "loginForm",
 
@@ -49,34 +48,44 @@ var loginForm = Ext.create("Ext.Container", {
             click: function () {
               Ext.getCmp("sign-up-button").hide();
               Ext.getCmp("login-button").hide();
-              //TODO Backend - Get the first name and last name from backend and put them in userName.
-              var email = Ext.getCmp("usernamelogin").getValue();
+              //TODO Backend - Get the first name and last name from backend and put them in currentUserLoggedIn.firstName.
+              var email = Ext.getCmp("firstNamelogin").getValue();
               var pass = Ext.getCmp("passwordlogin").getValue();
-			  //console.log(email,pass);	
-			  var respGetAll = ESApis.executeScript("loginArtgallery", ['paramCount', 'params2','params3'], [2, email,pass]);
+              //console.log(email,pass);
+              var respGetAll = ESApis.executeScript(
+                "loginArtgallery",
+                ["paramCount", "params2", "params3"],
+                [2, email, pass]
+              );
               //console.log(respGetAll);
 
               if (respGetAll.status == "success") {
-                Ext.Msg.alert("Alert", "Submitted Successfully");
+                Ext.Msg.alert("Alert", "Welcome to Art Gallery");
                 var esResp = respGetAll.response;
                 var esParse = JSON.parse(esResp);
-				//console.log(respGetAll);
-		
+                //console.log(respGetAll);
+
                 var count = esParse.CallResponse.length;
                 if (true) {
                   //console.log(esParse.CallResponse);
-                  userName = esParse.CallResponse[0].FirstName;
-                  //console.log(userName);
+                  currentUserLoggedIn.firstName =
+                    esParse.CallResponse[0].FirstName;
+                  currentUserLoggedIn.lastName =
+                    esParse.CallResponse[0].LastName;
+                  currentUserLoggedIn.accType =
+                    esParse.CallResponse[0].Account_Type;
+                  currentUserLoggedIn.email = esParse.CallResponse[0].EmailId;
+                  //console.log(currentUserLoggedIn.firstName);
                   Ext.getCmp("logged-in-name").setText(
-                    "Logged in as " + userName
+                    "Logged in as " + currentUserLoggedIn.firstName
                   );
                   Ext.getCmp("logged-in-name").show();
                   Ext.getCmp("logout-button").show();
 
                   //TODO Backend - Check if the data is valid. Return the account type, I am hard-coding it for now.
-                  var accType = esParse.CallResponse[0].Account_Type;
-                  //console.log(userName);
-                  switch (accType) {
+
+                  //console.log(currentUserLoggedIn.firstName);
+                  switch (currentUserLoggedIn.accType) {
                     case "Buyer":
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
@@ -87,14 +96,22 @@ var loginForm = Ext.create("Ext.Container", {
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
                       );
-                      //console.log(userName);
-                      Ext.Loader.loadScriptsSync('./project/artist-home.js');
+                      Ext.Loader.loadScriptsSync("./project/artist-home.js");
+                      var node = breadcrumbStore.getRootNode();
+                      node.data.containerName="artistHomeGrid";
+                      Ext.getCmp("Artsbutton").hide();
+                      Ext.getCmp("artbuttonSep").hide();
                       Ext.getCmp("itemsContainer").add(artistHomeGrid);
                       break;
                     case "Admin":
                       Ext.getCmp("itemsContainer").removeAll(
                         (autoDestroy = false)
                       );
+                      Ext.Loader.loadScriptsSync("./project/admin-home.js");
+                      var node = breadcrumbStore.getRootNode();
+                      node.data.containerName="adminHomeGrid";
+                      Ext.getCmp("Artsbutton").hide();
+                      Ext.getCmp("artbuttonSep").hide();
                       Ext.getCmp("itemsContainer").add(adminHomeGrid);
                       break;
                     default:
@@ -142,7 +159,7 @@ var loginForm = Ext.create("Ext.Container", {
           html: "<h1>Login Form</h1>",
         },
         {
-          id: "usernamelogin",
+          id: "firstNamelogin",
           fieldLabel: "Email",
           name: "Email",
           validator: function (value) {

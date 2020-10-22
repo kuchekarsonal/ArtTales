@@ -1,40 +1,85 @@
 //-------------SAMPLE STORE FOR PURCHASE REPORTS--------------------
 
-var simStore = Ext.create('Vistaar.data.DataStore', {
-  storeId: 'simpsonsStore',
-  fields: [{ name: 'date', type: 'date' }, 'artName', 'artistName', { name: 'price', type: 'number' }],
-  data: [
-    { date: '2020/04/22', artName: 'Painting', artistName: 'lisa', price: 5784 },
-    { date: '2020/02/19', artName: 'Quilled Basket', artistName: 'bart', price: 544 },
-    { date: '2020/02/19', artName: 'Quilled Flower Pot', artistName: 'homer', price: 456 },
-    { date: '2020/05/19', artName: 'Scenery', artistName: 'marge', price: 159 },
-    { date: '2020/10/19', artName: 'Painting', artistName: 'lisa', price: 514 },
-    { date: '2020/05/19', artName: 'Quilled Basket', artistName: 'bart', price: 234 },
-    { date: '2020/05/19', artName: 'Quilled Flower Pot', artistName: 'marge', price: 244 },
-    { date: '2020/08/19', artName: 'Painting', artistName: 'lisa', price: 1124 },
-    { date: '2020/06/19', artName: 'Quilled Basket', artistName: 'bart', price: 534 },
-    { date: '2020/04/19', artName: 'Quilled Flower Pot', artistName: 'homer', price: 554 }
+var simStore = Ext.create("Vistaar.data.DataStore", {
+  storeId: "simpsonsStore",
+  fields: [
+    { name: "date", type: "date" },
+    "artName",
+    "artistName",
+    { name: "price", type: "number" },
   ],
-  paging: 'local',
+  data: [
+    {
+      date: "2020/04/22",
+      artName: "Painting",
+      artistName: "lisa",
+      price: 5784,
+    },
+    {
+      date: "2020/02/19",
+      artName: "Quilled Basket",
+      artistName: "bart",
+      price: 544,
+    },
+    {
+      date: "2020/02/19",
+      artName: "Quilled Flower Pot",
+      artistName: "homer",
+      price: 456,
+    },
+    { date: "2020/05/19", artName: "Scenery", artistName: "marge", price: 159 },
+    { date: "2020/10/19", artName: "Painting", artistName: "lisa", price: 514 },
+    {
+      date: "2020/05/19",
+      artName: "Quilled Basket",
+      artistName: "bart",
+      price: 234,
+    },
+    {
+      date: "2020/05/19",
+      artName: "Quilled Flower Pot",
+      artistName: "marge",
+      price: 244,
+    },
+    {
+      date: "2020/08/19",
+      artName: "Painting",
+      artistName: "lisa",
+      price: 1124,
+    },
+    {
+      date: "2020/06/19",
+      artName: "Quilled Basket",
+      artistName: "bart",
+      price: 534,
+    },
+    {
+      date: "2020/04/19",
+      artName: "Quilled Flower Pot",
+      artistName: "homer",
+      price: 554,
+    },
+  ],
+  paging: "local",
   pageSize: 4,
 });
 
 //-------------SAMPLE STORE FOR FEEDBACK--------------------
-
-var feedbackStore = Ext.create('Vistaar.data.DataStore', {
-  storeId: 'feedbackStore',
-  fields: ['Message', 'FirstName', 'LastName', { name: 'Date Created', type: 'date' },],
-  data: [
-    // { date: '2020/02/19', feedback: 'Great product.', username: 'lisa'},
-    // { date: '2020/02/19', feedback: 'Very beautifull product.', username: 'bart'},
-    // { date: '2020/02/19', feedback: 'I liked the basket', username: 'homer'},
-    // { date: '2020/05/19', feedback: 'Not good.', username: 'marge'},
-    // { date: '2020/10/19', feedback: 'Great product.', username: 'lisa'},
-    // { date: '2020/05/19', feedback: 'Very beautifull product.', username: 'bart'},
-    // { date: '2020/05/19', feedback: 'I liked the basket', username: 'marge'},
-    // { date: '2020/08/19', feedback: 'Great product.', username: 'lisa'},
-    // { date: '2020/06/19', feedback: 'Very beautifull product.', username: 'bart'},
-    // { date: '2020/04/19', feedback: 'I liked the basket', username: 'homer'}
+var respGetAll = ESApis.executeScript(
+  "_getAllFeedback_artgallery",
+  ["paramCount"],
+  [0]
+);
+var feedbackData = JSON.parse(respGetAll.response).CallResponse;
+var feedbackStore = Ext.create("Vistaar.data.DataStore", {
+  storeId: "feedbackStore",
+  fields: [
+    "Message",
+    "FirstName",
+    "LastName",
+    { name: "Date Created", type: "date" },
+  ],
+  data: feedbackData /* [
     {
       "Modified By": "ADMINISTRATOR",
       "EmailId": "asd",
@@ -49,106 +94,114 @@ var feedbackStore = Ext.create('Vistaar.data.DataStore', {
       "RevisionId": 0,
       "MessageId": "2"
     }
-  ],
-  paging: 'local',
+  ], */,
+  paging: "local",
   pageSize: 4,
 });
 
 //--------------SAMPLE BAR GRAPH------------------
 
 obj = {
-  "chartConfig": {
-    "id": "CC1",
-    "popUpMode": false,
-    "chartConfig": {
+  chartConfig: {
+    id: "cc2",
+    popUpMode: false,
+    chartConfig: {
       id: "myChartView",
-      "animation": false,
-      "allowDuplicateValuesForCategoryAxis": false,
-      "chartType": "cartesian",
-      "containerId": "viewContainer",
-      "axes": [{
-        "type": "category",
-        "position": "bottom",
-        "title": "name",
-        "fields": [
-          "name"
-        ],
-        "axisId": "axis2"
-      }, {
-        "type": "numeric",
-        "position": "left",
-        "title": "sales",
-        "fields": [
-          "sales",
-        ],
-        "axisId": "axis1"
-      }],
-      "series": [{
-        "type": "bar",
-        "xField": "name",
-        "yField": "sales",
-        "seriesId": "sales",
-        "title": "sales",
-        style: {},
-        highlight: {
-          fillStyle: 'rgba(255, 115, 51, 1.0)',
-          strokeStyle: 'black'
+      animation: false,
+      allowDuplicateValuesForCategoryAxis: false,
+      chartType: "cartesian",
+      containerId: "itemsContainer",
+      axes: [
+        {
+          type: "category",
+          position: "bottom",
+          title: "name",
+          fields: ["name"],
+          axisId: "axis2",
         },
-        label: {
-          field: 'sales',
-          display: 'sales'
+        {
+          type: "numeric",
+          position: "left",
+          title: "sales",
+          fields: ["sales"],
+          axisId: "axis1",
         },
-        tooltip: {
-          trackMouse: true,
-          style: 'background: #fff',
-          renderer: function (toolTip, storeItem, item) {
-            toolTip.setHtml(storeItem.get('name') + ': ' + storeItem.get('sales'));
-          }
-        }
-      }],
-      "legend": true
+      ],
+      series: [
+        {
+          type: "bar",
+          xField: "name",
+          yField: "sales",
+          seriesId: "sales",
+          title: "sales",
+          style: {},
+          highlight: {
+            fillStyle: "rgba(255, 115, 51, 1.0)",
+            strokeStyle: "black",
+          },
+          label: {
+            field: "sales",
+            display: "sales",
+          },
+          tooltip: {
+            trackMouse: true,
+            style: "background: #fff",
+            renderer: function (toolTip, storeItem, item) {
+              toolTip.setHtml(
+                storeItem.get("name") + ": " + storeItem.get("sales")
+              );
+            },
+          },
+        },
+      ],
+      legend: true,
     },
-    "popUpWindowConfig": {
+    popUpWindowConfig: {
       //"title": "Custom Chart",
-      "modal": false,
-      "layout": {
-        "type": "fit"
+      modal: false,
+      layout: {
+        type: "fit",
       },
-      "autoShow": true,
-      "closeAction": "destroy"
-    }
+      autoShow: true,
+      closeAction: "destroy",
+    },
   },
-  "simdata": [{
-    'name': 'lisa',
-    'sales': 3
-  }, {
-    'name': 'marge',
-    'sales': 2
-  }, {
-    'name': 'bart',
-    'sales': 3
-  }, {
-    'name': 'homer',
-    'sales': 2
-  },]
+  simdata: [
+    {
+      name: "lisa",
+      sales: 3,
+    },
+    {
+      name: "marge",
+      sales: 2,
+    },
+    {
+      name: "bart",
+      sales: 3,
+    },
+    {
+      name: "homer",
+      sales: 2,
+    },
+  ],
 };
 var hist = VistaarCC.createCustomChart(obj.chartConfig, obj.simdata);
 
 //------------------GRID FOR PURCHASE REPORTS--------------------
 
-var grid = Ext.create('Vistaar.grid.DataGrid', {
+var grid = Ext.create("Vistaar.grid.DataGrid", {
   //title:'Pruchase Reports',
   store: simStore,
-  id: 'd1',
+  id: "d1",
   //forceFit:true,
   //autoSizeColumns: true,
-  width: '80%',
+  width: "80%",
   //flex: 1,
   //width: '99%',
   scrollable: true,
   //minWidth: '425',
   selModel: {
-    type: 'checkidmodel',
+    type: "checkidmodel",
     mode: "MULTI",
     //checkOnly: true,
     //selectionCount: true,
@@ -157,58 +210,64 @@ var grid = Ext.create('Vistaar.grid.DataGrid', {
   },
   plugins: [
     {
-      ptype: 'inlinefilterbar',
-    }],
+      ptype: "inlinefilterbar",
+    },
+  ],
   pagingConfig: {
     paging: true,
     pageSize: 4,
     serverSidePaging: false,
   },
-  columns: [{
-    text: 'Date',
-    dataIndex: 'date',
-    xtype: 'datecolumn',
-    format: 'd-m-Y',
-    flex: 1,
-  }, {
-    text: 'Art Name',
-    dataIndex: 'artName',
-    //id:'p1',
-    flex: 1,
-  }, {
-    text: 'Artist Name',
-    dataIndex: 'artistName',
-    flex: 1,
-  }, {
-    xtype: 'numbercolumn',
-    //renderer: Ext.util.Format.usMoney,
-    //currencySign: '₹',
-    //text: 'Price',
-    //dataIndex: 'price'
-    text: 'Price',
-    dataIndex: 'price',
-    //xtype: 'gridcolumn', 
-    //flex: 1,
-    renderer: function (value) {
-      return "₹" + value;
+  columns: [
+    {
+      text: "Date",
+      dataIndex: "date",
+      xtype: "datecolumn",
+      format: "d-m-Y",
+      flex: 1,
     },
-    flex: 1,
-  }],
+    {
+      text: "Art Name",
+      dataIndex: "artName",
+      //id:'p1',
+      flex: 1,
+    },
+    {
+      text: "Artist Name",
+      dataIndex: "artistName",
+      flex: 1,
+    },
+    {
+      xtype: "numbercolumn",
+      //renderer: Ext.util.Format.usMoney,
+      //currencySign: '₹',
+      //text: 'Price',
+      //dataIndex: 'price'
+      text: "Price",
+      dataIndex: "price",
+      //xtype: 'gridcolumn',
+      //flex: 1,
+      renderer: function (value) {
+        return "₹" + value;
+      },
+      flex: 1,
+    },
+  ],
 });
 
 //------------------GRID FOR FEEDBACK--------------------
 
-var feedbackGrid = Ext.create('Vistaar.grid.DataGrid', {
+var feedbackGrid = Ext.create("Vistaar.grid.DataGrid", {
   //title:'Feedback',
   store: feedbackStore,
-  id: 'd2',
+  id: "d2",
   //autoSizeColumns: true,
-  width: '80%',
+  width: "80%",
   //flex: 1,
   //width: "95%",
-  //forceFit:true,		
+  //forceFit:true,
   selModel: {
-    type: 'checkidmodel',
+    type: "checkidmodel",
     mode: "MULTI",
     checkOnly: true,
     //selectionCount: true,
@@ -217,44 +276,51 @@ var feedbackGrid = Ext.create('Vistaar.grid.DataGrid', {
   },
   plugins: [
     {
-      ptype: 'inlinefilterbar',
-    }],
+      ptype: "inlinefilterbar",
+    },
+  ],
   pagingConfig: {
     paging: true,
     pageSize: 4,
     serverSidePaging: false,
   },
-  columns: [{
-    text: 'Feedback',
-    dataIndex: 'Message',
-    flex: 1,
-    //id: 'p1'
-  }, {
-    text: 'First Name',
-    flex: 1,
-    dataIndex: 'FirstName' /*+ 'LastName',
-    renderer: function (value, record) {
-      var updated = record.get('LastName');
-      return value + record.get('LastName');
-    }*/
-  }, {
-    text: 'Last Name',
-    flex: 1,
-    dataIndex: 'LastName'
-  }, {
-    text: 'Date',
-    dataIndex: 'Date Created',
-    xtype: 'datecolumn',
-    flex: 1,
-    format: 'd-m-Y'
-  }],
+  columns: [
+    {
+      text: "Feedback",
+      dataIndex: "Message",
+      flex: 1,
+      //id: 'p1'
+    },
+    {
+      text: "First Name",
+      flex: 1,
+      dataIndex:
+        "FirstName" /*+ 'LastName',
+  renderer: function (value, record) {
+    var updated = record.get('LastName');
+    return value + record.get('LastName');
+  }*/,
+    },
+    {
+      text: "Last Name",
+      flex: 1,
+      dataIndex: "LastName",
+    },
+    {
+      text: "Date",
+      dataIndex: "Date Created",
+      xtype: "datecolumn",
+      flex: 1,
+      format: "d-m-Y",
+    },
+  ],
 });
 
 //---------------------MAIN CODE----------------------------
 
 var adminHomeGrid = Ext.create("Ext.Container", {
   id: "admintablePic",
-  //width: "auto",
+  width: "auto",
   flex: 1,
   layout: {
     type: "fit",
@@ -280,8 +346,8 @@ var adminHomeGrid = Ext.create("Ext.Container", {
       },
       scrollable: true,
       layout: {
-        type: 'vbox',
-        align: 'middle',
+        type: "vbox",
+        align: "middle",
       },
       items: [
         {
@@ -292,7 +358,7 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           border: false,
           width: "24%",
           layout: {
-            type: 'center',
+            type: "center",
             //align: 'stretch',
           },
           items: [
@@ -312,7 +378,7 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           width: "40%",
           border: false,
           layout: {
-            type: 'fit',
+            type: "fit",
             //align: 'stretch',
           },
           items: [grid],
@@ -325,7 +391,7 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           border: false,
           width: "24%",
           layout: {
-            type: 'center',
+            type: "center",
             //align: 'stretch',
           },
           items: [
@@ -345,12 +411,10 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           border: false,
           width: "40%",
           layout: {
-            type: 'center',
+            type: "anchor",
             //align: 'stretch',
           },
-          items: [
-            hist,
-          ],
+          items: [hist],
         },
         {
           xtype: "panel",
@@ -360,7 +424,7 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           border: false,
           width: "24%",
           layout: {
-            type: 'center',
+            type: "center",
             //align: 'stretch',
           },
           items: [
@@ -380,12 +444,11 @@ var adminHomeGrid = Ext.create("Ext.Container", {
           //autoWidth: true,
           border: false,
           layout: {
-            type: 'fit',
+            type: "fit",
             //align: 'stretch',
           },
           items: [feedbackGrid],
         },
-
       ],
     },
   ],
