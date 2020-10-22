@@ -244,6 +244,7 @@ var popupFormConfig={
 								  Category: artcategory,
 								  Price: price,
 								  },0);
+							artistGrid.commitChanges();
 						}
 					}
 				}],
@@ -295,16 +296,7 @@ var config = {
 			xtype: 'combobox',
 					width: '80%',
 					editable: false,
-					store: Ext.create('Ext.data.Store', {
-						 fields: ['abbr', 'name'],
-						 data: [{
-							'abbr': 'Drawing',
-							'name': 'Drawing'
-						 },{
-							'abbr': 'Quilling',
-							'name': 'Quilling'
-						 }]
-					  }),
+					store: categoryStore,
 					  valueField: 'abbr',
 					  displayField: 'name',
 					  name: 'Art Category',
@@ -425,6 +417,7 @@ var artistHomeGrid = Ext.create("Ext.Container", {
 			  {
 				  
 				  artistGrid.removeRecords (selectedRow);
+				  artistGrid.commitChanges();
 			  }
 			  else
 			  {

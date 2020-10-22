@@ -232,7 +232,11 @@ var feedbackGrid = Ext.create('Vistaar.grid.DataGrid', {
   }, {
     text: 'First Name',
     flex: 1,
-    dataIndex: 'FirstName' /*+ 'LastName'*/
+    dataIndex: 'FirstName' /*+ 'LastName',
+    renderer: function (value, record) {
+      var updated = record.get('LastName');
+      return value + record.get('LastName');
+    }*/
   }, {
     text: 'Last Name',
     flex: 1,
@@ -363,7 +367,7 @@ var adminHomeGrid = Ext.create("Ext.Container", {
             {
               xtype: "label",
               //title: 'hi',
-              html: "<h1>Feedback</h1>",
+              html: "<h1>Feedback for website</h1>",
               flex: 1,
             },
           ],
