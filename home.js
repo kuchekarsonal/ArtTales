@@ -218,6 +218,9 @@ var myhomeGrid = Ext.create("Ext.Container", {
           text: 'Buy',
           margin: '5 50% 5 5',
           flex: 1,
+          //handler:function(){
+          //  Ext.Msg.alert('No Product selected', 'No products selected , Please select atlest one product to continue');
+          //}
         }]
     })
 
