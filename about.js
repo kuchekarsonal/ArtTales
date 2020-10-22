@@ -1,13 +1,42 @@
+/*var respGetAll = ESApis.executeScript(
+  "getArtistDataForAbout_artgallery",
+  ["paramCount"],
+  [0]
+);*/
+
+//var artistData = JSON.parse(respGetAll.response).CallResponse;
+//console.log(artistData);
+
 //TODO Backend - Load data dynamically
 Ext.create('Ext.data.Store', {
   id: 'artistsStore',
   data: [
-    { name: 'Abhijeet', description: '20 year experience in drawing' },
-    { name: 'Mohan', description: 'Good at Quilling' },
-    { name: 'Shashank', description: 'Good at Drawing' },
-    { name: 'Rushabh', description: 'Unique Art Maker' },
-    { name: 'Sonal', description: '5 year experience' },
-    { name: 'Reema', description: 'Expert in free hand drawing' },
+		{
+			"Modified By": "ADMINISTRATOR",
+			"EmailId": "kuchekar@gmail.com",
+			"FirstName": "Sonal",
+			"Account_Type": "Artist",
+			"Document Id": 490490,
+			"Created By": "ADMINISTRATOR",
+			"LastName": "kuchekar",
+			"Date Modified": "Tue, 20 Oct 2020 11:59:14 GMT",
+			"Date Created": "Tue, 20 Oct 2020 11:59:14 GMT",
+			"RevisionId": 0,
+			"Password": "1234"
+		},
+		{
+			"Modified By": "ADMINISTRATOR",
+			"EmailId": "asd@sf.as",
+			"FirstName": "asd",
+			"Account_Type": "Artist",
+			"Document Id": 490494,
+			"Created By": "ADMINISTRATOR",
+			"LastName": "asd",
+			"Date Modified": "Wed, 21 Oct 2020 04:50:22 GMT",
+			"Date Created": "Wed, 21 Oct 2020 04:50:22 GMT",
+			"RevisionId": 0,
+			"Password": "1234"
+		}
   ],
 });
 
@@ -60,9 +89,9 @@ var aboutUs = Ext.create("Ext.Container", {
         '<tpl for=".">',
         '<tpl if="xindex &lt; this.getStart()+3">',
         '<div class="thumb-wrap about-card">',
-        '<h2 class="centered-text">{name}</h2>',
+        '<h2 class="centered-text">{FirstName} {LastName}</h2>',
         '<img src="./project/images/nophoto.png"/>',
-        '<p class="centered-text">{description}</p>',
+        //'<p class="centered-text">{description}</p>', //TODO Later - Get some appropriate metric to display along with the list, like products published or categories he is selling
         '</div>',
         '</tpl>',
         '</tpl>',
