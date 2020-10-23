@@ -243,16 +243,26 @@ function loginCallback() {
             var containerToLoad = this.getSelection().data.containerName;
             console.log(containerToLoad);
             if (this.getSelection().data.filerString)
+            {
+              if(myhomeGrid.contains(orderGrid))
+                myhomeGrid.remove(orderGrid);
+              
               homeGrid.addFilters({
                 property: "Category",
                 operator: "eq",
                 value: this.getSelection().data.filerString,
               });
+            }
             else {
               homeGrid.removeFilters();
+              if(currentUserLoggedIn.accType=='Buyer' &&containerToLoad=='myhomeGrid'){
+                myhomeGrid.add(orderGrid);
+          }
             }
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             Ext.getCmp("itemsContainer").add(window[containerToLoad]);
+          
+              
           },
         },
       },

@@ -409,7 +409,7 @@ var myhomeGrid = Ext.create("Ext.Container", {
         },
       ],
     }),
-  orderGrid
+  
   
   ],
 });
