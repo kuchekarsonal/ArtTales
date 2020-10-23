@@ -1,4 +1,3 @@
-
 var loginForm = Ext.create("Ext.Container", {
   id: "loginForm",
 
@@ -60,68 +59,83 @@ var loginForm = Ext.create("Ext.Container", {
               //console.log(respGetAll);
 
               if (respGetAll.status == "success") {
+                breadcrumbStore.getRootNode().findChild("text","Login").remove();
+                breadcrumbStore.getRootNode().findChild("text","Sign Up").remove();
                 Ext.Msg.alert("Alert", "Welcome to Art Gallery");
                 var esResp = respGetAll.response;
                 var esParse = JSON.parse(esResp);
                 //console.log(respGetAll);
 
                 var count = esParse.CallResponse.length;
-                if (true) {
-                  //console.log(esParse.CallResponse);
-                  currentUserLoggedIn.firstName =
-                    esParse.CallResponse[0].FirstName;
-                  currentUserLoggedIn.lastName =
-                    esParse.CallResponse[0].LastName;
-                  currentUserLoggedIn.accType =
-                    esParse.CallResponse[0].Account_Type;
-                  currentUserLoggedIn.email = esParse.CallResponse[0].EmailId;
-                  //console.log(currentUserLoggedIn.firstName);
-                  Ext.getCmp("logged-in-name").setText(
-                    "Logged in as " + currentUserLoggedIn.firstName
-                  );
-                  Ext.getCmp("logged-in-name").show();
-                  Ext.getCmp("logout-button").show();
+                //console.log(esParse.CallResponse);
+                currentUserLoggedIn.firstName =
+                  esParse.CallResponse[0].FirstName;
+                currentUserLoggedIn.lastName = esParse.CallResponse[0].LastName;
+                currentUserLoggedIn.accType =
+                  esParse.CallResponse[0].Account_Type;
+                currentUserLoggedIn.email = esParse.CallResponse[0].EmailId;
+                //console.log(currentUserLoggedIn.firstName);
+                Ext.getCmp("logged-in-name").setText(
+                  "Logged in as " + currentUserLoggedIn.firstName
+                );
+                Ext.getCmp("logged-in-name").show();
+                Ext.getCmp("logout-button").show();
 
-                  //TODO Backend - Check if the data is valid. Return the account type, I am hard-coding it for now.
+                //TODO Backend - Check if the data is valid. Return the account type, I am hard-coding it for now.
 
-                  //console.log(currentUserLoggedIn.firstName);
-                  switch (currentUserLoggedIn.accType) {
-                    case "Buyer":
-                      Ext.getCmp("itemsContainer").removeAll(
-                        (autoDestroy = false)
+                //console.log(currentUserLoggedIn.firstName);
+                switch (currentUserLoggedIn.accType) {
+                  case "Buyer":
+                    Ext.getCmp("itemsContainer").removeAll(
+                      (autoDestroy = false)
+                    );
+                    Ext.getCmp("itemsContainer").add(myhomeGrid);
+                    Ext.getCmp("bread-crumb")
+                      .getViewModel()
+                      .set(
+                        "selectedNode",
+                        breadcrumbStore.findNode("text", "Home")
                       );
-                      Ext.getCmp("itemsContainer").add(myhomeGrid);
-                      break;
-                    case "Artist":
-                      Ext.getCmp("itemsContainer").removeAll(
-                        (autoDestroy = false)
+                    break;
+                  case "Artist":
+                    Ext.getCmp("itemsContainer").removeAll(
+                      (autoDestroy = false)
+                    );
+                    Ext.Loader.loadScriptsSync("./project/artist-home.js");
+                    var node = breadcrumbStore.getRootNode();
+                    node.data.containerName = "artistHomeGrid";
+                    Ext.getCmp("Artsbutton").hide();
+                    Ext.getCmp("artbuttonSep").hide();
+                    Ext.getCmp("itemsContainer").add(artistHomeGrid);
+                    Ext.getCmp("bread-crumb")
+                      .getViewModel()
+                      .set(
+                        "selectedNode",
+                        breadcrumbStore.findNode("text", "Home")
                       );
-                      Ext.Loader.loadScriptsSync("./project/artist-home.js");
-                      var node = breadcrumbStore.getRootNode();
-                      node.data.containerName="artistHomeGrid";
-                      Ext.getCmp("Artsbutton").hide();
-                      Ext.getCmp("artbuttonSep").hide();
-                      Ext.getCmp("itemsContainer").add(artistHomeGrid);
-                      break;
-                    case "Admin":
-                      Ext.getCmp("itemsContainer").removeAll(
-                        (autoDestroy = false)
+                    break;
+                  case "Admin":
+                    Ext.getCmp("itemsContainer").removeAll(
+                      (autoDestroy = false)
+                    );
+                    Ext.Loader.loadScriptsSync("./project/admin-home.js");
+                    var node = breadcrumbStore.getRootNode();
+                    node.data.containerName = "adminHomeGrid";
+                    Ext.getCmp("bread-crumb")
+                      .getViewModel()
+                      .set(
+                        "selectedNode",
+                        breadcrumbStore.findNode("text", "Home")
                       );
-                      Ext.Loader.loadScriptsSync("./project/admin-home.js");
-                      var node = breadcrumbStore.getRootNode();
-                      node.data.containerName="adminHomeGrid";
-                      Ext.getCmp("Artsbutton").hide();
-                      Ext.getCmp("artbuttonSep").hide();
-                      Ext.getCmp("itemsContainer").add(adminHomeGrid);
-                      break;
-                    default:
-                      Ext.Msg.alert(
-                        "Invalid User",
-                        "Please check your credentials"
-                      );
-                  }
-                } else {
-                  Ext.Msg.alert("Alert", "Invalid Credentials.");
+                    Ext.getCmp("Artsbutton").hide();
+                    Ext.getCmp("artbuttonSep").hide();
+                    Ext.getCmp("itemsContainer").add(adminHomeGrid);
+                    break;
+                  default:
+                    Ext.Msg.alert(
+                      "Invalid User",
+                      "Please check your credentials"
+                    );
                 }
               }
             },
@@ -186,7 +200,6 @@ var loginForm = Ext.create("Ext.Container", {
 //signUp
 var signUpForm = Ext.create("Ext.Container", {
   id: "signUpForm",
-
   layout: {
     type: "vbox",
     align: "center",

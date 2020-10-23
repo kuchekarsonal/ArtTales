@@ -19,7 +19,7 @@ function loginCallback() {
           text: "Arts",
           expanded: true,
           iconCls: "x-fa fa-paint-brush",
-          //containerName: "artistHomeGrid",
+          containerName: "myhomeGrid",
           children: [
             {
               text: "Drawing",
@@ -190,6 +190,20 @@ function loginCallback() {
                 Ext.getCmp("artbuttonSep").show();
                 var node = breadcrumbStore.getRootNode();
                 node.data.containerName = "myhomeGrid";
+                node.appendChild({
+                  leaf: true,
+                  text: "Login",
+                  iconCls: "x-fa fa-sign-in",
+                  expanded: true,
+                  containerName: "loginForm",
+                });
+                node.appendChild({
+                  leaf: true,
+                  text: "Sign Up",
+                  iconCls: "x-fa fa-user-plus",
+                  expanded: true,
+                  containerName: "signUpForm",
+                });
                 //TODO Later - If sessions are used later, clear them here.
               },
             },
@@ -234,6 +248,9 @@ function loginCallback() {
                 operator: "eq",
                 value: this.getSelection().data.filerString,
               });
+            else {
+              homeGrid.removeFilters();
+            }
             Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             Ext.getCmp("itemsContainer").add(window[containerToLoad]);
           },
@@ -303,6 +320,7 @@ function loginCallback() {
         menu: [],
         listeners: {
           click: function () {
+            homeGrid.removeFilters();
             //Ext.getCmp("itemsContainer").removeAll((autoDestroy = false));
             if (Ext.getCmp("Drawing").isHidden()) {
               Ext.getCmp("Drawing").show();
