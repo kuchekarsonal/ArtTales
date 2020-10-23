@@ -1,6 +1,5 @@
 var loginForm = Ext.create("Ext.Container", {
   id: "loginForm",
-
   layout: {
     type: "vbox",
     align: "center",
@@ -45,8 +44,6 @@ var loginForm = Ext.create("Ext.Container", {
           disabled: true,
           listeners: {
             click: function () {
-              Ext.getCmp("sign-up-button").hide();
-              Ext.getCmp("login-button").hide();
               //TODO Backend - Get the first name and last name from backend and put them in currentUserLoggedIn.firstName.
               var email = Ext.getCmp("firstNamelogin").getValue();
               var pass = Ext.getCmp("passwordlogin").getValue();
@@ -59,8 +56,17 @@ var loginForm = Ext.create("Ext.Container", {
               //console.log(respGetAll);
 
               if (respGetAll.status == "success") {
-                breadcrumbStore.getRootNode().findChild("text","Login").remove();
-                breadcrumbStore.getRootNode().findChild("text","Sign Up").remove();
+                Ext.getCmp("sign-up-button").hide();
+                Ext.getCmp("login-button").hide();
+  
+                breadcrumbStore
+                  .getRootNode()
+                  .findChild("text", "Login")
+                  .remove();
+                breadcrumbStore
+                  .getRootNode()
+                  .findChild("text", "Sign Up")
+                  .remove();
                 Ext.Msg.alert("Alert", "Welcome to Art Gallery");
                 var esResp = respGetAll.response;
                 var esParse = JSON.parse(esResp);
